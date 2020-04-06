@@ -9,12 +9,8 @@ async function bootstrap() {
   dotenvFlow.config();
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors({
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type, Accept",
-  });
   // app.setGlobalPrefix('slidemaker/api');
+
   await app.listen(4200);
 }
 

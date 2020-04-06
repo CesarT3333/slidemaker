@@ -8,6 +8,7 @@ import { ApresentacaoModule } from './apresentacao/apresentacao.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 
+import { UsuarioModule } from './usuario/usuario.module';
 import database from './config/database';
 
 @Module({
@@ -21,6 +22,7 @@ import database from './config/database';
     }),
 
     ApresentacaoModule,
+    UsuarioModule,
     AuthModule
   ],
   controllers: [

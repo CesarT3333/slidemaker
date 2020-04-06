@@ -1,6 +1,8 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
+
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -12,11 +14,13 @@ import { NgModule } from '@angular/core';
       },
       {
         path: 'planos',
+        canActivate: [UsuarioLogadoGuard],
         loadChildren: () => import(`./modules/plano/plano.module`)
           .then(m => m.PlanoModule)
       },
       {
         path: 'configuracao-apresentacao',
+        canActivate: [UsuarioLogadoGuard],
         loadChildren: () => import(`./modules/configuracao-apresentacao/configuracao-apresentacao.module`)
           .then(m => m.ConfiguracaoApresentacaoModule)
       }

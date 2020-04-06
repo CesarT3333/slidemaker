@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -12,22 +12,9 @@ export class ApiService {
 
   teste(): Observable<any> {
 
-    console.log(localStorage.getItem('token'));
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    });
-
     const uri = 'slidemaker/api/apresentacao';
-    // const uri = 'apresentacao';
-    // const uri = 'auth/teste';
-    // const uri = 'apresentacoes/teste';
-    // return this.http.get('slidemaker/api/teste',
-    //   { headers: httpHeaders })
-    //   .pipe(
-    //     // map(res => res.json())
-    //   );
 
-    return this.http.get(uri, { headers: httpHeaders });
+    return this.http.get(uri);
   }
 
 }

@@ -1,6 +1,9 @@
 import { OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { environment } from '../../../../../environments/environment';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -11,15 +14,20 @@ export class LoginComponent
   loginWindow: any;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void { }
 
   onClickButtonLogin() {
 
-    const uriAuthGoogle =
-      'http://localhost:4200/auth/google';
+    const uriAuthGoogle = `${environment.apiUrl}/auth/google`;
+
+    console.log('============');
+    console.log('apiuri');
+    console.log(uriAuthGoogle);
+    console.log('============');
 
     const windowLoginGoogleConfig =
       'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no';
@@ -42,7 +50,8 @@ export class LoginComponent
   }
 
   private navegaParaPaginaPlanos(): void {
-    this.router.navigate(['/planos']);
+    this.router.navigate(['/planos'])
+      .finally(() => this.snackBarService.show('Logado com sucesso!'));
   }
 
 }
