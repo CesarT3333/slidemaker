@@ -6,7 +6,7 @@ import { UsuarioService } from '../../../../services/usuario.service';
 @Component({
   template: `
     <h1>Plano works</h1>
-    <button (click)="onClickButton()">Teste</button>
+    <button (click)="onClickButton()">Teste mais um</button>
     <button (click)="logout()">Logou</button>
   ` })
 export class PlanoComponent
