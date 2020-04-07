@@ -1,6 +1,5 @@
 import { OnInit, Component, Input } from '@angular/core';
-
-import { Plano } from 'src/app/models/plano';
+import Plano from 'src/app/models/plano';
 
 @Component({
   selector: 'smk-portlet-plano',

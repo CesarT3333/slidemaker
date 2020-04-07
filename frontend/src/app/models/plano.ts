@@ -1,10 +1,9 @@
-export interface Plano {
-  titulo: string;
-  quantitativo: {
-    quantidade: number,
-    descricao: string
-  };
+export default interface Plano {
+  id?: number;
+  nome: string;
   descricao: string;
-  atributos: Array<string>;
-
+  quantitativoDescricao: string;
+  quantitativoQuantidade: number;
+  valor: number;
+  atributos: string;
 }
