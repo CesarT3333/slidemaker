@@ -4,7 +4,7 @@ export class createTablePlans1586274054972
     implements MigrationInterface {
 
     private table = new Table({
-        name: 'plano',
+        name: 'planos',
         columns: [
             {
                 name: 'id',
@@ -16,40 +16,33 @@ export class createTablePlans1586274054972
             {
                 name: 'nome',
                 type: 'varchar',
-                length: '255',
+                length: '100',
                 isUnique: false,
                 isNullable: false,
             },
             {
                 name: 'descricao',
-                type: 'varchar',
-                length: '255',
+                type: 'text',
                 isUnique: false,
                 isNullable: true
             },
             {
-                name: 'quantitativo_descricao',
-                type: 'varchar',
-                length: '255',
-                isUnique: false,
-                isNullable: false,
-            },
-            {
-                name: 'quantitativo_quantidade',
-                type: 'integer',
-                isUnique: false,
-                isNullable: false,
-            },
-            {
                 name: 'valor',
                 type: 'decimal',
+                isUnique: false,
                 isNullable: false,
-                default: '0.0',
             },
             {
                 name: 'atributos',
                 type: 'varchar',
                 length: '300',
+                default: '0.0',
+                isNullable: false,
+                isUnique: false
+            },
+            {
+                name: 'tipo_cobranca',
+                type: 'text',
                 isNullable: false,
                 isUnique: false
             }

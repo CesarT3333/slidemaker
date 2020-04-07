@@ -43,4 +43,8 @@ npm run typeorm:cli -- migration:create -n [nome-da-migration]
 ```sh
 npm run typeorm:cli -- migration:run
 ```
+> Tipos de colunas do typeorm
+> https://github.com/typeorm/typeorm/blob/master/src/driver/types/ColumnTypes.ts
+---
+
 

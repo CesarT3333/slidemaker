@@ -1,4 +1,4 @@
-import { OnInit, Component, Input } from '@angular/core';
+import { OnInit, Component, Input, Output, EventEmitter } from '@angular/core';
 import Plano from 'src/app/models/plano';
 
 @Component({
@@ -11,7 +11,13 @@ export class PortletPlanoComponent
 
   @Input() plano: Plano;
 
+  @Output() eventAdiquirirPlano = new EventEmitter<Plano>();
+
   ngOnInit(): void { }
+
+  onAdiquirirPlano(): void {
+    this.eventAdiquirirPlano.emit(this.plano);
+  }
 
   get atributosPlano(): Array<string> {
     return this.plano.atributos.split(';');

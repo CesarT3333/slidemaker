@@ -5,8 +5,8 @@
   </div>
 
   <div class="flex-item quantitativo">
-    <span> {{ plano?.quantitativoValor | currency: 'R$' }} <br /> </span>
-    {{ plano?.quantitativoDescricao }}
+    <span> {{ plano?.valor | currency: 'R$' }} <br /> </span>
+    {{ plano?.tipoCobrancaPlano | tipoCobrancaPlanoPipe }}
   </div>
 
   <div class="flex-item descricao">
@@ -23,6 +23,7 @@
 
   <div class="flex-item botao-comprar-agora">
     <button type="button"
+            (click)="onAdiquirirPlano()"
             class="btn btn-outline-light">
       Comprar Agora
     </button>

@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity({ name: 'plano' })
+import { TipoCobrancaPlanoEnum } from './enum/tipo-cobranca-plano.enum';
+
+@Entity({ name: 'planos' })
 export default class Plano {
 
     @PrimaryGeneratedColumn()
@@ -12,16 +14,13 @@ export default class Plano {
     @Column()
     descricao: string;
 
-    @Column({ name: 'quantitativo_descricao' })
-    quantitativoDescricao: string;
-
-    @Column({ name: 'quantitativo_quantidade' })
-    quantitativoValor: number;
-
     @Column()
     valor: number;
-    
+
     @Column()
     atributos: string;
+
+    @Column({ name: 'tipo_cobranca' })
+    tipoCobrancaPlano: TipoCobrancaPlanoEnum;
 
 }
