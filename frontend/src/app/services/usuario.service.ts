@@ -10,6 +10,6 @@ export class UsuarioService {
 
   logoutUser() {
 
-    'https://accounts.google.com/o/oauth2/revoke?token="+ACCESS_TOKEN';
+    // 'https://accounts.google.com/o/oauth2/revoke?token="+ACCESS_TOKEN';
   }
 }

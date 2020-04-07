@@ -10,7 +10,7 @@ export class ApresentacaoService {
   ) { }
 
   teste(): Observable<any> {
-    return this.http.get('slidemaker/api/teste');
+    return this.http.get('');
   }
 
 }
