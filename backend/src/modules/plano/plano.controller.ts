@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { PlanoService } from '../../services/plano.service';
-import { resources } from 'src/util/resources';
+import { resources } from '../../util/resources';
 
 @Controller(resources.PLANOS)
 export class PlanoController {

@@ -1,9 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
 
-import * as jwt from '../../credentials/secret-app.json';
-import { UserGooglePayload } from 'src/interfaces/user-google-pay-load';
+import { UserGooglePayload } from '../../interfaces/user-google-pay-load';
 import { UsuarioService } from '../../services/usuario.service';
+import * as jwt from '../../credentials/secret-app.json';
 
 export enum Provider { GOOGLE = 'google' }
 

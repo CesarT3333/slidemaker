@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 
-import { resources } from 'src/util/resources';
+import { resources } from '../../util/resources';
 
 @Controller(resources.AUTH)
 export class AuthController {

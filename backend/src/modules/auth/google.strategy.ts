@@ -6,7 +6,7 @@ import { Strategy } from 'passport-google-oauth20';
 
 import { AuthService, Provider } from './oauth.service';
 
-import { UserGooglePayload } from 'src/interfaces/user-google-pay-load';
+import { UserGooglePayload } from '../../interfaces/user-google-pay-load';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
