@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { UserGooglePayload } from '../interfaces/user-google-pay-load';
-import { UsuarioRepository } from '../usuario/usuario.repository';
+import { UsuarioRepository } from '../repository/usuario.repository';
 import Usuario from '../db/models/usuario';
 
 @Injectable()
@@ -30,10 +30,9 @@ export class UsuarioService {
 
     }
 
-    private async usuarioNaoPossuiCadastro(idGoogle: string) {
+    private async usuarioNaoPossuiCadastro(idGoogle: string): Promise<boolean> {
         const quantidadeUsuariosComEsseId = await this.usuarioRepository
             .buscaUsuarioPorIdGoogle(idGoogle);
-        console.log(Number(quantidadeUsuariosComEsseId[0].count));
         return Number(quantidadeUsuariosComEsseId[0].count) === 0;
     }
 

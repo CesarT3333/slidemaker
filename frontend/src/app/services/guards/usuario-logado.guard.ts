@@ -1,9 +1,12 @@
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { map, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
 import { SnackBarService } from '../snack-bar.service';
+import { resources } from 'src/app/util/resources';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioLogadoGuard
@@ -25,7 +28,7 @@ export class UsuarioLogadoGuard
       return false;
     }
 
-    return this.http.get('auth/usuario-logado')
+    return this.http.get(`${resources.AUTH_USUARIO_LOGADO}`)
       .pipe(
         catchError(_ => {
           this.exibeMensagemErroLogin();

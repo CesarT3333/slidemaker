@@ -9,9 +9,12 @@ async function bootstrap() {
   dotenvFlow.config();
   const app = await NestFactory.create(AppModule);
 
-  // app.setGlobalPrefix('slidemaker/api');
+  app.setGlobalPrefix('slidemaker/api/v1');
 
   await app.listen(4200);
 }
 
 bootstrap();
+
+
+class FrontAppicationModule {}
