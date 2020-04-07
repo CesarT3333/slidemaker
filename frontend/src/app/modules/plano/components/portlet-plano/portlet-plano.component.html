@@ -4,9 +4,9 @@
     {{ plano?.nome }}
   </div>
 
-  <!-- <div class="flex-item quantitativo">
-    <span> {{ plano?.quantitativo.quantidade }} <br /> </span>
-    {{ plano?.quantitativo.descricao }}
+  <div class="flex-item quantitativo">
+    <span> {{ plano?.quantitativoValor | currency: 'R$' }} <br /> </span>
+    {{ plano?.quantitativoDescricao }}
   </div>
 
   <div class="flex-item descricao">
@@ -15,11 +15,11 @@
 
   <div class="flex-item atributos">
     <ul>
-      <li *ngFor="let atributo of plano?.atributos">
+      <li *ngFor="let atributo of atributosPlano">
         &#10004; {{ atributo }}
       </li>
     </ul>
-  </div> -->
+  </div>
 
   <div class="flex-item botao-comprar-agora">
     <button type="button"

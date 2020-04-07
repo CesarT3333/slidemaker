@@ -13,4 +13,8 @@ export class PortletPlanoComponent
 
   ngOnInit(): void { }
 
+  get atributosPlano(): Array<string> {
+    return this.plano.atributos.split(';');
+  }
+
 }

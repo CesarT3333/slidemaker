@@ -16,7 +16,7 @@ export default class Plano {
     quantitativoDescricao: string;
 
     @Column({ name: 'quantitativo_quantidade' })
-    quantitativoQuantidade: number;
+    quantitativoValor: number;
 
     @Column()
     valor: number;

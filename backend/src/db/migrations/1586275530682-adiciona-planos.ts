@@ -20,12 +20,12 @@ export class adicionaPlanos1586275530682
                         'O preço varia pela quantidade de slides que vocẽ deseja',
                     atributos: 'Configuração de Capa;Apresentação em Português',
                     quantitativoDescricao: 'Por Apresentação',
-                    quantitativoQuantidade: 5,
+                    quantitativoValor: 5,
                     valor: 0.1
                 },
                 {
                     nome: 'pro',
-                    quantitativoQuantidade: 10,
+                    quantitativoValor: 10,
                     quantitativoDescricao: 'Por mês',
                     descricao: 'Apresentações ilimitadas para todas as horas, com a quantidade' +
                         ' de slides que voê deseja',
@@ -34,7 +34,7 @@ export class adicionaPlanos1586275530682
                 },
                 {
                     nome: 'enterprise',
-                    quantitativoQuantidade: 15,
+                    quantitativoValor: 15,
                     quantitativoDescricao: 'Por mês',
                     descricao:
                         'A ferramenta completa para todos os tipos de apresentações' +
@@ -43,7 +43,7 @@ export class adicionaPlanos1586275530682
                         'Apresentações ilimitadas;' +
                         'Configuração de Capa;' +
                         'Apresentação em Português, Espanhol e Inglês;' +
-                        'Personalização de plano de fundo dos slides;',
+                        'Personalização de plano de fundo dos slides',
                     valor: 0.1
                 }
             ]).execute()

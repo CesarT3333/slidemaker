@@ -3,7 +3,7 @@ export default interface Plano {
   nome: string;
   descricao: string;
   quantitativoDescricao: string;
-  quantitativoQuantidade: number;
+  quantitativoValor: number;
   valor: number;
   atributos: string;
 }

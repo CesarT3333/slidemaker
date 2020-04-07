@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { resources } from '../util/resources';
@@ -16,6 +16,9 @@ export class PlanoService {
 
   buscarTodos(): Observable<Array<Plano>> {
     return this.http.get(resources.PLANOS)
-      .pipe(map(res => <Array<any>>res));
+      .pipe(
+        take(1),
+        map(res => <Array<Plano>>res),
+      );
   }
 }
