@@ -23,6 +23,12 @@ import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
         canActivate: [UsuarioLogadoGuard],
         loadChildren: () => import(`./modules/configuracao-apresentacao/configuracao-apresentacao.module`)
           .then(m => m.ConfiguracaoApresentacaoModule)
+      },
+      {
+        path: 'pagamento',
+        canActivate: [UsuarioLogadoGuard],
+        loadChildren: () => import(`./modules/pagamento/pagamento.module`)
+          .then(m => m.PagamentoMocule)
       }
     ])],
   exports: [RouterModule]
