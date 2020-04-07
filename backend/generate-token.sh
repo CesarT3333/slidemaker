@@ -11,6 +11,5 @@ TOKEN=$(cat token.txt)
 rm -rf token.txt
 
 echo "{ \"secret_key\": \"$TOKEN\" }" >> secret-app.json
-echo "{ \"clientID\": \"\", \"clientSecret\": \"\" }" >> google-credentials.json
 
-mv secret-app.json google-credentials.json src/credentials
+mv secret-app.json src/credentials
