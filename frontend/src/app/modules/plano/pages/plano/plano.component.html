@@ -1,0 +1,15 @@
+<div class="intro">
+
+  <div class="container-fluid">
+
+    <div class="row justify-content-md-center">
+      <div *ngFor="let plano of planos"
+           class="plano col">
+        <smk-portlet-plano [plano]="plano">
+        </smk-portlet-plano>
+      </div>
+
+    </div>
+
+  </div>
+</div>
