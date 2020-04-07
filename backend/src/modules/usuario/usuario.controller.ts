@@ -1,9 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Controller } from '@nestjs/common';
 
-import { UsuarioRepository } from './usuario.repository';
+import { UsuarioRepository } from '../../repository/usuario.repository';
+import { resources } from '../../util/resources';
 
-@Controller()
+@Controller(resources.USUARIOS)
 export class UsuarioController {
 
     constructor(

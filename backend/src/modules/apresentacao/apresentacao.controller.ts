@@ -1,12 +1,13 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { resources } from '../../util/resources';
 
-@Controller('slidemaker/api')
+@Controller(resources.APRESENTACOES)
 export class ApresentacaoController {
 
-    @Get('apresentacao')
+    @Get()
     @UseGuards(AuthGuard('jwt'))
-    testerequest() { 
+    testerequest() {
         console.log('alow')
     }
 

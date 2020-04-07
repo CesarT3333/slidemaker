@@ -1,10 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { UsuarioRepository } from './usuario.repository';
+import { UsuarioRepository } from '../../repository/usuario.repository';
+import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioController } from './usuario.controller';
-import Usuario from '../db/models/usuario';
-import { UsuarioService } from '../services/usuario.service';
+import Usuario from '../../db/models/usuario';
 
 @Module({
     imports: [
