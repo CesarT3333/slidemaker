@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 
 import { finalize, switchMap, map } from 'rxjs/operators';
 
+import { AssinaturaService } from 'src/app/services/assinatura-usuario.service';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
-import { TransacaoService } from 'src/app/services/transacao.service';
 import { PagamentoService } from 'src/app/services/pagamento.service';
+import { AssinaturaUsuario } from 'src/app/models/assinatura-usuario';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { Transacao } from 'src/app/models/transacao';
 import Plano from 'src/app/models/plano';
 
 @Component({
@@ -25,7 +25,8 @@ export class PagamentoComponent
   constructor(
     private handleErrorService: HandleErrorService,
     private pagamentoService: PagamentoService,
-    private transacaoService: TransacaoService,
+    private assinaturaService: AssinaturaService,
+    // private transacaoService: TransacaoService,
     private snackBarService: SnackBarService,
     private usuarioService: UsuarioService,
     private loadingService: LoadingService,
@@ -40,17 +41,18 @@ export class PagamentoComponent
     this.pagamentoService.confirmarPagamento()
       .pipe(
 
-        map((dadosTransacao: Transacao): Transacao =>
-          ({
-            ...dadosTransacao,
-            plano: <Plano>{
-              id: this.usuarioService.planoUsuario.id
-            }
-          })
-        ),
+        map((idTransacao: string): AssinaturaUsuario => {
+          const assinatura = this.usuarioService.assinatura;
 
-        switchMap((dadosTransacao: Transacao) =>
-          this.transacaoService.registraTransacao(dadosTransacao)),
+          assinatura.idTransacao = idTransacao;
+          assinatura.plano = <Plano>{ id: assinatura.plano.id };
+
+          return assinatura;
+
+        }),
+
+        switchMap((assinatura: AssinaturaUsuario) =>
+          this.assinaturaService.criaAssinatura(assinatura)),
 
         finalize(() => this.loadingService.dismiss()),
 

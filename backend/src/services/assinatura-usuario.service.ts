@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 
 import { AssinaturaUsuarioRepository } from '../repository/assinatura-usuario.repository';
 import { AssinaturaUsuario } from '../db/models/assinatura-usuario';
-import { Transacao } from '../db/models/transacao';
 import { UsuarioService } from './usuario.service';
 import Usuario from '../db/models/usuario';
 
@@ -22,18 +21,12 @@ export class AssinaturaUsuarioService {
         return this.assinaturaUsuarioRepository.buscaAssinaturaUsuario(usuario);
     }
 
-    async criaAssinaturaPor(transacao: Transacao): Promise<any> {
+    async criaAssinatura(assinatura: AssinaturaUsuario): Promise<any> {
 
         const idUsuario: number = await this.usuarioService
-            .recuperaIdUsuarioPorGoogleId(transacao.usuario.googleId);
+            .recuperaIdUsuarioPorGoogleId(assinatura.usuario.googleId);
 
-        transacao.usuario.id = idUsuario[0].id;
-
-        const assinatura = <AssinaturaUsuario>{
-            plano: transacao.plano,
-            usuario: transacao.usuario,
-            quantidadeApresentacoes: transacao.quantidadeApresentacoes
-        };
+        assinatura.usuario.id = idUsuario[0].id;
 
         return this.assinaturaUsuarioRepository.criaAssinatura(assinatura);
     }

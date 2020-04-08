@@ -14,13 +14,10 @@ export class AssinaturaService {
     private http: HttpClient
   ) { }
 
-  // buscarTodos(): Observable<Array<AssinaturaUsuario>> {
-  //   return this.http.get(resources.ASSINATURAS)
-  //     .pipe(
-  //       take(1),
-  //       map(res => <Array<AssinaturaUsuario>>res),
-  //     );
-  // }
+  criaAssinatura(assinatura: AssinaturaUsuario): Observable<any> {
+    return this.http.post(resources.ASSINATURAS, assinatura)
+      .pipe(take(1));
+  }
 
   buscaAssinaturaUsuario(): Observable<AssinaturaUsuario> {
     return this.http.get(`${resources.ASSINATURAS}/usuario`)

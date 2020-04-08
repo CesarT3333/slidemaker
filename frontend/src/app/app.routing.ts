@@ -15,7 +15,9 @@ import { AssinaturaUsuarioGuard } from './services/guards/assinatura-usuario.gua
       },
       {
         path: 'planos',
-        canActivate: [UsuarioLogadoGuard],
+        canActivate: [
+          UsuarioLogadoGuard
+        ],
         loadChildren: () => import(`./modules/plano/plano.module`)
           .then(m => m.PlanoModule)
       },
@@ -30,7 +32,9 @@ import { AssinaturaUsuarioGuard } from './services/guards/assinatura-usuario.gua
       },
       {
         path: 'pagamento',
-        canActivate: [UsuarioLogadoGuard],
+        canActivate: [
+          UsuarioLogadoGuard
+        ],
         loadChildren: () => import(`./modules/pagamento/pagamento.module`)
           .then(m => m.PagamentoMocule)
       }

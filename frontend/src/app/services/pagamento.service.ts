@@ -3,10 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { Guid } from 'guid-typescript';
 
-import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-
-import { Transacao } from '../models/transacao';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class PagamentoService {
@@ -15,12 +13,10 @@ export class PagamentoService {
     private http: HttpClient
   ) { }
 
-  confirmarPagamento(): Observable<Transacao> {
-    return of({
-      idTransacao: Guid.create().toString()
-    }).pipe(
-      delay(5000),
-      map(response => <Transacao>response)
+  confirmarPagamento(): Observable<string> {
+    return of(Guid.create().toString()).pipe(
+      delay(2000),
+      map(response => <string>response)
     );
   }
 

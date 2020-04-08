@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import Plano from '../models/plano';
+import { AssinaturaUsuario } from '../models/assinatura-usuario';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
 
-  planoUsuario: Plano;
+  assinatura: AssinaturaUsuario;
 
   constructor(
     private http: HttpClient
