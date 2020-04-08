@@ -11,10 +11,6 @@ export class UsuarioService {
         private usuarioRepository: UsuarioRepository
     ) { }
 
-    // async findAll(): Promise<Usuario[]> {
-    //     return this.usuarioRepository.find();
-    // }
-
     async criaUsuarioPorPayloadGoogle(profile: UserGooglePayload): Promise<any> {
 
         if (await this.usuarioNaoPossuiCadastro(profile.id)) {
@@ -28,6 +24,11 @@ export class UsuarioService {
             return this.usuarioRepository.criaUsuario(usuario);
         }
 
+    }
+
+    async recuperaIdUsuarioPorGoogleId(googleId: string): Promise<number> {
+        return await this.usuarioRepository
+            .recuperaIdUsuarioPorGoogleId(googleId);
     }
 
     private async usuarioNaoPossuiCadastro(idGoogle: string): Promise<boolean> {

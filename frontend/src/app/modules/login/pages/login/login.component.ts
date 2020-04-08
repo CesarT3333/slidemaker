@@ -24,11 +24,6 @@ export class LoginComponent
 
     const uriAuthGoogle = `${environment.apiUrl}/auth/google`;
 
-    console.log('============');
-    console.log('apiuri');
-    console.log(uriAuthGoogle);
-    console.log('============');
-
     const windowLoginGoogleConfig =
       'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no';
 
@@ -50,8 +45,7 @@ export class LoginComponent
   }
 
   private navegaParaPaginaPlanos(): void {
-    this.router.navigate(['/planos'])
-      .then(() => console.log('foi'))
+    this.router.navigate(['/configuracao-apresentacao'])
       .catch(e => console.log(e))
       .finally(() => this.snackBarService.show('Logado com sucesso!'));
   }

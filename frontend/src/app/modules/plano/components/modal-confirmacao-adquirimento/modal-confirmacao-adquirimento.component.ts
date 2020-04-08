@@ -46,7 +46,7 @@ export class ModalConfirmacaoAdiquirimentoComponent
   }
 
   private quantidadeEhValida(quantidade): boolean {
-    return quantidade !== null && !isNaN(quantidade);
+    return quantidade && !isNaN(quantidade);
   }
 
   get plano(): Plano {

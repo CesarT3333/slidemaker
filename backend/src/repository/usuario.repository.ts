@@ -10,10 +10,17 @@ export class UsuarioRepository
         return await this.save(usuario);
     };
 
-    buscaUsuarioPorIdGoogle = async (idGoogle: string) => {
+    buscaUsuarioPorIdGoogle = async (googleId: string) => {
         return await this.query(`
             SELECT COUNT(*) FROM usuario
-                WHERE google_id = '${idGoogle}'
+                WHERE google_id = '${googleId}'
+        `);
+    }
+
+    recuperaIdUsuarioPorGoogleId = async (googleId: string) => {
+        return await this.query(`
+            SELECT id FROM usuario
+                WHERE google_id = '${googleId}'
         `);
     }
 

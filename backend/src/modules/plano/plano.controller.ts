@@ -8,7 +8,7 @@ import { resources } from '../../util/resources';
 export class PlanoController {
 
     constructor(
-        private readonly planoService: PlanoService
+        private planoService: PlanoService
     ) { }
 
     @Get()

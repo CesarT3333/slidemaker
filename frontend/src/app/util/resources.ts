@@ -6,4 +6,6 @@ export const resources = {
   AUTH_USUARIO_LOGADO: `${BASE_URI}/auth/usuario-logado`,
   APRESENTACOES: `${BASE_URI}/apresentacoes`,
   USUARIOS: `${BASE_URI}/usuarios`,
+  TRANSACOES: `${BASE_URI}/transacoes`,
+  ASSINATURAS: `${BASE_URI}/assinaturas`,
 };

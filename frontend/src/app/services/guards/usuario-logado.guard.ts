@@ -13,9 +13,9 @@ export class UsuarioLogadoGuard
   implements CanActivate {
 
   constructor(
-    private readonly snackBarService: SnackBarService,
-    private readonly router: Router,
-    private readonly http: HttpClient,
+    private snackBarService: SnackBarService,
+    private router: Router,
+    private http: HttpClient,
   ) { }
 
   canActivate(): Observable<boolean> | boolean {

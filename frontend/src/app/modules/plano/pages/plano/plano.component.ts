@@ -9,6 +9,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { PlanoService } from 'src/app/services/plano.service';
 import Plano from 'src/app/models/plano';
 import { Router } from '@angular/router';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   templateUrl: './plano.component.html',
@@ -22,6 +23,7 @@ export class PlanoComponent
   constructor(
     private handleErrorService: HandleErrorService,
     private loadingService: LoadingService,
+    private usuarioService: UsuarioService,
     private planoService: PlanoService,
     private dialog: MatDialog,
     private router: Router,
@@ -40,6 +42,7 @@ export class PlanoComponent
     }).afterClosed()
       .pipe(filter(resultadoConfirmacao => resultadoConfirmacao))
       .subscribe(result => {
+        this.usuarioService.planoUsuario = $event;
         this.router.navigate(['./pagamento']);
       });
   }

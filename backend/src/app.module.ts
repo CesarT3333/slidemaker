@@ -12,6 +12,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AppController } from './app.controller';
 
 import database from './config/database';
+import { AssinaturaUsuarioModule } from './modules/assinatura/assinatura-usuario.module';
+import { TransacaoModule } from './modules/transacao/transacao.module';
 
 @Module({
   imports: [
@@ -24,9 +26,11 @@ import database from './config/database';
       rootPath: `${__dirname}/public`
     }),
 
+    AssinaturaUsuarioModule,
     ApresentacaoModule,
-    PlanoModule,
+    TransacaoModule,
     UsuarioModule,
+    PlanoModule,
     AuthModule
   ],
   controllers: [
