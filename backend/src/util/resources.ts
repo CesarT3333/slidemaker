@@ -3,4 +3,6 @@ export const resources = {
     AUTH: `/auth`,
     APRESENTACOES: `/apresentacoes`,
     USUARIOS: `/usuarios`,
+    ASSINATURAS: `/assinaturas`,
+    TRANSACOES: `/transacoes`
 }
