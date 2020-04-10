@@ -45,7 +45,7 @@ export class LoginComponent
   }
 
   private navegaParaPaginaPlanos(): void {
-    this.router.navigate(['/configuracao-apresentacao'])
+    this.router.navigate(['/apresentacao'])
       .catch(e => console.log(e))
       .finally(() => this.snackBarService.show('Logado com sucesso!'));
   }
