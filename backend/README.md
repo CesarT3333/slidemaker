@@ -47,7 +47,7 @@ cd backend && sh generate-token.sh
 
 ## Rodar a aplicação
 
-```bash
+```sh
 # watch mode (nodemon)
 $ npm run start:dev
 
@@ -60,13 +60,13 @@ $ npm run start:prod
 #### Comandos
 > Criação de Migrations
 
-```bash
+```sh
 npm run typeorm:cli -- migration:create -n [nome-da-migration]
 ```
 
 > Execução de migrations
 
-```bash
+```sh
 npm run typeorm:cli -- migration:run
 ```
 #### Documentação
