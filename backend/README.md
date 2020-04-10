@@ -29,7 +29,7 @@ GOOGLE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 
 File: `secret-app.json`
 
-```
+```json
 {
     "secret_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
