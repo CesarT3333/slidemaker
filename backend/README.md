@@ -60,13 +60,13 @@ $ npm run start:prod
 #### Comandos
 > Criação de Migrations
 
-```sh
+```bash
 npm run typeorm:cli -- migration:create -n [nome-da-migration]
 ```
 
 > Execução de migrations
 
-```sh
+```bash
 npm run typeorm:cli -- migration:run
 ```
 #### Documentação
