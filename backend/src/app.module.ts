@@ -1,8 +1,9 @@
-
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
+
+import { join } from 'path';
 
 import { ApresentacaoModule } from './modules/apresentacao/apresentacao.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
@@ -22,8 +23,7 @@ import { TransacaoModule } from './modules/transacao/transacao.module';
     TypeOrmModule.forRoot(database()),
 
     ServeStaticModule.forRoot({
-      renderPath: '/',
-      rootPath: `${__dirname}/public`
+      rootPath: join(__dirname, '..', 'src/public'),
     }),
 
     AssinaturaUsuarioModule,
