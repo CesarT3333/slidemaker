@@ -1,19 +1,6 @@
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+## Rodar a aplicação
 
 ```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
 
@@ -21,29 +8,43 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+---
 
-```bash
-# unit tests
-$ npm run test
+## Hash de geração de token da aplicação para autenticação JWT
 
-# e2e tests
-$ npm run test:e2e
+> Para a integração com o banco de dados
+> é necessário adicionar um arquivo de `environment` na pasta
+> raiz do projeto de `backend`
 
-# test coverage
-$ npm run test:cov
+File: `.env`
+
+```
+URL_FRONTEND= http://localhost:3000
+
+POSTGRES_URL_STRING=postgresql://[user]:[password]@localhost:5432/slidemakerdb
+
+GOOGLE_URL_CALLBACK= http://localhost:4200/auth/google/callback
+GOOGLE_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxx
+GOOGLE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Comandos typeorm
 
-## Stay in touch
+> Criação de Migrations
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```sh
+npm run typeorm:cli -- migration:create -n [nome-da-migration]
+```
 
-## License
+> Execução de migrations
 
-  Nest is [MIT licensed](LICENSE).
+```sh
+npm run typeorm:cli -- migration:run
+```
+> Tipos de colunas do typeorm
+> https://github.com/typeorm/typeorm/blob/master/src/driver/types/ColumnTypes.ts
+---
+
+

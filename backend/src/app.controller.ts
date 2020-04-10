@@ -1,19 +1,4 @@
-import { Get, Res, Controller } from '@nestjs/common';
-
-import { Response } from 'express';
+import { Controller } from '@nestjs/common';
 
 @Controller()
-export class AppController {
-
-    @Get()
-    index(@Res() response: Response) {
-        response.sendFile('public/index.html', { root: __dirname });
-    }
-
-    @Get('api/teste')
-    testerequest() {
-        console.log('teste');
-        console.log('teste');
-    }
-
-}
+export class AppController { }

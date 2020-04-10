@@ -1,6 +1,9 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
+import { AssinaturaUsuarioGuard } from './services/guards/assinatura-usuario.guard';
+
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -12,13 +15,28 @@ import { NgModule } from '@angular/core';
       },
       {
         path: 'planos',
+        canActivate: [
+          UsuarioLogadoGuard
+        ],
         loadChildren: () => import(`./modules/plano/plano.module`)
           .then(m => m.PlanoModule)
       },
       {
         path: 'configuracao-apresentacao',
+        canActivate: [
+          UsuarioLogadoGuard,
+          AssinaturaUsuarioGuard
+        ],
         loadChildren: () => import(`./modules/configuracao-apresentacao/configuracao-apresentacao.module`)
           .then(m => m.ConfiguracaoApresentacaoModule)
+      },
+      {
+        path: 'pagamento',
+        canActivate: [
+          UsuarioLogadoGuard
+        ],
+        loadChildren: () => import(`./modules/pagamento/pagamento.module`)
+          .then(m => m.PagamentoMocule)
       }
     ])],
   exports: [RouterModule]

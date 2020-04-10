@@ -1,0 +1,57 @@
+.portlet {
+  height: 100%;
+  color: #4E4F5C;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .flex-item {
+    height: auto;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .titulo {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  .quantitativo {
+    font-size: 1em;
+
+    span {
+      font-size: 3em;
+    }
+  }
+
+  .descricao {
+    color: white;
+    font-weight: bold;
+    padding: 0px 40px;
+  }
+
+  .atributos {
+    padding-top: 20px;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+
+    ul {
+      li {
+        list-style-type: none;
+        margin: 5px;
+      }
+    }
+  }
+
+  // .botao-comprar-agora {
+  //   button {
+  //     background-color: white;
+  //   }
+  // }
+
+}
