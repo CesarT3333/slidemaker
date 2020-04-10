@@ -18,4 +18,13 @@
 4. _Push_ (`git push origin feature/fooBar`)
 5. Crie um novo _Pull Request_
 
+## Semantica de mensagens de commit
+* feat: (nova feature para o usuário, não uma nova funcionalidade de código)
+* fix: (correção de bugs para o usuário, não uma correção de código em si)
+* docs: (mudanças na documentação)
+* style: (formatação, ponto e vírgulas faltante, etc; nenhuma alteração no código de rodução)
+* refactor: (refatoração de código de produção, ex: renomeando uma variável)
+* test: (adição de testes faltantes; nenhuma alteração de código de produção)
+* chore: (atualização de código em geral)
+
 
