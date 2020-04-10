@@ -2,15 +2,17 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { ConfiguracaoApresentacaoComponent } from './pages/configuracao-apresentacao/configuracao-apresentacao.component';
-import { ConfiguracaoApresentacaoRoutingModule } from './configuracao-apresentacao.routing';
+import { ApresentacaoComponent } from './pages/apresentacao/apresentacao.component';
+import { ApresentacaoRoutingModule } from './apresentacao.routing';
 
 @NgModule({
   imports: [
     CommonModule,
-    ConfiguracaoApresentacaoRoutingModule,
+    ApresentacaoRoutingModule,
   ],
   declarations: [
+    ApresentacaoComponent,
     ConfiguracaoApresentacaoComponent
   ]
 })
-export class ConfiguracaoApresentacaoModule { }
+export class ApresentacaoModule { }
