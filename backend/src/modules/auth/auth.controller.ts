@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UsuarioService } from 'src/services/usuario.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.service';
 import { resources } from '../../util/resources';
 import Usuario from '../../db/models/usuario';

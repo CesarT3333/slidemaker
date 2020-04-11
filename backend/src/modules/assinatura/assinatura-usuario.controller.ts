@@ -2,9 +2,9 @@ import { Controller, Get, UseGuards, Req, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AssinaturaUsuarioService } from '../../services/assinatura-usuario.service';
+import { AssinaturaUsuario } from '../../db/models/assinatura-usuario';
 import { resources } from '../../util/resources';
 import Usuario from '../../db/models/usuario';
-import { AssinaturaUsuario } from 'src/db/models/assinatura-usuario';
 
 @Controller(resources.ASSINATURAS)
 export class AssinaturaUsuarioController {
