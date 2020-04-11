@@ -9,27 +9,27 @@ import { AssinaturaUsuario } from 'src/db/models/assinatura-usuario';
 @Controller(resources.ASSINATURAS)
 export class AssinaturaUsuarioController {
 
-    constructor(
-        private assinaturaUsuarioService: AssinaturaUsuarioService
-    ) { }
+  constructor(
+    private assinaturaUsuarioService: AssinaturaUsuarioService
+  ) { }
 
-    @Get(`usuario`)
-    @UseGuards(AuthGuard('jwt'))
-    buscaAssinaturaUsuario(@Req() request) {
-        const usuario = <Usuario>{ googleId: request.user.profileId }
-        return this.assinaturaUsuarioService.buscaAssinaturaUsuario(usuario)
-    }
+  @Get(`usuario`)
+  @UseGuards(AuthGuard('jwt'))
+  buscaAssinaturaUsuario(@Req() request) {
+    const usuario = <Usuario>{ googleId: request.user.profileId }
+    return this.assinaturaUsuarioService.buscaAssinaturaUsuario(usuario)
+  }
 
-    @Post()
-    @UseGuards(AuthGuard('jwt'))
-    registraTransacao(@Req() request) {
-        const assinatura: AssinaturaUsuario = request.body;
-        assinatura.usuario = <Usuario>{ googleId: request.user.profileId }
+  @Post()
+  @UseGuards(AuthGuard('jwt'))
+  async registraTransacao(@Req() request) {
+    const assinatura: AssinaturaUsuario = request.body;
+    assinatura.usuario = <Usuario>{ googleId: request.user.profileId }
 
-        this.assinaturaUsuarioService
-            .criaAssinatura(<AssinaturaUsuario>request.body);
+    await this.assinaturaUsuarioService
+      .criaAssinatura(<AssinaturaUsuario>request.body);
 
-    }
+  }
 
 
 }

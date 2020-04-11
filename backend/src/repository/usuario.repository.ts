@@ -4,24 +4,28 @@ import Usuario from '../db/models/usuario';
 
 @EntityRepository(Usuario)
 export class UsuarioRepository
-    extends Repository<Usuario> {
+  extends Repository<Usuario> {
 
-    criaUsuario = async (usuario: Usuario) => {
-        return await this.save(usuario);
-    };
-
-    buscaUsuarioPorIdGoogle = async (googleId: string) => {
-        return await this.query(`
-            SELECT COUNT(*) FROM usuario
-                WHERE google_id = '${googleId}'
-        `);
+  recuperaUsuarioPorGoogleId =
+    async (googleId: string): Promise<Usuario> => {
+      return await this.findOne({ googleId: googleId });
     }
 
-    recuperaIdUsuarioPorGoogleId = async (googleId: string) => {
-        return await this.query(`
-            SELECT id FROM usuario
-                WHERE google_id = '${googleId}'
-        `);
-    }
+  criaUsuario = async (usuario: Usuario) => {
+    return await this.save(usuario);
+  };
+
+  buscaUsuarioPorIdGoogle = async (googleId: string): Promise<number> => {
+    return this.createQueryBuilder('usuario')
+      .where({ googleId: googleId })
+      .getCount();
+  }
+
+  recuperaIdUsuarioPorGoogleId = async (googleId: string): Promise<Usuario> => {
+    return await this.findOne({
+      select: ['id'],
+      where: { googleId: googleId },
+    });
+  }
 
 }

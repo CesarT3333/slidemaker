@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { ConfiguracaoApresentacaoComponent } from './pages/configuracao-apresentacao/configuracao-apresentacao.component';
+import { ConfiguracaoApresentacaoComponent } from './components/configuracao-apresentacao/configuracao-apresentacao.component';
 import { ApresentacaoComponent } from './pages/apresentacao/apresentacao.component';
 
 const configuracaoApresentacaoRoutes: Routes = [

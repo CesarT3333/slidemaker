@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../../../environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
-
+import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -15,6 +15,7 @@ export class LoginComponent
 
   constructor(
     private router: Router,
+    private usuarioService: UsuarioService,
     private snackBarService: SnackBarService
   ) { }
 
@@ -30,17 +31,19 @@ export class LoginComponent
     this.loginWindow = window.open(uriAuthGoogle, '', windowLoginGoogleConfig);
 
     window.addEventListener('message', event => {
-      if (typeof event.data === 'string') {
+      console.log();
+      if (event.data?.jwt) {
         this.onLogin(event.data);
       }
     });
 
   }
 
-  private onLogin(token) {
-    localStorage.setItem('token', `${token}`);
+  private onLogin(authResponse) {
+    localStorage.setItem('token', `${authResponse.jwt}`);
     this.loginWindow.close();
     window.removeEventListener('message', this.onLogin);
+    this.usuarioService.googleProfile = authResponse.profile;
     this.navegaParaPaginaPlanos();
   }
 

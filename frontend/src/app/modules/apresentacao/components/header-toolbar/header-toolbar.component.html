@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Slidemaker</span>
+
+    <span class="spacer"></span>
+
+    <button mat-button
+            [matMenuTriggerFor]="menu">
+      {{ googleProfile.displayName }}
+      <mat-icon>keyboard_arrow_down</mat-icon>
+      <img class="img-perfil rounded-circle"
+           [src]="userImageProfile" />
+    </button>
+
+    <mat-menu #menu="matMenu"
+              [overlapTrigger]="false">
+      <button (click)="onLogoutClick()"
+              mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+
+  </mat-toolbar-row>
+</mat-toolbar>

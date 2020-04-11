@@ -1,19 +1,20 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { Controller } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
-import { UsuarioRepository } from '../../repository/usuario.repository';
+import { UsuarioService } from 'src/services/usuario.service';
 import { resources } from '../../util/resources';
+import Usuario from 'src/db/models/usuario';
 
 @Controller(resources.USUARIOS)
 export class UsuarioController {
 
     constructor(
-        @InjectRepository(UsuarioRepository)
-        private readonly usuarioRepository: UsuarioRepository,
+        private usuarioService: UsuarioService,
     ) { }
 
-    // @Post()
-    // create(@Body() dogDto: DogDto) {
-    //     return this.dogRepository.createDog(dogDto)
-    // }
+    @Get()
+    @UseGuards(AuthGuard('jwt'))
+    recuperaUsuarioLogado(googleId: string): Promise<Usuario> {
+        return this.usuarioService.recuperaUsuarioPorGoogleId(googleId)
+    }
 }

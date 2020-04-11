@@ -8,27 +8,27 @@ import Usuario from '../db/models/usuario';
 @Injectable()
 export class AssinaturaUsuarioService {
 
-    constructor(
-        private assinaturaUsuarioRepository: AssinaturaUsuarioRepository,
-        private usuarioService: UsuarioService
-    ) { }
+  constructor(
+    private assinaturaUsuarioRepository: AssinaturaUsuarioRepository,
+    private usuarioService: UsuarioService
+  ) { }
 
-    buscarTodos(): Promise<Array<AssinaturaUsuario>> {
-        return this.assinaturaUsuarioRepository.buscarTodas();
-    }
+  async buscarTodos(): Promise<Array<AssinaturaUsuario>> {
+    return await this.assinaturaUsuarioRepository.buscarTodas();
+  }
 
-    async buscaAssinaturaUsuario(usuario: Usuario): Promise<AssinaturaUsuario> {
-        return this.assinaturaUsuarioRepository.buscaAssinaturaUsuario(usuario);
-    }
+  async buscaAssinaturaUsuario(usuario: Usuario): Promise<AssinaturaUsuario> {
+    return this.assinaturaUsuarioRepository.buscaAssinaturaUsuario(usuario);
+  }
 
-    async criaAssinatura(assinatura: AssinaturaUsuario): Promise<any> {
+  async criaAssinatura(assinatura: AssinaturaUsuario): Promise<any> {
 
-        const idUsuario: number = await this.usuarioService
-            .recuperaIdUsuarioPorGoogleId(assinatura.usuario.googleId);
+    const idUsuario: number = await this.usuarioService
+      .recuperaIdUsuarioPorGoogleId(assinatura.usuario.googleId);
 
-        assinatura.usuario.id = idUsuario[0].id;
+    assinatura.usuario.id = idUsuario;
 
-        return this.assinaturaUsuarioRepository.criaAssinatura(assinatura);
-    }
+    return this.assinaturaUsuarioRepository.criaAssinatura(assinatura);
+  }
 
 }
