@@ -5,6 +5,7 @@
     <span class="spacer"></span>
 
     <button mat-button
+            *ngIf="userImageProfile"
             [matMenuTriggerFor]="menu">
       {{ googleProfile.displayName }}
       <mat-icon>keyboard_arrow_down</mat-icon>
