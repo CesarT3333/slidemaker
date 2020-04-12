@@ -1,11 +1,11 @@
 import { EntityRepository, Repository } from 'typeorm';
 
-import { AssinaturaUsuario } from '../db/models/assinatura-usuario';
-import Usuario from '../db/models/user';
+import { UserSignature } from '../models/user-signature';
+import Usuario from '../models/user';
 
-@EntityRepository(AssinaturaUsuario)
-export class AssinaturaUserRepository
-  extends Repository<AssinaturaUsuario> {
+@EntityRepository(UserSignature)
+export class UserSignatureRepository
+  extends Repository<UserSignature> {
 
   buscaAssinaturaUsuario = async (usuario: Usuario) => {
     return this.createQueryBuilder('assinaturas')
@@ -23,7 +23,7 @@ export class AssinaturaUserRepository
       .getMany();
   }
 
-  criaAssinatura = async (assinatura: AssinaturaUsuario) => {
+  criaAssinatura = async (assinatura: UserSignature) => {
     return await this.save(assinatura);
 
   }

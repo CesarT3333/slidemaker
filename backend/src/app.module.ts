@@ -9,12 +9,11 @@ import { AuthModule } from './modules/auth/auth.module';
 
 import { AppController } from './app.controller';
 
-import { AssinaturaUsuarioModule } from './modules/assinatura/assinatura-usuario.module';
+import { UserSignatureModule } from './modules/assinatura/user-signature.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
-import { TransacaoModule } from './modules/transacao/transacao.module';
+import { UserModule } from './modules/usuario/user.module';
 import { PlanModule } from './modules/plan/plan.module';
 import database from './config/database';
-import { UserModule } from './modules/usuario/user.module';
 
 @Module({
   imports: [
@@ -31,8 +30,7 @@ import { UserModule } from './modules/usuario/user.module';
     PlanModule,
     AuthModule,
 
-    AssinaturaUsuarioModule,
-    TransacaoModule,
+    UserSignatureModule
   ],
   controllers: [
     AppController

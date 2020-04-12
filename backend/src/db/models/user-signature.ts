@@ -4,7 +4,7 @@ import Plan from './plan';
 import User from './user';
 
 @Entity({ name: 'assinaturas' })
-export class AssinaturaUsuario {
+export class UserSignature {
 
   @PrimaryGeneratedColumn()
   id?: number;

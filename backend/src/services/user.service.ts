@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { UserGooglePayload } from '../interfaces/user-google-pay-load';
-import { UserRepository } from '../repository/user.repository';
+import { UserRepository } from '../db/repository/user.repository';
 import User from '../db/models/user';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Repository, EntityRepository } from 'typeorm';
 
-import User from '../db/models/user';
+import User from '../models/user';
 
 @EntityRepository(User)
 export class UserRepository
