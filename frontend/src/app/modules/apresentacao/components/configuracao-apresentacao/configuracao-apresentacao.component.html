@@ -1,0 +1,58 @@
+
+<div class=listaSlide></div>
+<div class=formularioApresentacao>
+    <br>
+    <br>
+    <h3>Nova Apresentação</h3>
+    <br>
+   
+    <div class="row">
+        <div class="column-3 column label">
+            <label for="assunto">Assunto</label>
+        </div>
+        <div class="column-9 column input">
+            <input type="text" name="assunto" >
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-3 column label">
+            <label for="qtdSlides">Quantidade de slides</label>
+        </div>
+        <div class="column-9 column input">
+            <input type="text" name="qtdSlides">
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-3 column label">
+            <label for="idioma">Idioma</label>
+        </div>
+        <div class="column-9 column input">
+            <input type="text" name="idioma">
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-3 column label">
+            <label for="typeFile">Fonte de Dados</label>
+        </div>
+        <div class="column-9 column input">
+            <select id="typeFile" onselect="enableDisableFile($event)">
+                <option value="web" selected>Web</option>
+                <option value="arquivo">Arquivo de texto</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-3 column label">
+            <label>Arquivo</label>
+        </div>
+        <div class="column-9 column input">
+            <input type="file" name="arquivo" id="arquivo">
+        </div>
+    </div>  
+    
+    <button (click)="clickCreateSlide()">
+        Construir apresentacao
+    </button>
+
+
+</div>
