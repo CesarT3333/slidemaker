@@ -2,10 +2,10 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 
-import { UsuarioModule } from '../usuario/usuario.module';
 import { AuthService } from '../../services/auth.service';
 import { GoogleStrategy } from './google.strategy';
 import { AuthController } from './auth.controller';
+import { UserModule } from '../usuario/user.module';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
@@ -13,7 +13,7 @@ import { JwtStrategy } from './jwt.strategy';
   imports: [
     ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    UsuarioModule
+    UserModule
   ],
   providers: [
     AuthService,

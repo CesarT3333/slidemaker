@@ -1,17 +1,17 @@
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { resources } from '../../util/resources';
-import Usuario from '../../db/models/usuario';
+import User from '../../db/models/user';
 
 @Controller(resources.AUTH)
 export class AuthController {
 
   constructor(
-    private usuarioService: UsuarioService,
     private oauthService: AuthService,
+    private userService: UserService,
   ) { }
 
   @Get('google')
@@ -27,8 +27,8 @@ export class AuthController {
   @Get('usuario-logado')
   @UseGuards(AuthGuard('jwt'))
   async usuarioEstaLogado(@Req() request): Promise<void> {
-    const usuario = <Usuario>{ googleId: request.user.profileId }
-    await this.usuarioService.recuperaIdUsuarioPorGoogleId(usuario.googleId)
+    const usuario = <User>{ googleId: request.user.profileId }
+    await this.userService.recuperaIdUsuarioPorGoogleId(usuario.googleId)
   }
 
 }

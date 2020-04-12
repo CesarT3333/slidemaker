@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AssinaturaUsuarioService } from '../../services/assinatura-usuario.service';
 import { AssinaturaUsuario } from '../../db/models/assinatura-usuario';
 import { resources } from '../../util/resources';
-import Usuario from '../../db/models/usuario';
+import User from '../../db/models/user';
 
 @Controller(resources.ASSINATURAS)
 export class AssinaturaUsuarioController {
@@ -16,7 +16,7 @@ export class AssinaturaUsuarioController {
   @Get(`usuario`)
   @UseGuards(AuthGuard('jwt'))
   buscaAssinaturaUsuario(@Req() request) {
-    const usuario = <Usuario>{ googleId: request.user.profileId }
+    const usuario = <User>{ googleId: request.user.profileId }
     return this.assinaturaUsuarioService.buscaAssinaturaUsuario(usuario)
   }
 
@@ -24,7 +24,7 @@ export class AssinaturaUsuarioController {
   @UseGuards(AuthGuard('jwt'))
   async registraTransacao(@Req() request) {
     const assinatura: AssinaturaUsuario = request.body;
-    assinatura.usuario = <Usuario>{ googleId: request.user.profileId }
+    assinatura.usuario = <User>{ googleId: request.user.profileId }
 
     await this.assinaturaUsuarioService
       .criaAssinatura(<AssinaturaUsuario>request.body);

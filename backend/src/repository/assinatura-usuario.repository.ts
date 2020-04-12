@@ -1,10 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import { AssinaturaUsuario } from '../db/models/assinatura-usuario';
-import Usuario from '../db/models/usuario';
+import Usuario from '../db/models/user';
 
 @EntityRepository(AssinaturaUsuario)
-export class AssinaturaUsuarioRepository
+export class AssinaturaUserRepository
   extends Repository<AssinaturaUsuario> {
 
   buscaAssinaturaUsuario = async (usuario: Usuario) => {

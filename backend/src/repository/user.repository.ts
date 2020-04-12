@@ -1,27 +1,27 @@
 import { Repository, EntityRepository } from 'typeorm';
 
-import Usuario from '../db/models/usuario';
+import User from '../db/models/user';
 
-@EntityRepository(Usuario)
-export class UsuarioRepository
-  extends Repository<Usuario> {
+@EntityRepository(User)
+export class UserRepository
+  extends Repository<User> {
 
   recuperaUsuarioPorGoogleId =
-    async (googleId: string): Promise<Usuario> => {
+    async (googleId: string): Promise<User> => {
       return await this.findOne({ googleId: googleId });
     }
 
-  criaUsuario = async (usuario: Usuario) => {
-    return await this.save(usuario);
+  criaUsuario = async (user: User) => {
+    return await this.save(user);
   };
 
   buscaUsuarioPorIdGoogle = async (googleId: string): Promise<number> => {
-    return this.createQueryBuilder('usuario')
+    return this.createQueryBuilder('user')
       .where({ googleId: googleId })
       .getCount();
   }
 
-  recuperaIdUsuarioPorGoogleId = async (googleId: string): Promise<Usuario> => {
+  recuperaIdUsuarioPorGoogleId = async (googleId: string): Promise<User> => {
     return await this.findOne({
       select: ['id'],
       where: { googleId: googleId },

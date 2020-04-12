@@ -5,7 +5,6 @@ import { Module } from '@nestjs/common';
 
 import { join } from 'path';
 
-import { UsuarioModule } from './modules/usuario/usuario.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 import { AppController } from './app.controller';
@@ -15,6 +14,7 @@ import { PresentationModule } from './modules/presentation/presentation.module';
 import { TransacaoModule } from './modules/transacao/transacao.module';
 import { PlanModule } from './modules/plan/plan.module';
 import database from './config/database';
+import { UserModule } from './modules/usuario/user.module';
 
 @Module({
   imports: [
@@ -27,12 +27,12 @@ import database from './config/database';
     }),
 
     PresentationModule,
+    UserModule,
+    PlanModule,
+    AuthModule,
 
     AssinaturaUsuarioModule,
     TransacaoModule,
-    UsuarioModule,
-    PlanModule,
-    AuthModule
   ],
   controllers: [
     AppController

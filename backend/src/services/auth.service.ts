@@ -5,7 +5,7 @@ import { sign } from 'jsonwebtoken';
 
 import { UserGooglePayload } from '../interfaces/user-google-pay-load';
 import * as jwt from '../credentials/secret-app.json';
-import { UsuarioService } from './usuario.service';
+import { UserService } from './user.service';
 
 export enum Provider { GOOGLE = 'google' }
 
@@ -13,15 +13,15 @@ export enum Provider { GOOGLE = 'google' }
 export class AuthService {
 
   constructor(
-    private usuarioService: UsuarioService,
     private configService: ConfigService,
+    private userService: UserService,
   ) { }
 
   async validateOAuthLogin(profile: UserGooglePayload, provider: Provider): Promise<string> {
     try {
 
       const profileId: string = profile.id;
-      this.usuarioService.criaUsuarioPorPayloadGoogle(profile);
+      this.userService.criaUsuarioPorPayloadGoogle(profile);
 
       return sign(
         { profileId, provider },

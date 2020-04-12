@@ -1,21 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { UserGooglePayload } from '../interfaces/user-google-pay-load';
-import { UsuarioRepository } from '../repository/usuario.repository';
-import Usuario from '../db/models/usuario';
+import { UserRepository } from '../repository/user.repository';
+import User from '../db/models/user';
 
 @Injectable()
-export class UsuarioService {
+export class UserService {
 
   constructor(
-    private usuarioRepository: UsuarioRepository
+    private userRepository: UserRepository
   ) { }
 
   async criaUsuarioPorPayloadGoogle(profile: UserGooglePayload): Promise<any> {
 
     if (await this.usuarioNaoPossuiCadastro(profile.id)) {
 
-      const usuario: Usuario = {
+      const usuario: User = {
         googleId: profile.id,
         email: profile.emails[0].value,
         nome: profile.name.givenName,
@@ -23,7 +23,7 @@ export class UsuarioService {
         createdAt: new Date()
       }
 
-      return this.usuarioRepository.criaUsuario(usuario);
+      return this.userRepository.criaUsuario(usuario);
 
     }
 
@@ -31,7 +31,7 @@ export class UsuarioService {
 
   async recuperaIdUsuarioPorGoogleId(googleId: string): Promise<number> {
 
-    const idUsuario: number = await this.usuarioRepository
+    const idUsuario: number = await this.userRepository
       .recuperaIdUsuarioPorGoogleId(googleId)
       .then(usuario => usuario?.id);
 
@@ -42,13 +42,13 @@ export class UsuarioService {
     return idUsuario;
   }
 
-  async recuperaUsuarioPorGoogleId(googleId: string): Promise<Usuario> {
-    return await this.usuarioRepository
+  async recuperaUsuarioPorGoogleId(googleId: string): Promise<User> {
+    return await this.userRepository
       .recuperaUsuarioPorGoogleId(googleId);
   }
 
   private async usuarioNaoPossuiCadastro(idGoogle: string): Promise<boolean> {
-    const quantidadeUsuariosComEsseId = await this.usuarioRepository
+    const quantidadeUsuariosComEsseId = await this.userRepository
       .buscaUsuarioPorIdGoogle(idGoogle);
     console.log(quantidadeUsuariosComEsseId);
     return !quantidadeUsuariosComEsseId;

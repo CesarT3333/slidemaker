@@ -1,34 +1,34 @@
 import { Injectable } from '@nestjs/common';
 
-import { AssinaturaUsuarioRepository } from '../repository/assinatura-usuario.repository';
+import { AssinaturaUserRepository } from '../repository/assinatura-usuario.repository';
 import { AssinaturaUsuario } from '../db/models/assinatura-usuario';
-import { UsuarioService } from './usuario.service';
-import Usuario from '../db/models/usuario';
+import { UserService } from './user.service';
+import User from '../db/models/user';
 
 @Injectable()
 export class AssinaturaUsuarioService {
 
   constructor(
-    private assinaturaUsuarioRepository: AssinaturaUsuarioRepository,
-    private usuarioService: UsuarioService
+    private assinaturaUserRepository: AssinaturaUserRepository,
+    private userService: UserService
   ) { }
 
   async buscarTodos(): Promise<Array<AssinaturaUsuario>> {
-    return await this.assinaturaUsuarioRepository.buscarTodas();
+    return await this.assinaturaUserRepository.buscarTodas();
   }
 
-  async buscaAssinaturaUsuario(usuario: Usuario): Promise<AssinaturaUsuario> {
-    return this.assinaturaUsuarioRepository.buscaAssinaturaUsuario(usuario);
+  async buscaAssinaturaUsuario(user: User): Promise<AssinaturaUsuario> {
+    return this.assinaturaUserRepository.buscaAssinaturaUsuario(user);
   }
 
   async criaAssinatura(assinatura: AssinaturaUsuario): Promise<any> {
 
-    const idUsuario: number = await this.usuarioService
+    const idUsuario: number = await this.userService
       .recuperaIdUsuarioPorGoogleId(assinatura.usuario.googleId);
 
     assinatura.usuario.id = idUsuario;
 
-    return this.assinaturaUsuarioRepository.criaAssinatura(assinatura);
+    return this.assinaturaUserRepository.criaAssinatura(assinatura);
   }
 
 }
