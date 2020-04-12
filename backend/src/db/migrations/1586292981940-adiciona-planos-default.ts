@@ -1,14 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { TipoCobrancaPlanoEnum } from '../models/enum/tipo-cobranca-plano.enum';
-import Plano from '../models/plano';
+import Plan from '../models/plan';
 
 export class adicionaPlanosDefault1586292981940
     implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
 
-        const planos: Array<Plano> = [
+        const planos: Array<Plan> = [
             {
                 nome: 'pro',
                 descricao: 'Apresentações ilimitadas para todas as horas, com a quantidade' +

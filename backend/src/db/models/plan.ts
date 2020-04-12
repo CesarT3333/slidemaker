@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { TipoCobrancaPlanoEnum } from './enum/tipo-cobranca-plano.enum';
 
 @Entity({ name: 'planos' })
-export default class Plano {
+export default class Plan {
 
     @PrimaryGeneratedColumn()
     id?: number;

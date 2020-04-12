@@ -1,7 +1,7 @@
 import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, Entity } from 'typeorm';
 
 import Usuario from './usuario';
-import Plano from './plano';
+import Plan from './plan';
 
 @Entity({ name: 'assinaturas' })
 export class AssinaturaUsuario {
@@ -16,12 +16,12 @@ export class AssinaturaUsuario {
     })
     usuario: Usuario;
 
-    @OneToOne(type => Plano)
+    @OneToOne(type => Plan)
     @JoinColumn({
         name: 'id_plano',
         referencedColumnName: 'id'
     })
-    plano: Plano;
+    plano: Plan;
 
     @Column({ name: 'quantidade_apresentacoes', })
     quantidadeApresentacoes: number;
