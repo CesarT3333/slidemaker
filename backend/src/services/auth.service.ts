@@ -21,7 +21,7 @@ export class AuthService {
     try {
 
       const profileId: string = profile.id;
-      this.userService.criaUsuarioPorPayloadGoogle(profile);
+      this.userService.createByGooglePayload(profile);
 
       return sign(
         { profileId, provider },

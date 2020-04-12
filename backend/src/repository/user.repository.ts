@@ -6,22 +6,18 @@ import User from '../db/models/user';
 export class UserRepository
   extends Repository<User> {
 
-  recuperaUsuarioPorGoogleId =
+  getByGoogleId =
     async (googleId: string): Promise<User> => {
       return await this.findOne({ googleId: googleId });
     }
 
-  criaUsuario = async (user: User) => {
-    return await this.save(user);
-  };
-
-  buscaUsuarioPorIdGoogle = async (googleId: string): Promise<number> => {
+  getCountByGoogleId = async (googleId: string): Promise<number> => {
     return this.createQueryBuilder('user')
       .where({ googleId: googleId })
       .getCount();
   }
 
-  recuperaIdUsuarioPorGoogleId = async (googleId: string): Promise<User> => {
+  getIdByGoogleId = async (googleId: string): Promise<User> => {
     return await this.findOne({
       select: ['id'],
       where: { googleId: googleId },

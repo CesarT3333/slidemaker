@@ -15,6 +15,6 @@ export class UserController {
   @Get()
   @UseGuards(AuthGuard('jwt'))
   recuperaUsuarioLogado(googleId: string): Promise<User> {
-    return this.usuario.recuperaUsuarioPorGoogleId(googleId)
+    return this.usuario.getByGoogleId(googleId)
   }
 }

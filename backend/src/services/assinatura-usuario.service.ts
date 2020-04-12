@@ -24,7 +24,7 @@ export class AssinaturaUsuarioService {
   async criaAssinatura(assinatura: AssinaturaUsuario): Promise<any> {
 
     const idUsuario: number = await this.userService
-      .recuperaIdUsuarioPorGoogleId(assinatura.usuario.googleId);
+      .getIdByGoogleId(assinatura.usuario.googleId);
 
     assinatura.usuario.id = idUsuario;
 

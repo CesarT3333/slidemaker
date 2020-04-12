@@ -11,28 +11,30 @@ export class UserService {
     private userRepository: UserRepository
   ) { }
 
-  async criaUsuarioPorPayloadGoogle(profile: UserGooglePayload): Promise<any> {
+  async createByGooglePayload(profile: UserGooglePayload): Promise<any> {
 
-    if (await this.usuarioNaoPossuiCadastro(profile.id)) {
+    const unregisteredUser: boolean =
+      !(await this.getCountByGoogleId(profile.id));
 
-      const usuario: User = {
-        googleId: profile.id,
-        email: profile.emails[0].value,
-        nome: profile.name.givenName,
-        sobreNome: profile.name.familyName,
-        createdAt: new Date()
-      }
+    if (unregisteredUser) {
 
-      return this.userRepository.criaUsuario(usuario);
+      return await this.userRepository.save(
+        <User>{
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          nome: profile.name.givenName,
+          sobreNome: profile.name.familyName,
+          createdAt: new Date()
+        });
 
     }
 
   }
 
-  async recuperaIdUsuarioPorGoogleId(googleId: string): Promise<number> {
+  async getIdByGoogleId(googleId: string): Promise<number> {
 
     const idUsuario: number = await this.userRepository
-      .recuperaIdUsuarioPorGoogleId(googleId)
+      .getIdByGoogleId(googleId)
       .then(usuario => usuario?.id);
 
     if (!idUsuario) {
@@ -42,16 +44,12 @@ export class UserService {
     return idUsuario;
   }
 
-  async recuperaUsuarioPorGoogleId(googleId: string): Promise<User> {
-    return await this.userRepository
-      .recuperaUsuarioPorGoogleId(googleId);
+  async getByGoogleId(googleId: string): Promise<User> {
+    return await this.userRepository.getByGoogleId(googleId);
   }
 
-  private async usuarioNaoPossuiCadastro(idGoogle: string): Promise<boolean> {
-    const quantidadeUsuariosComEsseId = await this.userRepository
-      .buscaUsuarioPorIdGoogle(idGoogle);
-    console.log(quantidadeUsuariosComEsseId);
-    return !quantidadeUsuariosComEsseId;
+  private async getCountByGoogleId(googleId: string): Promise<number> {
+    return await this.userRepository.getCountByGoogleId(googleId);
   }
 
 }

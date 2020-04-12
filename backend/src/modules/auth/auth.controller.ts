@@ -28,7 +28,7 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   async usuarioEstaLogado(@Req() request): Promise<void> {
     const usuario = <User>{ googleId: request.user.profileId }
-    await this.userService.recuperaIdUsuarioPorGoogleId(usuario.googleId)
+    await this.userService.getIdByGoogleId(usuario.googleId)
   }
 
 }
