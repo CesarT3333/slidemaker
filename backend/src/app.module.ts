@@ -4,16 +4,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 
-import { ApresentacaoModule } from './modules/apresentacao/apresentacao.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
-import { PlanoModule } from './modules/plano/plano.module';
+import { PlanoModule } from './modules/plan/plan.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 import { AppController } from './app.controller';
 
-import database from './config/database';
 import { AssinaturaUsuarioModule } from './modules/assinatura/assinatura-usuario.module';
+import { PresentationModule } from './modules/presentation/presentation.module';
 import { TransacaoModule } from './modules/transacao/transacao.module';
+import database from './config/database';
 
 @Module({
   imports: [
@@ -26,8 +26,9 @@ import { TransacaoModule } from './modules/transacao/transacao.module';
       rootPath: `${__dirname}/public`
     }),
 
+    PresentationModule,
+
     AssinaturaUsuarioModule,
-    ApresentacaoModule,
     TransacaoModule,
     UsuarioModule,
     PlanoModule,
