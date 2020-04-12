@@ -1,5 +1,5 @@
 export const resources = {
-    PLANOS: `/planos`,
+    PLANS: `/planos`,
     AUTH: `/auth`,
     APRESENTACOES: `/apresentacoes`,
     USUARIOS: `/usuarios`,

@@ -5,16 +5,16 @@ import { Module } from '@nestjs/common';
 
 import { join } from 'path';
 
-import { ApresentacaoModule } from './modules/apresentacao/apresentacao.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
-import { PlanoModule } from './modules/plano/plano.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 import { AppController } from './app.controller';
 
-import database from './config/database';
 import { AssinaturaUsuarioModule } from './modules/assinatura/assinatura-usuario.module';
+import { PresentationModule } from './modules/presentation/presentation.module';
 import { TransacaoModule } from './modules/transacao/transacao.module';
+import { PlanModule } from './modules/plan/plan.module';
+import database from './config/database';
 
 @Module({
   imports: [
@@ -26,15 +26,16 @@ import { TransacaoModule } from './modules/transacao/transacao.module';
       rootPath: join(__dirname, '..', 'src/public'),
     }),
 
+    PresentationModule,
+
     AssinaturaUsuarioModule,
-    ApresentacaoModule,
     TransacaoModule,
     UsuarioModule,
-    PlanoModule,
+    PlanModule,
     AuthModule
   ],
   controllers: [
     AppController
   ]
 })
-export class AppModule { } 
+export class AppModule { }

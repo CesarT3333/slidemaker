@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { resources } from '../../util/resources';
 
 @Controller(resources.APRESENTACOES)
-export class ApresentacaoController {
+export class PresentationController {
 
     @Get()
     @UseGuards(AuthGuard('jwt'))

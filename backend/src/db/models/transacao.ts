@@ -1,8 +1,8 @@
-import Plano from './plano';
 import Usuario from './usuario';
+import Plan from './plan';
 
 export class Transacao {
-    plano: Plano;
+    plano: Plan;
     usuario: Usuario;
     quantidadeApresentacoes: number;
 }
