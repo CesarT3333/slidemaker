@@ -15,9 +15,9 @@ export class UserSignatureController {
 
   @Get(`usuario`)
   @UseGuards(AuthGuard('jwt'))
-  buscaAssinaturaUsuario(@Req() request) {
+  getForLoggedInUser(@Req() request) {
     const usuario = <User>{ googleId: request.user.profileId }
-    return this.userSignatureService.buscaAssinaturaUsuario(usuario)
+    return this.userSignatureService.getForLoggedInUser(usuario)
   }
 
   @Post()
@@ -27,7 +27,7 @@ export class UserSignatureController {
     signature.usuario = <User>{ googleId: request.user.profileId }
 
     await this.userSignatureService
-      .criaAssinatura(<UserSignature>request.body);
+      .create(<UserSignature>request.body);
 
   }
 

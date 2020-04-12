@@ -13,22 +13,18 @@ export class UserSignatureService {
     private userService: UserService
   ) { }
 
-  async buscarTodos(): Promise<Array<UserSignature>> {
-    return await this.userSignatureRepository.buscarTodas();
+  async getForLoggedInUser(user: User): Promise<UserSignature> {
+    return this.userSignatureRepository.getForLoggedInUser(user);
   }
 
-  async buscaAssinaturaUsuario(user: User): Promise<UserSignature> {
-    return this.userSignatureRepository.buscaAssinaturaUsuario(user);
-  }
-
-  async criaAssinatura(assinatura: UserSignature): Promise<any> {
+  async create(signature: UserSignature): Promise<any> {
 
     const idUsuario: number = await this.userService
-      .getIdByGoogleId(assinatura.usuario.googleId);
+      .getIdByGoogleId(signature.usuario.googleId);
 
-    assinatura.usuario.id = idUsuario;
+    signature.usuario.id = idUsuario;
 
-    return this.userSignatureRepository.criaAssinatura(assinatura);
+    return this.userSignatureRepository.save(signature);
   }
 
 }

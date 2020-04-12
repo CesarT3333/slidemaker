@@ -9,7 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 
 import { AppController } from './app.controller';
 
-import { UserSignatureModule } from './modules/assinatura/user-signature.module';
+import { UserSignatureModule } from './modules/user-signature/user-signature.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
 import { UserModule } from './modules/usuario/user.module';
 import { PlanModule } from './modules/plan/plan.module';
@@ -25,12 +25,12 @@ import database from './config/database';
       rootPath: join(__dirname, '..', 'src/public'),
     }),
 
+    UserSignatureModule,
     PresentationModule,
     UserModule,
     PlanModule,
     AuthModule,
 
-    UserSignatureModule
   ],
   controllers: [
     AppController
