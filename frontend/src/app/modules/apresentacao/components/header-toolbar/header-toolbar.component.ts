@@ -26,7 +26,7 @@ export class HeaderToolbarComponent
   }
 
   get userImageProfile(): string {
-    return this.usuarioService.googleProfile.photos[0]?.value ||
+    return this.usuarioService.googleProfile?.photos[0]?.value ||
       '../../../../../assets/img/Grupo 10.svg';
   }
 }

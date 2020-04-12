@@ -21,7 +21,6 @@ export class ConfiguracaoApresentacaoComponent
     private snackBarService: SnackBarService,
     private loadingService: LoadingService,
     private apresentacaoService: ApresentacaoService,
-    private dialog: MatDialog,
     private router: Router,
   ) { }
 

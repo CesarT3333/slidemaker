@@ -10,6 +10,7 @@ import { ConfiguracaoApresentacaoComponent } from './components/configuracao-apr
 import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
 import { ApresentacaoComponent } from './pages/apresentacao/apresentacao.component';
 import { ApresentacaoRoutingModule } from './apresentacao.routing';
+import { ApresentacaoService } from 'src/app/services/apresentacao.service';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { ApresentacaoRoutingModule } from './apresentacao.routing';
 
     ConfiguracaoApresentacaoComponent,
     HeaderToolbarComponent,
-  ]
+  ],
+  providers: [ApresentacaoService]
 })
 export class ApresentacaoModule { }
