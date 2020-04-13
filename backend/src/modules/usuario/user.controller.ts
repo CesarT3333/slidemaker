@@ -5,6 +5,7 @@ import { UserService } from 'src/services/user.service';
 import { resources } from '../../util/resources';
 import User from '../../db/models/user';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller(resources.USERS)
 export class UserController {
 
@@ -13,7 +14,6 @@ export class UserController {
   ) { }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
   recuperaUsuarioLogado(googleId: string): Promise<User> {
     return this.usuario.getByGoogleId(googleId)
   }
