@@ -6,6 +6,7 @@ import { UserSignature } from '../../db/models/user-signature';
 import { resources } from '../../util/resources';
 import User from '../../db/models/user';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller(resources.ASSINATURAS)
 export class UserSignatureController {
 
@@ -14,14 +15,12 @@ export class UserSignatureController {
   ) { }
 
   @Get(`usuario`)
-  @UseGuards(AuthGuard('jwt'))
   getForLoggedInUser(@Req() request) {
     const usuario = <User>{ googleId: request.user.profileId }
     return this.userSignatureService.getForLoggedInUser(usuario)
   }
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
   async registraTransacao(@Req() request) {
     const signature: UserSignature = request.body;
     signature.usuario = <User>{ googleId: request.user.profileId }
