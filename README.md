@@ -2,6 +2,7 @@
 > Projeto open source para fazer apresentações de slide de forma automática
 
 ![Build & Deploy](https://github.com/CesarT3333/slidemaker/workflows/Build%20&%20Deploy/badge.svg)
+![Contributors](https://img.shields.io/github/issues/CesarT3333/slidemaker)
 
 [npm-url]: https://npmjs.org/package/datadog-metrics
 
