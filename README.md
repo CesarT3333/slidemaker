@@ -4,6 +4,7 @@
 ![Build & Deploy](https://github.com/CesarT3333/slidemaker/workflows/Build%20&%20Deploy/badge.svg)
 ![Contributors](https://img.shields.io/github/issues/CesarT3333/slidemaker)
 ![Starts](https://img.shields.io/github/stars/CesarT3333/slidemaker)
+![Contributors](https://img.shields.io/github/contributors/CesarT3333/slidemaker)
 
 [npm-url]: https://npmjs.org/package/datadog-metrics
 
