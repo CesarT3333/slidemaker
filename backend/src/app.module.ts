@@ -14,6 +14,8 @@ import { PresentationModule } from './modules/presentation/presentation.module';
 import { UserModule } from './modules/usuario/user.module';
 import { PlanModule } from './modules/plan/plan.module';
 import database from './config/database';
+import { DataSourceModule } from './modules/data-sources/data-source.module';
+import { IdiomModule } from './modules/idiom/idiom.module';
 
 @Module({
   imports: [
@@ -24,6 +26,9 @@ import database from './config/database';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'src/public'),
     }),
+
+    DataSourceModule,
+    IdiomModule,
 
     UserSignatureModule,
     PresentationModule,
