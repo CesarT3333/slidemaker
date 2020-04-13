@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { resources } from '../util/resources';
-import { Apresentacao } from '../models/apresentacao';
+import Apresentacao  from '../models/apresentacao';
 
 @Injectable()
 export class ApresentacaoService {

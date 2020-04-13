@@ -1,4 +1,5 @@
-export interface Apresentacao {
+export default interface Apresentacao {
     id?: number;
-    nome: string;        
-}
+    nome: string;  
+  }
+  

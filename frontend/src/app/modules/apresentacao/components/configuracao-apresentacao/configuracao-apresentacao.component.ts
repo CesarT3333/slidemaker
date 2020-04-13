@@ -1,11 +1,12 @@
 import { MatDialog } from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 import { OnInit, Component } from '@angular/core';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ApresentacaoService } from 'src/app/services/apresentacao.service';
 import { Router } from '@angular/router';
-import { Apresentacao } from 'src/app/models/apresentacao';
+import Apresentacao from '../../../../models/apresentacao';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -42,6 +43,12 @@ export class ConfiguracaoApresentacaoComponent
 
   clickCreateSlide() {
     //aqui vamos salvar os dados, e criar o registro no banco
+  }
+
+  enableDisableFile($event){
+    //var select = document.getElementById('typeFile');
+	 
+	  console.log($event); // pt
   }
 
 
