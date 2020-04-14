@@ -76,4 +76,10 @@ npm run typeorm:cli -- migration:run
 
 ---
 
+## Validações de requisição
+#### Documentação
+[Class Validator](https://github.com/typestack/class-validator)
+
+---
+
 
