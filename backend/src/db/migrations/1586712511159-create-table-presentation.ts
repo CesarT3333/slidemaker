@@ -23,6 +23,12 @@ export class createTablePresentation1586712511159
         isUnique: false
       },
       {
+        name: 'text',
+        type: 'text',
+        isNullable: true,
+        isUnique: false
+      },
+      {
         name: 'amount_slides',
         type: 'integer',
         isNullable: true
