@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { take, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+import { EnumClientData } from '../models/enum-client-data';
 import { resources } from '../util/resources';
 
 @Injectable()
@@ -13,9 +14,12 @@ export class DataSourceService {
     private http: HttpClient
   ) { }
 
-  getAll(): Observable<any> {
+  getAll(): Observable<Array<EnumClientData>> {
     return this.http.get(resources.DATA_SOURCES)
-      .pipe(take(1));
+      .pipe(
+        take(1),
+        map(dataSources => <Array<EnumClientData>>dataSources)
+      );
   }
 
 }

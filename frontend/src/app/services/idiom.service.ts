@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { take, tap, map } from 'rxjs/operators';
+import { take, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+import { EnumClientData } from '../models/enum-client-data';
 import { resources } from '../util/resources';
 
 @Injectable()
@@ -13,12 +14,11 @@ export class IdiomService {
     private http: HttpClient
   ) { }
 
-  getAll(): Observable<any> {
+  getAll(): Observable<Array<EnumClientData>> {
     return this.http.get(resources.IDIOMS)
       .pipe(
         take(1),
-        // tap(response => console.log(response)),
-        // map(response => <any>response)
+        map(idioms => <Array<EnumClientData>>idioms),
       );
   }
 
