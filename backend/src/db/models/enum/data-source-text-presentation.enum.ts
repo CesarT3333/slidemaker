@@ -1,6 +1,4 @@
-export type DataSourceTextPresentationDataType = {
-  [key in DataSourceTextPresentationEnum]: string
-};
+import { EnumClientData } from '../enum-client-data';
 
 export enum DataSourceTextPresentationEnum {
   FILE = 'FILE',
@@ -10,9 +8,9 @@ export enum DataSourceTextPresentationEnum {
 
 export namespace DataSourceTextPresentationEnum {
   export const getAllForClient =
-    (): DataSourceTextPresentationDataType => ({
-      FILE: 'Arquivo',
-      TXT: 'Texto',
-      WIKIPEDIA: 'Wikipedia'
-    });
+    (): Array<EnumClientData> => ([
+      { name: DataSourceTextPresentationEnum.FILE, clientData: 'Arquivo' },
+      { name: DataSourceTextPresentationEnum.TXT, clientData: 'Texto' },
+      { name: DataSourceTextPresentationEnum.WIKIPEDIA, clientData: 'Wikipedia' }
+    ]);
 }

@@ -1,4 +1,7 @@
-export type IdiomDataType = { [key in IdiomEnum]: string };
+export type IdiomDataType = {
+  name: IdiomEnum,
+  clientData: string
+};
 
 export enum IdiomEnum {
   PT_PR = 'PT_BR',
@@ -7,8 +10,8 @@ export enum IdiomEnum {
 
 export namespace IdiomEnum {
   export const getAllForCLientTest =
-    (): IdiomDataType => ({
-      EN: 'Inglês',
-      PT_BR: 'Português'
-    });
+    (): Array<IdiomDataType> => ([
+      { name: IdiomEnum.PT_PR, clientData: 'Português' },
+      { name: IdiomEnum.EN, clientData: 'Inglês' },
+    ]);
 }
