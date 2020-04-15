@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl, Form
 import { OnInit, Component, ViewChild } from '@angular/core';
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
-import { Observable, concat, pipe } from 'rxjs';
+import { Observable, concat } from 'rxjs';
 
 import { ApresentacaoService } from 'src/app/services/apresentacao.service';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
