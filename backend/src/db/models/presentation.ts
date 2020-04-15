@@ -30,7 +30,7 @@ export class Presentation {
 
   @ManyToOne(type => User, user => user.presentations)
   @JoinColumn({
-    name: 'id_usuario',
+    name: 'id_user',
     referencedColumnName: 'id'
   })
   user: User;
