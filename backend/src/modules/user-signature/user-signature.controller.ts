@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Req, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UserSignatureService } from 'src/services/user-signatureservice';
+import { UserSignatureService } from '../../services/user-signatureservice';
 import { UserSignature } from '../../db/models/user-signature';
 import { resources } from '../../util/resources';
 import User from '../../db/models/user';
