@@ -1,9 +1,9 @@
 import { Controller, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { DataSourceService } from 'src/services/data-source.service';
-import { EnumClientData } from 'src/db/models/enum-client-data';
-import { resources } from 'src/util/resources';
+import { DataSourceService } from '../../services/data-source.service';
+import { EnumClientData } from '../../db/models/enum-client-data';
+import { resources } from '../../util/resources';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller(resources.DATA_SOURCES)
