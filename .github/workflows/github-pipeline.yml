@@ -18,20 +18,19 @@ jobs:
       run: |
         apt-get update && apt-get install zip
         cd backend
-        sh generate-token.sh
         npm install
         npm run build
         cd ..
         cd frontend
-        npm install 
+        npm install
         npm run build
         cd ..
         mv frontend/dist/frontend backend/dist/src/public
         cd backend
         zip -r deploy.zip dist
         mkdir -p ./.ssh
-        touch "./.ssh/known_hosts" 
-        echo "${{ secrets.SSH_DEPLOY_KEY }}" > "./.ssh/deploy_key"  
+        touch "./.ssh/known_hosts"
+        echo "${{ secrets.SSH_DEPLOY_KEY }}" > "./.ssh/deploy_key"
         chmod 600 ./.ssh/deploy_key
         scp -o StrictHostKeyChecking=no -i "./.ssh/deploy_key" deploy.zip ubuntu@ec2-54-233-179-194.sa-east-1.compute.amazonaws.com:~/deploy
         ssh -i "./.ssh/deploy_key" ubuntu@ec2-54-233-179-194.sa-east-1.compute.amazonaws.com 'cd deploy && sh deploy.sh'
