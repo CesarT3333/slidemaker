@@ -1,7 +1,8 @@
-import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl, Form } from '@angular/forms';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
-import { finalize, delay } from 'rxjs/operators';
+import { finalize, delay, tap, switchMap } from 'rxjs/operators';
+import { Observable, concat, pipe } from 'rxjs';
 
 import { ApresentacaoService } from 'src/app/services/apresentacao.service';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
@@ -22,7 +23,9 @@ export class ConfiguracaoApresentacaoComponent
 
   @ViewChild('inputFile', { static: true }) inputFile;
 
-  private _slides: Array<Apresentacao> = [];
+  @ViewChild('form', { static: false }) form;
+
+  private _presentations: Array<Apresentacao> = [];
 
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
@@ -47,13 +50,7 @@ export class ConfiguracaoApresentacaoComponent
   ) { }
 
   ngOnInit(): void {
-    // aqui vamos chamar a procedure para carregar as apresentações
-    // já criadas pelo usuário e jogar na lista.
-    this.getAllSlides();
-    this.initForm();
-
-    this.getIdioms();
-    this.getDataSources();
+    this.startsMandatorySearches();
   }
 
   onSubmit() {
@@ -62,30 +59,21 @@ export class ConfiguracaoApresentacaoComponent
       this.presentationService.create(<Apresentacao>this.formPresentation.value)
         .pipe(
           delay(2000),
-          finalize(() => {
-            this.resetFormDefault();
-            this.loadingService.dismiss();
-            this.snackBarService.show('Apresentação criada com sucesso');
-          })
+          finalize(() => this.loadingService.dismiss()),
+          switchMap(() => this.getAllSlides())
         ).subscribe(
-          apresentacaoCriada => console.log(apresentacaoCriada),
+          userpresentations => {
+            this._presentations = userpresentations;
+            this.resetFormDefault();
+            this.snackBarService.show('Apresentação criada com sucesso');
+          },
           error => this.handleErrorService.handle(error)
         );
     }
 
   }
 
-  clickCreateSlide(): void {
-    // aqui vamos salvar os dados, e criar o registro no banco
-  }
-
-  enableDisableFile($event): void {
-    // var select = document.getElementById('typeFile');
-
-    console.log($event); // pt
-  }
-
-  onClickAnexarArquivoButton($event) {
+  onClickAttachmentFile($event) {
     $event?.preventDefault();
     this.inputFile.nativeElement.click();
   }
@@ -107,80 +95,112 @@ export class ConfiguracaoApresentacaoComponent
     });
   }
 
-  // TODO: CONCAT SUBJECTS
-  private getAllSlides(): void {
+  onDataSourceChange(): void {
+    const dataSourceSelected: string =
+      this.formPresentation.get('dataSource').value;
+
+    const textFormControl = <FormControl>this.formPresentation.get('text');
+    const filenameFormControl = <FormControl>this.formPresentation.get('fileName');
+
+    switch (dataSourceSelected) {
+      case 'TXT':
+
+        textFormControl.setValue(null);
+        textFormControl.setValidators(Validators.required);
+
+        filenameFormControl.patchValue(null);
+        filenameFormControl.setErrors(null);
+        filenameFormControl.setValidators(null);
+        break;
+
+      case 'FILE':
+        filenameFormControl.setValue(null);
+        filenameFormControl.setValidators(Validators.required);
+
+        textFormControl.setValue(null);
+        textFormControl.patchValue(null);
+        textFormControl.setErrors(null);
+        textFormControl.setValidators(null);
+        break;
+
+      default:
+        filenameFormControl.setValidators(null);
+        textFormControl.setValidators(null);
+        break;
+    }
+
+    filenameFormControl.updateValueAndValidity();
+    textFormControl.updateValueAndValidity();
+
+  }
+
+  private startsMandatorySearches(): void {
     this.loadingService.show();
-    this.presentationService.buscarSlides()
-      .pipe(finalize(() => this.loadingService.dismiss()))
-      .subscribe(
-        slides => this._slides = slides,
-        error => this.handleErrorService.handle(error)
-      );
+    concat(
+      this.getAllSlides(),
+      this.getDataSources(),
+      this.getIdioms()
+    ).pipe(
+      finalize(() => {
+        this.loadingService.dismiss();
+        this.initForm();
+      })
+    ).subscribe();
   }
 
-  // TODO: CONCAT SUBJECTS
-  private getDataSources() {
-    this.dataSourceService.getAll()
-      .pipe(
-
-        finalize(() =>
-          this.formPresentation
-            .patchValue({
-              dataSource: this._dataSources
-                .find(i => i.name === this._defaults.DATASOURCE).name
-            }))
-
-      ).subscribe(
-        dataSources => this._dataSources = dataSources,
-        errors => this.handleErrorService.handle(errors)
-      );
+  private getAllSlides(): Observable<Array<Apresentacao>> {
+    return this.presentationService.buscarSlides()
+      .pipe(tap(presentations => this._presentations = presentations));
   }
 
-  // TODO: CONCAT SUBJECTS
-  private getIdioms() {
-    this.idiomService.getAll()
-      .pipe(
+  private getDataSources(): Observable<Array<EnumClientData>> {
+    return this.dataSourceService.getAll()
+      .pipe(tap(dataSources => this._dataSources = dataSources));
+  }
 
-        finalize(() => this.formPresentation
-          .patchValue({
-            idiom: this._idioms
-              .find(i => i.name === this._defaults.IDIOM).name
-          }))
-
-      ).subscribe(
-        idioms => this._idioms = idioms,
-        errors => this.handleErrorService.handle(errors)
-      );
+  private getIdioms(): Observable<Array<EnumClientData>> {
+    return this.idiomService.getAll()
+      .pipe(tap(idioms => this._idioms = idioms));
   }
 
   private initForm() {
     this.formPresentation =
       this.formBuilder.group({
-        fileName: null,
+        fileName: [{
+          value: null,
+          disabled: false
+        }],
         text: null,
         term: [null, Validators.required],
         amountOfSlides: [
-          // TODO: Fazer validação de campo permitir somente números
           this._defaults.AMOUNT_SLIDES,
-          Validators.required
+          [
+            Validators.required,
+            Validators.pattern('^[0-9]*$')
+          ]
         ],
         idiom: [null, Validators.required],
         dataSource: [null, Validators.required],
       });
+
+    this.setDatasourceToDefault();
+    this.setIdiomToDefault();
+
   }
 
   private resetFormDefault(): void {
+    this.form.resetForm();
     this.formPresentation.patchValue({
-      fileName: null,
-      text: null,
       term: null,
+      text: null,
+      fileName: null,
       amountOfSlides: this._defaults.AMOUNT_SLIDES,
       idiom: this._defaults.IDIOM,
       dataSource: this._defaults.DATASOURCE,
     });
 
-    this.formPresentation.setErrors(null);
-    this.formPresentation.get('term').setErrors(null);
+    this.formPresentation.updateValueAndValidity();
+
   }
 
   private processesAttachedFile(): void {
@@ -204,6 +224,22 @@ export class ConfiguracaoApresentacaoComponent
     });
   }
 
+  private setIdiomToDefault(): void {
+    this.formPresentation
+      .patchValue({
+        idiom: this._idioms
+          .find(i => i.name === this._defaults.IDIOM).name
+      });
+  }
+
+  private setDatasourceToDefault(): void {
+    this.formPresentation
+      .patchValue({
+        dataSource: this._dataSources
+          .find(i => i.name === this._defaults.DATASOURCE).name
+      });
+  }
+
   get idioms(): Array<EnumClientData> {
     return this._idioms;
   }
@@ -218,6 +254,10 @@ export class ConfiguracaoApresentacaoComponent
 
   get fileName(): FormControl {
     return <FormControl>this.formPresentation.get('fileName');
+  }
+
+  get presentations(): Array<Apresentacao> {
+    return this._presentations;
   }
 
 }

@@ -6,12 +6,23 @@
        style="display: none;" />
 
 <div class="container">
-  <div class="row content">
-    <div class="col">
-      <div class=listaSlide></div>
+  <div class="row">
+
+    <div class="col-md-4 col-sm-12 portlet">
+      <div class="content">
+        <ul>
+          <li *ngFor="let presentation of presentations">
+            {{presentation.id}} - {{ presentation.term }}
+          </li>
+        </ul>
+      </div>
+
     </div>
-    <div class="col-md-8 col-sm-12 formularioApresentacao">
+    <div *ngIf="formPresentation"
+         class="col-md-8 col-sm-12 portlet">
       <form [formGroup]="formPresentation"
+            class="content"
+            #form="ngForm"
             (ngSubmit)="onSubmit()">
 
         <div class="row presentation-form">
@@ -38,7 +49,16 @@
               <input formControlName="amountOfSlides"
                      matInput
                      type="text" />
+              <mat-error class="invalid-feedback"
+                         *ngIf="getErrorsInput('amountOfSlides')?.required">
+                Campo obrigatório
+              </mat-error>
+              <mat-error class="invalid-feedback"
+                         *ngIf="getErrorsInput('amountOfSlides')?.pattern">
+                Valor informado inválido
+              </mat-error>
             </mat-form-field>
+
           </div>
 
           <div class="col-6">
@@ -56,7 +76,8 @@
           <div class="col-6">
             <mat-form-field appearance="outline">
               <mat-label>Fonte de Dados</mat-label>
-              <mat-select formControlName="dataSource">
+              <mat-select (selectionChange)="onDataSourceChange()"
+                          formControlName="dataSource">
                 <mat-option *ngFor="let dataSource of dataSources"
                             [value]="dataSource.name">
                   {{ dataSource.clientData }}
@@ -70,41 +91,56 @@
             <mat-form-field appearance='outline'>
               <mat-label>Texto</mat-label>
               <textarea formControlName="text"
-                        rows="15"
+                        required
+                        rows="5"
                         matInput>
               </textarea>
+              <mat-error class="invalid-feedback"
+                         *ngIf="getErrorsInput('text')?.required">
+                Campo obrigatório
+              </mat-error>
             </mat-form-field>
           </div>
 
           <div *ngIf="dataSourceSelected==='FILE'"
                class="col-12">
-            <div class="input-group mb-3">
-              <input type="text"
-                     formControlName="fileName"
+            <mat-form-field appearance="outline">
+              <mat-label>Arquivo</mat-label>
+              <input matInput
                      readonly
-                     disabled
-                     class="form-control"
-                     placeholder="Anexe um arquivo texto (.txt)"
-                     aria-label="Anexe um arquivo texto (.txt)"
-                     aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button *ngIf="fileName?.value"
-                        class="btn btn-outline-secondary"
-                        (click)="onLimparAttachedFile($event)"
-                        type="button">
-                  Limpar
-                </button>
-                <button class="btn btn-outline-secondary"
-                        (click)="onClickAnexarArquivoButton($event)"
-                        type="button">
-                  Anexar
-                </button>
-              </div>
-            </div>
+                     required
+                     formControlName="fileName"
+                     placeholder="Anexe um arquivo texto (.txt)">
+
+              <button *ngIf="!fileName.value"
+                      mat-icon-button
+                      (click)="onClickAttachmentFile($event)"
+                      matSuffix
+                      color="primary"
+                      aria-label="Anexar Arquivo">
+                <mat-icon style="cursor: pointer;">attachment</mat-icon>
+              </button>
+
+              <button *ngIf="fileName.value"
+                      mat-icon-button
+                      (click)="onLimparAttachedFile($event) "
+                      matSuffix
+                      color="primary"
+                      aria-label="Limpar">
+                <mat-icon style="cursor: pointer;">clear</mat-icon>
+              </button>
+
+              <mat-error class="invalid-feedback"
+                         *ngIf="getErrorsInput('fileName')?.required">
+                Campo obrigatório
+              </mat-error>
+            </mat-form-field>
+
           </div>
 
           <div class="col-12">
             <button mat-stroked-button
+                    [disabled]="!formPresentation.valid"
                     color="primary">
               Salvar
             </button>

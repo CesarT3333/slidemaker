@@ -22,12 +22,8 @@ export class ApresentacaoService {
   }
 
   buscarSlides(): Observable<Array<Apresentacao>> {
-    // this.http.get(resources.APRESENTACOES)
-    return of([{}])
-      .pipe(
-        take(1),
-        map(res => <Array<Apresentacao>>res),
-      );
+    return this.http.get<Array<Apresentacao>>(resources.APRESENTACOES)
+      .pipe(take(1));
   }
 
 }
