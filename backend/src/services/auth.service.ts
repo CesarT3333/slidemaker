@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { sign } from 'jsonwebtoken';
 
 import { UserGooglePayload } from '../interfaces/user-google-pay-load';
-import * as jwt from '../credentials/secret-app.json';
 import { UserService } from './user.service';
 
 export enum Provider { GOOGLE = 'google' }
@@ -21,11 +20,13 @@ export class AuthService {
     try {
 
       const profileId: string = profile.id;
+      const secretJwt: string = this.configService.get('SECRET_JWT');
       this.userService.createByGooglePayload(profile);
 
       return sign(
         { profileId, provider },
-        jwt.secret_key, { expiresIn: 3600 }
+        secretJwt,
+        { expiresIn: 3600 }
       );
 
     } catch (err) {

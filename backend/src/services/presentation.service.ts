@@ -3,11 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { PresentationRepository } from '../db/repository/presentation.repository';
 import { Presentation } from '../db/models/presentation';
 import { UserService } from './user.service';
-import User from '../db/models/user';
 
 @Injectable()
 export class PresentationService {
-
 
   constructor(
     private presentationRepository: PresentationRepository,

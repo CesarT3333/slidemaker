@@ -12,36 +12,13 @@ File: `.env`
 ```
 URL_FRONTEND= http://localhost:3000
 
+SECRET_JWT=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 POSTGRES_URL_STRING=postgresql://[user]:[password]@localhost:5432/slidemakerdb
 
 GOOGLE_URL_CALLBACK= http://localhost:4200/auth/google/callback
 GOOGLE_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxx
 GOOGLE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
-```
-
----
-
-## Arquivo com chave para autenticação JWT
-
-> Para os recursos de autenticação da aplicação funcionar
-> é preciso criar um arquivo contendo a chave `base64` pertinente
-> a encriptação de chave JWT 
-
-File: `secret-app.json`
-
-```json
-{
-    "secret_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-}
-```
-
-> o arquivo também pode ser gerado utilizando o 
-> comando na raiz do projeto:
-
-```sh
-
-cd backend && sh generate-token.sh
-
 ```
 ---
 
