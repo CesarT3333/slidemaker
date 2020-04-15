@@ -17,8 +17,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/config/typeorm-cli.config.ts",
-    "typeorm:prod": "npx typeorm migration:run -f src/config/typeorm-cli.config",
-    "generate-token": "node -e \"console.log(require('crypto').randomBytes(256).toString('base64'));\""
+    "typeorm:prod": "npx typeorm migration:run -f src/config/typeorm-cli.config"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.14",
