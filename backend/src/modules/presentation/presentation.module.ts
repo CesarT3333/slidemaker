@@ -5,9 +5,11 @@ import { PresentationRepository } from '../../db/repository/presentation.reposit
 import { PresentationService } from '../../services/presentation.service';
 import { PresentationController } from './presentation.controller';
 import { Presentation } from '../../db/models/presentation';
+import { UserModule } from '../usuario/user.module';
 
 @Module({
   imports: [
+    UserModule,
     TypeOrmModule.forFeature([Presentation, PresentationRepository])
   ],
   controllers: [PresentationController],
