@@ -1,8 +1,8 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
 import { AssinaturaUsuarioGuard } from './services/guards/assinatura-usuario.guard';
+import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
 
 @NgModule({
   imports: [
@@ -22,13 +22,13 @@ import { AssinaturaUsuarioGuard } from './services/guards/assinatura-usuario.gua
           .then(m => m.PlanoModule)
       },
       {
-        path: 'configuracao-apresentacao',
+        path: 'apresentacao',
         canActivate: [
           UsuarioLogadoGuard,
           AssinaturaUsuarioGuard
         ],
-        loadChildren: () => import(`./modules/configuracao-apresentacao/configuracao-apresentacao.module`)
-          .then(m => m.ConfiguracaoApresentacaoModule)
+        loadChildren: () => import(`./modules/apresentacao/apresentacao.module`)
+          .then(m => m.ApresentacaoModule)
       },
       {
         path: 'pagamento',

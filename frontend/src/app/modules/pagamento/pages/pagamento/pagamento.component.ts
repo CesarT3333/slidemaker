@@ -58,7 +58,7 @@ export class PagamentoComponent
 
       ).subscribe(
         _ =>
-          this.router.navigate(['/configuracao-apresentacao'])
+          this.router.navigate(['/apresentacao'])
             .then(() => this.snackBarService.show('Assinatura realizada com sucesso')),
 
         error => this.handleErrorService.handle(error)

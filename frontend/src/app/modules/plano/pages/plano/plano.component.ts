@@ -75,7 +75,7 @@ export class PlanoComponent
       .subscribe(assinatura => {
         if (assinatura) {
           this.loadingService.show();
-          this.router.navigate(['/configuracao-apresentacao'])
+          this.router.navigate(['/apresentacao'])
             .then(() => this.snackBarService.show('Usuário já possui assinatura!'))
             .finally(() => this.loadingService.dismiss());
         }

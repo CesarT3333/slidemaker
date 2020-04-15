@@ -7,6 +7,8 @@ import { Observable, of } from 'rxjs';
 
 import { SnackBarService } from '../snack-bar.service';
 import { resources } from 'src/app/util/resources';
+import { GoogleProfile } from 'src/app/models/google-profile';
+import { UsuarioService } from '../usuario.service';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioLogadoGuard
@@ -14,6 +16,7 @@ export class UsuarioLogadoGuard
 
   constructor(
     private snackBarService: SnackBarService,
+    private usuarioService: UsuarioService,
     private router: Router,
     private http: HttpClient,
   ) { }
@@ -21,8 +24,9 @@ export class UsuarioLogadoGuard
   canActivate(): Observable<boolean> | boolean {
 
     const token: string = localStorage.getItem('token');
+    const googleProfile: GoogleProfile = this.usuarioService.googleProfile;
 
-    if (!token) {
+    if (!token || !googleProfile) {
       this.exibeMensagemErroLogin();
       this.navegaParaPaginaDeLogin();
       return false;

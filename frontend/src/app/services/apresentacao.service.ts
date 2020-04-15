@@ -1,16 +1,29 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+
+import { map, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
+import Apresentacao from '../models/apresentacao';
+import { resources } from '../util/resources';
 
 @Injectable()
 export class ApresentacaoService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
-  teste(): Observable<any> {
-    return this.http.get('');
+  create(apresentacao: Apresentacao): Observable<Apresentacao> {
+    return this.http.post<Apresentacao>(
+      resources.APRESENTACOES,
+      apresentacao
+    ).pipe(take(1));
+  }
+
+  buscarSlides(): Observable<Array<Apresentacao>> {
+    return this.http.get<Array<Apresentacao>>(resources.APRESENTACOES)
+      .pipe(take(1));
   }
 
 }

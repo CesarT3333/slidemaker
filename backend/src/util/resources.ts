@@ -1,8 +1,12 @@
 export const resources = {
-    PLANOS: `/planos`,
-    AUTH: `/auth`,
-    APRESENTACOES: `/apresentacoes`,
-    USUARIOS: `/usuarios`,
-    ASSINATURAS: `/assinaturas`,
-    TRANSACOES: `/transacoes`
+  PLANS: `/planos`,
+  AUTH: `/auth`,
+  PRESENTATIONS: `/apresentacoes`,
+  USERS: `/usuarios`,
+
+  IDIOMS: '/idioms',
+  DATA_SOURCES: '/data-sources',
+
+  ASSINATURAS: `/assinaturas`,
+  TRANSACOES: `/transacoes`
 }

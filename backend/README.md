@@ -1,20 +1,11 @@
-## Rodar a aplicação
-
-```bash
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
----
-
-## Hash de geração de token da aplicação para autenticação JWT
+# Arquivos necessários para o ambiente de desenvolvimento
+## Arquivo de environments 
 
 > Para a integração com o banco de dados
+> e demais serviçoes do `google`
 > é necessário adicionar um arquivo de `environment` na pasta
-> raiz do projeto de `backend`
+> raiz do projeto de `backend` com a finalidade de prover
+> o ambiente de desenvolvimento
 
 File: `.env`
 
@@ -30,8 +21,43 @@ GOOGLE_CLIENT_SECRET=xxxxxxxxxxxxxxxxx
 
 ---
 
-## Comandos typeorm
+## Arquivo com chave para autenticação JWT
 
+> Para os recursos de autenticação da aplicação funcionar
+> é preciso criar um arquivo contendo a chave `base64` pertinente
+> a encriptação de chave JWT 
+
+File: `secret-app.json`
+
+```json
+{
+    "secret_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+```
+
+> o arquivo também pode ser gerado utilizando o 
+> comando na raiz do projeto:
+
+```sh
+
+cd backend && sh generate-token.sh
+
+```
+---
+
+## Rodar a aplicação
+
+```sh
+# watch mode (nodemon)
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+---
+
+## Typeorm
+#### Comandos
 > Criação de Migrations
 
 ```sh
@@ -43,8 +69,17 @@ npm run typeorm:cli -- migration:create -n [nome-da-migration]
 ```sh
 npm run typeorm:cli -- migration:run
 ```
-> Tipos de colunas do typeorm
-> https://github.com/typeorm/typeorm/blob/master/src/driver/types/ColumnTypes.ts
+#### Documentação
+[Documentação `typeorm`](https://github.com/typeorm/typeorm/blob/master/src/driver/types/ColumnTypes.ts)
+
+[Tipos de colunas](https://github.com/typeorm/typeorm/blob/master/src/driver/types/ColumnTypes.ts)
+
+---
+
+## Validações de requisição
+#### Documentação
+[Class Validator](https://github.com/typestack/class-validator)
+
 ---
 
 

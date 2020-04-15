@@ -8,4 +8,7 @@ export const resources = {
   USUARIOS: `${BASE_URI}/usuarios`,
   TRANSACOES: `${BASE_URI}/transacoes`,
   ASSINATURAS: `${BASE_URI}/assinaturas`,
+
+  DATA_SOURCES: `${BASE_URI}/data-sources`,
+  IDIOMS: `${BASE_URI}/idioms`,
 };
