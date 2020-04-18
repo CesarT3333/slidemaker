@@ -21,6 +21,20 @@
   }
 }
 
+.theme-content {
+  img {
+    width: 300px;
+    max-width: 100%;
+    height: auto;
+
+    &:hover  {
+      border: 2px #673ab7 solid;
+    }
+
+  }
+
+}
+
 .presentation-form {
 
   mat-form-field {

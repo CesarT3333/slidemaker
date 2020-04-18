@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { EnumClientData } from 'src/app/models/enum-client-data';
 import { IdiomService } from 'src/app/services/idiom.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import Apresentacao from '../../../../models/apresentacao';
 
 @Component({
@@ -29,6 +30,7 @@ export class ConfiguracaoApresentacaoComponent
 
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
+  private _themes: Array<string> = [];
 
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
@@ -46,6 +48,7 @@ export class ConfiguracaoApresentacaoComponent
     private snackBarService: SnackBarService,
     private loadingService: LoadingService,
     private idiomService: IdiomService,
+    private themeService: ThemeService,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -138,6 +141,7 @@ export class ConfiguracaoApresentacaoComponent
     this.loadingService.show();
     concat(
       this.getAllSlides(),
+      this.getAllThemes(),
       this.getDataSources(),
       this.getIdioms()
     ).pipe(
@@ -146,6 +150,11 @@ export class ConfiguracaoApresentacaoComponent
         this.initForm();
       })
     ).subscribe();
+  }
+
+  private getAllThemes(): any {
+    return this.themeService.getAll()
+      .pipe(tap(themes => this._themes = themes));
   }
 
   private getAllSlides(): Observable<Array<Apresentacao>> {
@@ -258,6 +267,10 @@ export class ConfiguracaoApresentacaoComponent
 
   get presentations(): Array<Apresentacao> {
     return this._presentations;
+  }
+
+  get themes(): Array<string> {
+    return this._themes;
   }
 
 }

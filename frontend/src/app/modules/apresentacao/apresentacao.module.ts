@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -17,6 +18,7 @@ import { DataSourceService } from 'src/app/services/data-sources.service';
 import { FileReaderService } from 'src/app/services/file-reade.service';
 import { ApresentacaoRoutingModule } from './apresentacao.routing';
 import { IdiomService } from 'src/app/services/idiom.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ import { IdiomService } from 'src/app/services/idiom.service';
     ReactiveFormsModule,
     FormsModule,
 
+    MatTabsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatToolbarModule,
@@ -42,6 +45,7 @@ import { IdiomService } from 'src/app/services/idiom.service';
     HeaderToolbarComponent,
   ],
   providers: [
+    ThemeService,
     ApresentacaoService,
     FileReaderService,
     DataSourceService,
