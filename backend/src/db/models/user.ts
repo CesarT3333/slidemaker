@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+
 import { Presentation } from './presentation';
 
 @Entity({ name: 'usuario' })
@@ -27,6 +28,5 @@ export default class User {
 
   @OneToMany(type => Presentation, presentation => presentation.user)
   presentations: Array<Presentation>;
-
 
 }

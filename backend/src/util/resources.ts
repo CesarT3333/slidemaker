@@ -11,4 +11,4 @@ export const resources = {
 
   ASSINATURAS: `/assinaturas`,
   TRANSACOES: `/transacoes`
-}
+};

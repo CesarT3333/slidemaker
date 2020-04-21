@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 
 import dotenvFlow = require('dotenv-flow');
 
-import "reflect-metadata";
+import 'reflect-metadata';
 
 async function bootstrap() {
   dotenvFlow.config();
@@ -15,6 +15,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
-
-class FrontAppicationModule {}

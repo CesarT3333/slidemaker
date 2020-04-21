@@ -1,10 +1,8 @@
-import { PassportStrategy } from "@nestjs/passport";
+import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
 import { Strategy } from 'passport-google-oauth20';
-
-import { google } from 'googleapis';
 
 import { UserGooglePayload } from '../../interfaces/user-google-pay-load';
 import { AuthService, Provider } from '../../services/auth.service';

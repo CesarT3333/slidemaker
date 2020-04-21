@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
 
-import { IsInt } from "class-validator";
+import { IsInt } from 'class-validator';
 
 import { DataSourceTextPresentationEnum } from './enum/data-source-text-presentation.enum';
 import { IdiomEnum } from './enum/idiom.enum';
+import { Theme } from './theme';
 import User from './user';
 
 @Entity({ name: 'presentation' })
@@ -23,7 +24,7 @@ export class Presentation {
   idiom: IdiomEnum;
 
   @Column({ name: 'data_source' })
-  dataSource: DataSourceTextPresentationEnum
+  dataSource: DataSourceTextPresentationEnum;
 
   @Column()
   text: string;
