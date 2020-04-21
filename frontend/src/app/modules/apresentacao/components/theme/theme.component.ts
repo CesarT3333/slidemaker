@@ -1,10 +1,10 @@
 import { OnInit, Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import { HandleErrorService } from 'src/app/services/handle-error.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Theme } from 'src/app/models/theme';
 import { finalize } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'smk-theme',
@@ -33,8 +33,12 @@ export class ThemeComponent
     this.getAllThemes();
   }
 
+  onMouseOutImageTheme(): void {
+    this.themeHovered = this.themeSelected;
+  }
+
   onMouseEnterImageTheme(theme: Theme): void {
-    if (!this.themeSelected) {
+    if (!this.themeSelected || this.themeSelected.googleIdPresentation === this._defaultThemeId) {
       this.themeHovered = theme;
     }
   }

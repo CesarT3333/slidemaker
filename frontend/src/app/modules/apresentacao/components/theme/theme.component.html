@@ -14,6 +14,7 @@
           <img [ngClass]="{'selected': theme.selected}"
                (click)="onSelectTheme(theme)"
                (mouseenter)="onMouseEnterImageTheme(theme)"
+               (mouseout)="onMouseOutImageTheme()"
                src="https://drive.google.com/uc?export=view&id={{theme?.googleIdImg}}" />
         </div>
       </div>
