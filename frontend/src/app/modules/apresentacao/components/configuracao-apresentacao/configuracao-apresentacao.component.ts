@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
-import { OnInit, Component, ViewChild } from '@angular/core';
+import { OnInit, Component, ViewChild, Input } from '@angular/core';
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
@@ -48,7 +48,6 @@ export class ConfiguracaoApresentacaoComponent
     private snackBarService: SnackBarService,
     private loadingService: LoadingService,
     private idiomService: IdiomService,
-    private themeService: ThemeService,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -141,7 +140,6 @@ export class ConfiguracaoApresentacaoComponent
     this.loadingService.show();
     concat(
       this.getAllSlides(),
-      this.getAllThemes(),
       this.getDataSources(),
       this.getIdioms()
     ).pipe(
@@ -150,11 +148,6 @@ export class ConfiguracaoApresentacaoComponent
         this.initForm();
       })
     ).subscribe();
-  }
-
-  private getAllThemes(): any {
-    return this.themeService.getAll()
-      .pipe(tap(themes => this._themes = themes));
   }
 
   private getAllSlides(): Observable<Array<Apresentacao>> {
@@ -190,6 +183,7 @@ export class ConfiguracaoApresentacaoComponent
         ],
         idiom: [null, Validators.required],
         dataSource: [null, Validators.required],
+        theme: [null, Validators.required]
       });
 
     this.setDatasourceToDefault();

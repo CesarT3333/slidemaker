@@ -19,6 +19,7 @@ import { FileReaderService } from 'src/app/services/file-reade.service';
 import { ApresentacaoRoutingModule } from './apresentacao.routing';
 import { IdiomService } from 'src/app/services/idiom.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeComponent } from './components/theme/theme.component';
 
 @NgModule({
   imports: [
@@ -39,10 +40,11 @@ import { ThemeService } from 'src/app/services/theme.service';
     ApresentacaoRoutingModule,
   ],
   declarations: [
+    HeaderToolbarComponent,
     ApresentacaoComponent,
+    ThemeComponent,
 
     ConfiguracaoApresentacaoComponent,
-    HeaderToolbarComponent,
   ],
   providers: [
     ThemeService,

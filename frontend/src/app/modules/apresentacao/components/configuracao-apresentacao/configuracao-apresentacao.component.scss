@@ -21,18 +21,12 @@
   }
 }
 
-.theme-content {
-  img {
-    width: 300px;
-    max-width: 100%;
-    height: auto;
+::ng-deep div.mat-tab-body-content {
+  overflow-x: hidden;
+}
 
-    &:hover  {
-      border: 2px #673ab7 solid;
-    }
-
-  }
-
+::ng-deep div.mat-tab-body-wrapper {
+  padding-top: 20px;
 }
 
 .presentation-form {

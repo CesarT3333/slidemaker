@@ -1,7 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 import { resources } from '../util/resources';
+import { Theme } from '../models/theme';
 
 @Injectable()
 export class ThemeService {
@@ -10,8 +14,9 @@ export class ThemeService {
     private http: HttpClient
   ) { }
 
-  getAll(): Observable<any> {
-    return this.http.get(resources.THEMES);
+  getAll(): Observable<Array<Theme>> {
+    return this.http.get<Array<Theme>>(resources.THEMES)
+      .pipe(take(1));
   }
 
 }

@@ -1,0 +1,22 @@
+<div class="content">
+  <div class="row">
+    <div class="col-8"
+         style="text-align: center;">
+      <img src="https://drive.google.com/uc?export=view&id={{themeHovered?.googleIdImg}}"
+           class="img-theme-selected"
+           alt="">
+      <span class="theme-name">{{ themeHovered?.name }}</span>
+    </div>
+    <div class="col-4">
+      <div class="list-themes">
+        <div *ngFor="let theme of themes"
+             class="theme-content">
+          <img [ngClass]="{'selected': theme.selected}"
+               (click)="onSelectTheme(theme)"
+               (mouseenter)="onMouseEnterImageTheme(theme)"
+               src="https://drive.google.com/uc?export=view&id={{theme?.googleIdImg}}" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
