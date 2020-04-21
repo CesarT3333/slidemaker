@@ -36,4 +36,11 @@ export class Presentation {
   })
   user: User;
 
+  @ManyToOne(type => Theme)
+  @JoinColumn({
+    name: 'id_theme',
+    referencedColumnName: 'id'
+  })
+  theme: Theme;
+
 }
