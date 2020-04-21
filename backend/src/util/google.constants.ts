@@ -5,4 +5,4 @@ export const scopes: Array<string> = [
   'https://www.googleapis.com/auth/presentations',
 ];
 
-export const folderThemesId: string = '1fiqRv2arJXvEA5Ft4bMomf2t0iEiuzLG'
+export const folderThemesId = '1IP8WpH_vxlLBWjniEmqQbdE-Xn0_PuGr';

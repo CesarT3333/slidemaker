@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-import { GoogleDriveService } from './google-drive.service';
+import { ThemeRepository } from 'db/repository/theme.repository';
 
 @Injectable()
 export class ThemeService {
 
   constructor(
-    private googleDriveService: GoogleDriveService
+    private themeRepository: ThemeRepository
   ) { }
 
   async getAll(): Promise<any> {
-    return await this.googleDriveService.getAllThemes();
+    return await this.themeRepository.find();
   }
 }
