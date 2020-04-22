@@ -16,19 +16,18 @@ export class UserSignatureController {
 
   @Get(`usuario`)
   getForLoggedInUser(@Req() request) {
-    const usuario = <User>{ googleId: request.user.profileId }
-    return this.userSignatureService.getForLoggedInUser(usuario)
+    const usuario = <User>{ googleId: request.user.profileId };
+    return this.userSignatureService.getForLoggedInUser(usuario);
   }
 
   @Post()
   async registraTransacao(@Req() request) {
     const signature: UserSignature = request.body;
-    signature.usuario = <User>{ googleId: request.user.profileId }
+    signature.usuario = <User>{ googleId: request.user.profileId };
 
     await this.userSignatureService
       .create(<UserSignature>request.body);
 
   }
-
 
 }

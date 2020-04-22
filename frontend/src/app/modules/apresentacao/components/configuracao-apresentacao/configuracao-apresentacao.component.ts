@@ -1,5 +1,6 @@
-import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { OnInit, Component, ViewChild } from '@angular/core';
+import { MatTabGroup } from '@angular/material/tabs';
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
@@ -24,11 +25,13 @@ export class ConfiguracaoApresentacaoComponent
   @ViewChild('inputFile', { static: true }) inputFile;
 
   @ViewChild('form', { static: false }) form;
+  @ViewChild(MatTabGroup, { static: false }) tabApresentacao: MatTabGroup;
 
   private _presentations: Array<Apresentacao> = [];
 
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
+  private _themes: Array<string> = [];
 
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
@@ -181,6 +184,7 @@ export class ConfiguracaoApresentacaoComponent
         ],
         idiom: [null, Validators.required],
         dataSource: [null, Validators.required],
+        theme: [null, Validators.required]
       });
 
     this.setDatasourceToDefault();
@@ -200,6 +204,7 @@ export class ConfiguracaoApresentacaoComponent
     });
 
     this.formPresentation.updateValueAndValidity();
+    this.tabApresentacao.selectedIndex = 0;
 
   }
 
@@ -258,6 +263,10 @@ export class ConfiguracaoApresentacaoComponent
 
   get presentations(): Array<Apresentacao> {
     return this._presentations;
+  }
+
+  get themes(): Array<string> {
+    return this._themes;
   }
 
 }

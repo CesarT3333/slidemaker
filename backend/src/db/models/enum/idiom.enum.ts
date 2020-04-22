@@ -1,7 +1,7 @@
-export type IdiomDataType = {
-  name: IdiomEnum,
-  clientData: string
-};
+export interface IdiomDataType {
+  name: IdiomEnum;
+  clientData: string;
+}
 
 export enum IdiomEnum {
   PT_PR = 'PT_BR',

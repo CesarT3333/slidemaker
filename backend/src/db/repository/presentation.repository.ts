@@ -15,7 +15,7 @@ export class PresentationRepository
         },
 
       }, where: qb => {
-        qb.where('user.googleId = :googleId', { googleId: googleId })
+        qb.where('user.googleId = :googleId', { googleId: `${googleId}` });
       },
     });
 

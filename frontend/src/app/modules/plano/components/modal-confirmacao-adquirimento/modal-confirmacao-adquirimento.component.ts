@@ -18,9 +18,9 @@ export class ModalConfirmacaoAdiquirimentoComponent
   ngOnInit(): void { }
 
   constructor(
-    public dialogRef: MatDialogRef<ModalConfirmacaoAdiquirimentoComponent>,
+    private dialogRef: MatDialogRef<ModalConfirmacaoAdiquirimentoComponent>,
     private snackBarService: SnackBarService,
-    @Inject(MAT_DIALOG_DATA) public data: { plano: Plano }
+    @Inject(MAT_DIALOG_DATA) data: { plano: Plano }
   ) {
     this._plano = data.plano;
   }

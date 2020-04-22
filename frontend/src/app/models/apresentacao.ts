@@ -1,3 +1,5 @@
+import { Theme } from './theme';
+
 export default interface Apresentacao {
   id?: number;
   term: string;
@@ -5,4 +7,5 @@ export default interface Apresentacao {
   idiom: string;
   dataSource: string;
   text: string;
+  theme: Theme;
 }

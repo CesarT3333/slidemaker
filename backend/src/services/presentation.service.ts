@@ -15,7 +15,6 @@ export class PresentationService {
   async create(presentation: Presentation): Promise<Presentation> {
     presentation.user = await this.usuarioService
       .getByGoogleId(presentation.user.googleId);
-    console.log(presentation);
     return await this.presentationRepository.save(presentation);
   }
 

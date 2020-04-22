@@ -8,19 +8,19 @@ export class UserRepository
 
   getByGoogleId =
     async (googleId: string): Promise<User> => {
-      return await this.findOne({ googleId: googleId });
+      return await this.findOne({ googleId: `${googleId}` });
     }
 
   getCountByGoogleId = async (googleId: string): Promise<number> => {
     return this.createQueryBuilder('user')
-      .where({ googleId: googleId })
+      .where({ googleId: `${googleId}` })
       .getCount();
   }
 
   getIdByGoogleId = async (googleId: string): Promise<User> => {
     return await this.findOne({
       select: ['id'],
-      where: { googleId: googleId },
+      where: { googleId: `${googleId}` },
     });
   }
 

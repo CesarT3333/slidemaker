@@ -15,6 +15,6 @@ export class UserController {
 
   @Get()
   recuperaUsuarioLogado(googleId: string): Promise<User> {
-    return this.usuario.getByGoogleId(googleId)
+    return this.usuario.getByGoogleId(googleId);
   }
 }

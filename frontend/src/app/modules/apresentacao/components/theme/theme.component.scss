@@ -1,0 +1,35 @@
+.list-themes{
+  max-height: 40vh;
+  overflow-y: scroll;
+
+  .theme-content {
+
+    margin-bottom: 1px;
+
+    img {
+      width: 250px;
+      max-width: 100%;
+      height: auto;
+      border: 2px silver solid;
+      transition: 0.3s;
+
+      &:hover,
+      &.selected  {
+        opacity: 0.6;
+        border: 2.5px #673ab7 solid;
+      }
+
+    }
+
+  }
+
+}
+
+.img-theme-selected {
+  width:400px;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.theme-name {
+margin-top: 10px;
+}

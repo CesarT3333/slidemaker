@@ -45,7 +45,7 @@ export class AuthService {
         name: googleProfile.profile.name,
         photos: googleProfile.profile.photos,
       }
-    }
+    };
 
     if (googleProfile.jwt) {
       return this.htmlPostMessage(payloadMessage);

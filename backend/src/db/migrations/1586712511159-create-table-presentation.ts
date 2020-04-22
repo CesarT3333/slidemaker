@@ -1,9 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 import { DataSourceTextPresentationEnum } from '../models/enum/data-source-text-presentation.enum';
 import { IdiomEnum } from '../models/enum/idiom.enum';
 
-export class createTablePresentation1586712511159
+export class CreateTablePresentation1586712511159
   implements MigrationInterface {
 
   private table = new Table({
@@ -63,11 +63,11 @@ export class createTablePresentation1586712511159
     ],
   });
 
-  public async up(queryRunner: QueryRunner): Promise<any> {
+  async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.createTable(this.table);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<any> {
+  async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(this.table);
   }
 

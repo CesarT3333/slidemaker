@@ -21,6 +21,14 @@
   }
 }
 
+::ng-deep div.mat-tab-body-content {
+  overflow-x: hidden;
+}
+
+::ng-deep div.mat-tab-body-wrapper {
+  padding-top: 20px;
+}
+
 .presentation-form {
 
   mat-form-field {

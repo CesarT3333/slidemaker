@@ -9,6 +9,8 @@ export const resources = {
   TRANSACOES: `${BASE_URI}/transacoes`,
   ASSINATURAS: `${BASE_URI}/assinaturas`,
 
+  THEMES: `${BASE_URI}/themes`,
+
   DATA_SOURCES: `${BASE_URI}/data-sources`,
   IDIOMS: `${BASE_URI}/idioms`,
 };

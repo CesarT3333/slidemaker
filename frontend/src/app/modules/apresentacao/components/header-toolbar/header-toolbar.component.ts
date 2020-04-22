@@ -2,6 +2,7 @@ import { OnInit, Component } from '@angular/core';
 
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GoogleProfile } from 'src/app/models/google-profile';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'smk-header-toolbar',
@@ -12,7 +13,8 @@ export class HeaderToolbarComponent
   implements OnInit {
 
   constructor(
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private appService: AppService
   ) { }
 
   ngOnInit(): void { }
@@ -28,5 +30,9 @@ export class HeaderToolbarComponent
   get userImageProfile(): string {
     return this.usuarioService.googleProfile?.photos[0]?.value ||
       '../../../../../assets/img/Grupo 10.svg';
+  }
+
+  get appVersion(): string {
+    return this.appService.appVersion;
   }
 }

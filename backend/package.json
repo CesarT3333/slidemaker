@@ -1,12 +1,12 @@
 {
   "name": "backend",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "",
   "author": "",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc -p tsconfig.prod.json",
+    "build": "nest build",
     "start": "nest start",
     "start:dev": "rm -rf dist && nest start --watch",
     "start:prod": "node src/main",
@@ -30,6 +30,7 @@
     "class-validator": "^0.11.1",
     "dotenv": "^8.2.0",
     "dotenv-flow": "^3.1.0",
+    "googleapis": "^49.0.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",

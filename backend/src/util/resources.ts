@@ -4,9 +4,11 @@ export const resources = {
   PRESENTATIONS: `/apresentacoes`,
   USERS: `/usuarios`,
 
+  THEMES: `/themes`,
+
   IDIOMS: '/idioms',
   DATA_SOURCES: '/data-sources',
 
   ASSINATURAS: `/assinaturas`,
   TRANSACOES: `/transacoes`
-}
+};

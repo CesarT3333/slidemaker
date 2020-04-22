@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { AppService } from 'src/app/services/app.service';
+
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -14,9 +16,10 @@ export class LoginComponent
   loginWindow: any;
 
   constructor(
-    private router: Router,
+    private snackBarService: SnackBarService,
     private usuarioService: UsuarioService,
-    private snackBarService: SnackBarService
+    private appService: AppService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void { }
@@ -31,7 +34,6 @@ export class LoginComponent
     this.loginWindow = window.open(uriAuthGoogle, '', windowLoginGoogleConfig);
 
     window.addEventListener('message', event => {
-      console.log();
       if (event.data?.jwt) {
         this.onLogin(event.data);
       }
@@ -51,6 +53,10 @@ export class LoginComponent
     this.router.navigate(['/apresentacao'])
       .catch(e => console.log(e))
       .finally(() => this.snackBarService.show('Logado com sucesso!'));
+  }
+
+  get appVersion(): string {
+    return this.appService.appVersion;
   }
 
 }
