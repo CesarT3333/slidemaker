@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "tsc -p tsconfig.prod.json",
     "start": "nest start",
     "start:dev": "rm -rf dist && nest start --watch",
     "start:prod": "node src/main",
@@ -62,6 +62,7 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.0",
     "tsconfig-paths": "^3.9.0",
+    "ttypescript": "^1.5.10",
     "typescript": "^3.7.4"
   },
   "jest": {
