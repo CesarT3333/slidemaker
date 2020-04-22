@@ -25,7 +25,7 @@
         <form [formGroup]="formPresentation"
               #form="ngForm"
               (ngSubmit)="onSubmit()">
-          <mat-tab-group>
+          <mat-tab-group #tabApresentacao>
             <mat-tab label="Configuração">
 
               <div class="row presentation-form">
@@ -145,7 +145,8 @@
 
             </mat-tab>
             <mat-tab label="Tema">
-              <smk-theme [formPresentation]="formPresentation"></smk-theme>
+              <smk-theme [formPresentation]="formPresentation">
+              </smk-theme>
               <!--
             <div class="content">
               <div *ngFor="let theme of themes"

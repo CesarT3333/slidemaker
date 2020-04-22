@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
-import { OnInit, Component, ViewChild, Input } from '@angular/core';
+import { OnInit, Component, ViewChild } from '@angular/core';
+import { MatTabGroup } from '@angular/material/tabs';
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
@@ -12,7 +13,6 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { EnumClientData } from 'src/app/models/enum-client-data';
 import { IdiomService } from 'src/app/services/idiom.service';
-import { ThemeService } from 'src/app/services/theme.service';
 import Apresentacao from '../../../../models/apresentacao';
 
 @Component({
@@ -25,6 +25,7 @@ export class ConfiguracaoApresentacaoComponent
   @ViewChild('inputFile', { static: true }) inputFile;
 
   @ViewChild('form', { static: false }) form;
+  @ViewChild(MatTabGroup, { static: false }) tabApresentacao: MatTabGroup;
 
   private _presentations: Array<Apresentacao> = [];
 
@@ -203,6 +204,7 @@ export class ConfiguracaoApresentacaoComponent
     });
 
     this.formPresentation.updateValueAndValidity();
+    this.tabApresentacao.selectedIndex = 0;
 
   }
 
