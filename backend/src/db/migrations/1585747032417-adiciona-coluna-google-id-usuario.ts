@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AdicionaColunaGoogleIdUsuario1585747032417
+// tslint:disable
+export class adicionaColunaGoogleIdUsuario1585747032417
   implements MigrationInterface {
 
   async up(queryRunner: QueryRunner): Promise<any> {

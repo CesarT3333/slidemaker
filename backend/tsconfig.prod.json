@@ -1,8 +1,12 @@
 {
   "extends": "./tsconfig.json",
+  "files": [
+    "paths.json",
+    "tsconfig-paths-bootstrap.js",
+    "package.json"
+  ],
   "include": [
     "src",
-    "package.json"
   ],
   "exclude": [
     "src/test.ts",

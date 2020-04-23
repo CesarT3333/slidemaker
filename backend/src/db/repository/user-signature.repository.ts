@@ -1,18 +1,18 @@
 import { EntityRepository, Repository } from 'typeorm';
 
-import { UserSignature } from '../models/user-signature';
-import Usuario from '../models/user';
+import { UserSignature } from '@model/user-signature';
+import User from '@model/user';
 
 @EntityRepository(UserSignature)
 export class UserSignatureRepository
   extends Repository<UserSignature> {
 
-  getForLoggedInUser = async (usuario: Usuario) => {
+  getForLoggedInUser = async (user: User) => {
     return this.createQueryBuilder('assinaturas')
       .leftJoinAndSelect('assinaturas.usuario', 'usuario')
       .leftJoinAndSelect('assinaturas.plano', 'plano')
       .where('usuario.googleId = :googleId',
-        { googleId: usuario.googleId })
+        { googleId: user.googleId })
       .getOne();
   }
 

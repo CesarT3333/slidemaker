@@ -1,11 +1,11 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { PresentationRepository } from '../../db/repository/presentation.repository';
-import { PresentationService } from '../../services/presentation.service';
+import { PresentationRepository } from '@repository/presentation.repository';
+import { PresentationService } from '@services/presentation.service';
 import { PresentationController } from './presentation.controller';
-import { Presentation } from '../../db/models/presentation';
 import { UserModule } from '../usuario/user.module';
+import { Presentation } from '@model/presentation';
 
 @Module({
   imports: [

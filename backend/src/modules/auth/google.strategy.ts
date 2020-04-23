@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-google-oauth20';
 
 import { UserGooglePayload } from '../../interfaces/user-google-pay-load';
-import { AuthService, Provider } from '../../services/auth.service';
+import { Provider, AuthService } from '@services/auth.service';
 import { scopes } from '../../util/google.constants';
 
 @Injectable()

@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateTablePlans1586274054972
+// tslint:disable
+export class createTablePlans1586274054972
   implements MigrationInterface {
 
   private table = new Table({

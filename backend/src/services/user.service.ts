@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { UserGooglePayload } from '../interfaces/user-google-pay-load';
-import { UserRepository } from '../db/repository/user.repository';
-import User from '../db/models/user';
+import { UserRepository } from '@repository/user.repository';
+import User from '@model/user';
 
 @Injectable()
 export class UserService {
@@ -13,7 +13,7 @@ export class UserService {
 
   async createByGooglePayload(profile: UserGooglePayload): Promise<any> {
 
-    const unregisteredUser: boolean =
+    const unregisteredUser =
       !(await this.getCountByGoogleId(profile.id));
 
     if (unregisteredUser) {

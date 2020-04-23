@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { IdiomService } from '../../services/idiom.service';
+import { IdiomService } from '@services/idiom.service';
 import { IdiomController } from './idiom.controller';
 
 @Module({

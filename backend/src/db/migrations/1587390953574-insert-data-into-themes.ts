@@ -2,7 +2,8 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 import { Theme } from '../models/theme';
 
-export class InsertDataIntoThemes1587390953574
+// tslint:disable
+export class insertDataIntoThemes1587390953574
   implements MigrationInterface {
 
   async up(queryRunner: QueryRunner): Promise<any> {

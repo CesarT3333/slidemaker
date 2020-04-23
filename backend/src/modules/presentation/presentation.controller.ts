@@ -1,10 +1,10 @@
 import { Controller, UseGuards, Post, Req, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { PresentationService } from '../../services/presentation.service';
-import { Presentation } from '../../db/models/presentation';
+import { PresentationService } from '@services/presentation.service';
+import { Presentation } from '@model/presentation';
 import { resources } from '../../util/resources';
-import User from '../../db/models/user';
+import User from '@model/user';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller(resources.PRESENTATIONS)

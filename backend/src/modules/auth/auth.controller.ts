@@ -1,10 +1,10 @@
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
 import { resources } from '../../util/resources';
-import User from '../../db/models/user';
+import User from '@model/user';
 
 @Controller(resources.AUTH)
 export class AuthController {

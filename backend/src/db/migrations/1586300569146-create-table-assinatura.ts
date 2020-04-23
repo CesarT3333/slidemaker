@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-export class CreateTableAssinatura1586300569146
+// tslint:disable
+export class createTableAssinatura1586300569146
   implements MigrationInterface {
 
   private table = new Table({

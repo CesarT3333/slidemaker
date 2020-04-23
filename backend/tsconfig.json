@@ -1,7 +1,9 @@
 {
+  "extends": "./paths.json",
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
+    "allowJs": true,
     "declaration": true,
     "removeComments": true,
     "resolveJsonModule": true,

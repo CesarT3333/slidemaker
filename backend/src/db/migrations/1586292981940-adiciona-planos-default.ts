@@ -3,7 +3,8 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 import { TipoCobrancaPlanoEnum } from '../models/enum/tipo-cobranca-plano.enum';
 import Plan from '../models/plan';
 
-export class AdicionaPlanosDefault1586292981940
+// tslint:disable
+export class adicionaPlanosDefault1586292981940
   implements MigrationInterface {
 
   async up(queryRunner: QueryRunner): Promise<any> {
