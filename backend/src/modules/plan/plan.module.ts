@@ -1,10 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { PlanRepository } from '../../db/repository/plan.repository';
-import { PlanService } from '../../services/plan.service';
+import { PlanRepository } from '@repository/plan.repository';
+import { PlanService } from '@services/plan.service';
 import { PlanController } from './plan.controller';
-import Plan from '../../db/models/plan';
+import Plan from '@model/plan';
 
 @Module({
   imports: [

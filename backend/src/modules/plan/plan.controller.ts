@@ -1,9 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { PlanService } from '../../services/plan.service';
+import { PlanService } from '@services/plan.service';
 import { resources } from '../../util/resources';
-import Plan from '../../db/models/plan';
+import Plan from '@model/plan';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller(resources.PLANS)

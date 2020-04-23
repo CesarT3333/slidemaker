@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@model/*": [
+        "src/db/models/*"
+      ],
+      "@repository/*": [
+        "src/db/repository/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { PlanRepository } from '../db/repository/plan.repository';
-import Plan from '../db/models/plan';
+import { PlanRepository } from '@repository/plan.repository';
+import Plan from '@model/plan';
 
 @Injectable()
 export class PlanService {

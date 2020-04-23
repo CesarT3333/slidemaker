@@ -3,7 +3,8 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 import { DataSourceTextPresentationEnum } from '../models/enum/data-source-text-presentation.enum';
 import { IdiomEnum } from '../models/enum/idiom.enum';
 
-export class CreateTablePresentation1586712511159
+// tslint:disable
+export class createTablePresentation1586712511159
   implements MigrationInterface {
 
   private table = new Table({

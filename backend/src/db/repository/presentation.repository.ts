@@ -1,6 +1,6 @@
 import { Repository, EntityRepository } from 'typeorm';
 
-import { Presentation } from '../models/presentation';
+import { Presentation } from '@model/presentation';
 
 @EntityRepository(Presentation)
 export class PresentationRepository

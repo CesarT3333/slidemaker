@@ -1,10 +1,10 @@
 import { Controller, Get, UseGuards, Req, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UserSignatureService } from '../../services/user-signatureservice';
-import { UserSignature } from '../../db/models/user-signature';
+import { UserSignatureService } from '@services/user-signatureservice';
+import { UserSignature } from '@model/user-signature';
 import { resources } from '../../util/resources';
-import User from '../../db/models/user';
+import User from '@model/user';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller(resources.ASSINATURAS)

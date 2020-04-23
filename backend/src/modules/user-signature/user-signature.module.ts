@@ -1,10 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { UserSignatureRepository } from '../../db/repository/user-signature.repository';
-import { UserSignatureService } from '../../services/user-signatureservice';
+import { UserSignatureRepository } from '@repository/user-signature.repository';
+import { UserSignatureService } from '@services/user-signatureservice';
 import { UserSignatureController } from './user-signature.controller';
-import { UserSignature } from '../../db/models/user-signature';
+import { UserSignature } from '@model/user-signature';
 import { UserModule } from '../usuario/user.module';
 
 @Module({

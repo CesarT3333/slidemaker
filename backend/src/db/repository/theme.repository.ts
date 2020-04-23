@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 
-import { Theme } from '../models/theme';
+import { Theme } from '@model/theme';
 
 @EntityRepository(Theme)
 export class ThemeRepository

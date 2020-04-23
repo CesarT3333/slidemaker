@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { UserSignatureRepository } from '../db/repository/user-signature.repository';
-import { UserSignature } from '../db/models/user-signature';
+import { UserSignatureRepository } from '@repository/user-signature.repository';
+import { UserSignature } from '@model/user-signature';
 import { UserService } from './user.service';
-import User from '../db/models/user';
+import User from '@model/user';
 
 @Injectable()
 export class UserSignatureService {

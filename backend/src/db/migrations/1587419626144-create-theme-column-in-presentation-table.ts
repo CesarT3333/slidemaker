@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 
-export class CreateThemeColumnInPresentationTable1587419626144
+// tslint:disable
+export class createThemeColumnInPresentationTable1587419626144
   implements MigrationInterface {
 
   async up(queryRunner: QueryRunner): Promise<any> {
@@ -23,6 +24,7 @@ export class CreateThemeColumnInPresentationTable1587419626144
   }
 
   async down(queryRunner: QueryRunner): Promise<any> {
+    // TODO:
   }
 
 }

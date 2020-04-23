@@ -1,8 +1,8 @@
-import { Controller, UseGuards, Get, HttpCode } from '@nestjs/common';
+import { Controller, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { EnumClientData } from '../../db/models/enum-client-data';
-import { IdiomService } from '../../services/idiom.service';
+import { EnumClientData } from '@model/enum-client-data';
+import { IdiomService } from '@services/idiom.service';
 import { resources } from '../../util/resources';
 
 @UseGuards(AuthGuard('jwt'))

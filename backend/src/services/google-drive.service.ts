@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { google } from 'googleapis';
 
 import { folderThemesId } from '../util/google.constants';
-import { Theme } from '../db/models/theme';
+import { Theme } from '@model/theme';
 
 @Injectable()
 export class GoogleDriveService {

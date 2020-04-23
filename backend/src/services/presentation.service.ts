@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { PresentationRepository } from '../db/repository/presentation.repository';
-import { Presentation } from '../db/models/presentation';
+import { PresentationRepository } from '@repository/presentation.repository';
+import { Presentation } from '@model/presentation';
 import { UserService } from './user.service';
 
 @Injectable()
