@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } fro
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 
+
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
 
@@ -16,6 +17,7 @@ import { IdiomService } from 'src/app/services/idiom.service';
 import Apresentacao from '../../../../models/apresentacao';
 
 @Component({
+  selector: 'stepper-overview',
   templateUrl: './configuracao-apresentacao.component.html',
   styleUrls: ['./configuracao-apresentacao.component.scss']
 })
@@ -40,6 +42,10 @@ export class ConfiguracaoApresentacaoComponent
   };
 
   formPresentation: FormGroup;
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
 
   constructor(
     private presentationService: ApresentacaoService,
@@ -54,6 +60,16 @@ export class ConfiguracaoApresentacaoComponent
 
   ngOnInit(): void {
     this.startsMandatorySearches();
+
+    this.firstFormGroup = this.formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+    this.thirdFormGroup = this.formBuilder.group({
+      thirdCtrl: ['', Validators.required]
+    });
   }
 
   onSubmit() {
