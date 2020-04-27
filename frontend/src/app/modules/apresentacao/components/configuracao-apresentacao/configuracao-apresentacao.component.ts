@@ -1,7 +1,5 @@
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { OnInit, Component, ViewChild } from '@angular/core';
-import { MatTabGroup } from '@angular/material/tabs';
-
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
@@ -17,7 +15,7 @@ import { IdiomService } from 'src/app/services/idiom.service';
 import Apresentacao from '../../../../models/apresentacao';
 
 @Component({
-  selector: 'stepper-overview',
+  selector: 'configuracao-apresentacao.component',
   templateUrl: './configuracao-apresentacao.component.html',
   styleUrls: ['./configuracao-apresentacao.component.scss']
 })
@@ -25,9 +23,7 @@ export class ConfiguracaoApresentacaoComponent
   implements OnInit {
 
   @ViewChild('inputFile', { static: true }) inputFile;
-
   @ViewChild('form', { static: false }) form;
-  @ViewChild(MatTabGroup, { static: false }) tabApresentacao: MatTabGroup;
 
   private _presentations: Array<Apresentacao> = [];
 
@@ -43,9 +39,9 @@ export class ConfiguracaoApresentacaoComponent
 
   formPresentation: FormGroup;
   isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
+  configurationForm: FormGroup;
+  themeForm: FormGroup;
+  coverForm: FormGroup;
 
   constructor(
     private presentationService: ApresentacaoService,
@@ -61,13 +57,13 @@ export class ConfiguracaoApresentacaoComponent
   ngOnInit(): void {
     this.startsMandatorySearches();
 
-    this.firstFormGroup = this.formBuilder.group({
+    this.configurationForm = this.formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
-    this.secondFormGroup = this.formBuilder.group({
+    this.themeForm = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
-    this.thirdFormGroup = this.formBuilder.group({
+    this.coverForm = this.formBuilder.group({
       thirdCtrl: ['', Validators.required]
     });
   }
@@ -103,7 +99,7 @@ export class ConfiguracaoApresentacaoComponent
   }
 
   getErrorsInput(input: string): ValidationErrors {
-    return this.formPresentation.get(input).errors;
+    return this.formPresentation.get(input)?.errors;
   }
 
   onLimparAttachedFile($event) {
@@ -220,7 +216,7 @@ export class ConfiguracaoApresentacaoComponent
     });
 
     this.formPresentation.updateValueAndValidity();
-    this.tabApresentacao.selectedIndex = 0;
+    //this.tabApresentacao.selectedIndex = 0;
 
   }
 

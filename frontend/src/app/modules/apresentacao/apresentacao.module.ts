@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -20,6 +21,7 @@ import { ApresentacaoRoutingModule } from './apresentacao.routing';
 import { IdiomService } from 'src/app/services/idiom.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { ThemeComponent } from './components/theme/theme.component';
+//import { CoverComponent } from './components/cover/cover.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { ThemeComponent } from './components/theme/theme.component';
     MatInputModule,
     MatMenuModule,
     MatIconModule,
+    MatStepperModule,
 
     ApresentacaoRoutingModule,
   ],
@@ -43,7 +46,7 @@ import { ThemeComponent } from './components/theme/theme.component';
     HeaderToolbarComponent,
     ApresentacaoComponent,
     ThemeComponent,
-
+//    CoverComponent,
     ConfiguracaoApresentacaoComponent,
   ],
   providers: [
