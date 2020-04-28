@@ -38,7 +38,7 @@ export class ConfiguracaoApresentacaoComponent
   };
 
   formPresentation: FormGroup;
-  isLinear = false;
+  isLinear = true;
   configurationForm: FormGroup;
   themeForm: FormGroup;
   coverForm: FormGroup;
@@ -56,20 +56,14 @@ export class ConfiguracaoApresentacaoComponent
 
   ngOnInit(): void {
     this.startsMandatorySearches();
-
+        
     this.configurationForm = this.formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
-    this.themeForm = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.coverForm = this.formBuilder.group({
-      thirdCtrl: ['', Validators.required]
-    });
   }
 
-  onSubmit() {
-    if (this.formPresentation.valid) {
+  onSavePresentation() {
+    if (this.formPresentation.valid) {                  
       this.loadingService.show();
       this.presentationService.create(<Apresentacao>this.formPresentation.value)
         .pipe(
@@ -81,13 +75,16 @@ export class ConfiguracaoApresentacaoComponent
             this._presentations = userpresentations;
             this.resetFormDefault();
             this.snackBarService.show('Apresentação criada com sucesso');
+            
           },
           error => this.handleErrorService.handle(error)
         );
     }
-
   }
-
+  
+  onSubmit(){
+  }
+  
   onClickAttachmentFile($event) {
     $event?.preventDefault();
     this.inputFile.nativeElement.click();
