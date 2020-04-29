@@ -12,7 +12,7 @@ export class UserRepository
     }
 
   getCountByGoogleId = async (googleId: string): Promise<number> => {
-    return this.createQueryBuilder('user')
+    return this.createQueryBuilder('users')
       .where({ googleId: `${googleId}` })
       .getCount();
   }

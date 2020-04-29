@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
+import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { AssinaturaService } from '../assinatura-usuario.service';
-import { catchError, map } from 'rxjs/operators';
+import { AssinaturaService } from '../rest/assinatura-usuario.service';
 import { SnackBarService } from '../snack-bar.service';
 
 @Injectable({ providedIn: 'root' })

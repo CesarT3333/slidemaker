@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-// tslint:disable
-export class createTableAssinatura1586300569146
+export class CreateTableSubscriptions1588077762890
   implements MigrationInterface {
 
   private table = new Table({
-    name: 'assinaturas',
+    name: 'subscriptions',
     columns: [
       {
         name: 'id',
@@ -15,19 +14,19 @@ export class createTableAssinatura1586300569146
         generationStrategy: 'increment',
       },
       {
-        name: 'quantidade_apresentacoes',
+        name: 'amount_presentation',
         type: 'integer',
         isNullable: true,
         isUnique: false
       },
       {
-        name: 'id_usuario',
+        name: 'id_user',
         type: 'integer',
         isNullable: false,
         isUnique: false
       },
       {
-        name: 'id_plano',
+        name: 'id_plan',
         type: 'integer',
         isNullable: false,
         isUnique: false
@@ -40,23 +39,23 @@ export class createTableAssinatura1586300569146
     await queryRunner.createTable(this.table);
 
     await queryRunner.createForeignKey(
-      'assinaturas',
+      'subscriptions',
       new TableForeignKey({
-        name: 'fk_assinatura_usuario',
-        columnNames: ['id_usuario'],
+        name: 'fk_subscription_user',
+        columnNames: ['id_user'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'usuario',
+        referencedTableName: 'users',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }));
 
     await queryRunner.createForeignKey(
-      'assinaturas',
+      'subscriptions',
       new TableForeignKey({
-        name: 'fk_assinatura_plano',
-        columnNames: ['id_plano'],
+        name: 'fk_assinatura_plan',
+        columnNames: ['id_plan'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'planos',
+        referencedTableName: 'plans',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }));
@@ -65,5 +64,4 @@ export class createTableAssinatura1586300569146
   async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(this.table);
   }
-
 }

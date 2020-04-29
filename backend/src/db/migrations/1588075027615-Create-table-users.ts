@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-// tslint:disable
-export class createTablePlans1586274054972
+export class CreateTableUsers1588075027615
   implements MigrationInterface {
 
   private table = new Table({
-    name: 'planos',
+    name: 'users',
     columns: [
       {
         name: 'id',
@@ -15,39 +14,32 @@ export class createTablePlans1586274054972
         generationStrategy: 'increment',
       },
       {
-        name: 'nome',
+        name: 'name',
         type: 'varchar',
-        length: '100',
+        length: '255',
         isUnique: false,
         isNullable: false,
       },
       {
-        name: 'descricao',
-        type: 'text',
+        name: 'family_name',
+        type: 'varchar',
+        length: '255',
         isUnique: false,
         isNullable: true
       },
       {
-        name: 'valor',
-        type: 'decimal',
-        isUnique: false,
-        isNullable: false,
-      },
-      {
-        name: 'atributos',
+        name: 'email',
         type: 'varchar',
-        length: '300',
-        default: '0.0',
+        length: '255',
+        isUnique: true,
         isNullable: false,
-        isUnique: false
       },
       {
-        name: 'tipo_cobranca',
+        name: 'google_id',
         type: 'text',
+        isUnique: true,
         isNullable: false,
-        isUnique: false
       }
-
     ],
   });
 

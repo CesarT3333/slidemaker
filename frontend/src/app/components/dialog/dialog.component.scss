@@ -1,0 +1,48 @@
+.flex-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.flex-item {
+  flex: 1;
+}
+
+.success {
+  color: #59BA75;
+}
+
+.info {
+  color: black;
+}
+
+.critical {
+  color: #8b0001;
+}
+
+.btn-ok {
+  margin-bottom: 10px
+}
+
+.dialog-content {
+  text-align: center;
+  min-width: 500px;
+}
+
+.mat-accordion {
+  margin-bottom: 100px;
+  margin-top: 100px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+  background: white;
+}
+
+.mat-expansion-panel-header-description {
+  display: inline;
+}

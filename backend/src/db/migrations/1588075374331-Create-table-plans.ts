@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-// tslint:disable
-export class createTableThemes1587389313202
+export class CreateTablePlans1588075374331
   implements MigrationInterface {
 
   private table = new Table({
-    name: 'themes',
+    name: 'plans',
     columns: [
       {
         name: 'id',
@@ -18,29 +17,45 @@ export class createTableThemes1587389313202
         name: 'name',
         type: 'varchar',
         length: '100',
+        isUnique: false,
         isNullable: false,
       },
       {
-        name: 'google_id_img',
+        name: 'description',
         type: 'text',
-        isNullable: false,
-        isUnique: true
+        isUnique: false,
+        isNullable: true
       },
       {
-        name: 'google_id_presentation',
+        name: 'cost',
+        type: 'decimal',
+        isUnique: false,
+        isNullable: false,
+      },
+      {
+        name: 'attributes',
+        type: 'varchar',
+        length: '300',
+        default: '0.0',
+        isNullable: false,
+        isUnique: false
+      },
+      {
+        name: 'billing_type',
         type: 'text',
         isNullable: false,
-        isUnique: true
-      },
-    ]
+        isUnique: false
+      }
+
+    ],
   });
 
   async up(queryRunner: QueryRunner): Promise<any> {
-    queryRunner.createTable(this.table);
+    await queryRunner.createTable(this.table);
   }
 
   async down(queryRunner: QueryRunner): Promise<any> {
-    queryRunner.dropTable(this.table);
+    await queryRunner.dropTable(this.table);
   }
 
 }

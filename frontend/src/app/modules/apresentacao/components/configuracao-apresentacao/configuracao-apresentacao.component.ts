@@ -1,19 +1,20 @@
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OnInit, Component, ViewChild } from '@angular/core';
-import { MatTabGroup } from '@angular/material/tabs';
 
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
 
-import { ApresentacaoService } from 'src/app/services/apresentacao.service';
-import { HandleErrorService } from 'src/app/services/handle-error.service';
-import { DataSourceService } from 'src/app/services/data-sources.service';
-import { FileReaderService } from 'src/app/services/file-reade.service';
-import { SnackBarService } from 'src/app/services/snack-bar.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { EnumClientData } from 'src/app/models/enum-client-data';
-import { IdiomService } from 'src/app/services/idiom.service';
-import Apresentacao from '../../../../models/apresentacao';
+import { ApresentacaoService } from '@services/rest/apresentacao.service';
+import { DataSourceService } from '@services/rest/data-sources.service';
+import { HandleErrorService } from '@services/handle-error.service';
+import { FileReaderService } from '@services/file-reade.service';
+import { LoadingService } from '@services/loading.service';
+import { EnumClientData } from '@models/enum-client-data';
+import { DialogService } from '@services/dialog.service';
+import { IdiomService } from '@services/rest/idiom.service';
+import Apresentacao from '@models/apresentacao';
+import { Theme } from '@models/theme';
 
 @Component({
   templateUrl: './configuracao-apresentacao.component.html',
@@ -22,10 +23,20 @@ import Apresentacao from '../../../../models/apresentacao';
 export class ConfiguracaoApresentacaoComponent
   implements OnInit {
 
-  @ViewChild('inputFile', { static: true }) inputFile;
+  @ViewChild('inputFile', { static: true })
+  inputFile;
 
-  @ViewChild('form', { static: false }) form;
-  @ViewChild(MatTabGroup, { static: false }) tabApresentacao: MatTabGroup;
+  @ViewChild('form', { static: false })
+  form;
+
+  @ViewChild(MatHorizontalStepper, { static: false })
+  presentationStepper: MatHorizontalStepper;
+
+  formPresentation: FormGroup;
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
 
   private _presentations: Array<Apresentacao> = [];
 
@@ -36,24 +47,30 @@ export class ConfiguracaoApresentacaoComponent
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
     IDIOM: 'PT_BR',
-    AMOUNT_SLIDES: 20
+    AMOUNT_SLIDES: 20,
+    COVER: {
+      title: 'Claro Simples',
+      subTitle: 'Legenda'
+    }
   };
-
-  formPresentation: FormGroup;
 
   constructor(
     private presentationService: ApresentacaoService,
     private handleErrorService: HandleErrorService,
     private dataSourceService: DataSourceService,
     private fileReaderService: FileReaderService,
-    private snackBarService: SnackBarService,
     private loadingService: LoadingService,
+    private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.startsMandatorySearches();
+  }
+
+  onAbreModal() {
+    this.dialogService.open({ message: 'Teste de mensagem' });
   }
 
   onSubmit() {
@@ -63,12 +80,12 @@ export class ConfiguracaoApresentacaoComponent
         .pipe(
           delay(2000),
           finalize(() => this.loadingService.dismiss()),
-          switchMap(() => this.getAllSlides())
+          switchMap(() => this.getAllPresentations())
         ).subscribe(
           userpresentations => {
             this._presentations = userpresentations;
             this.resetFormDefault();
-            this.snackBarService.show('Apresentação criada com sucesso');
+            this.dialogService.open({ message: 'Apresentação criada com sucesso' });
           },
           error => this.handleErrorService.handle(error)
         );
@@ -87,7 +104,7 @@ export class ConfiguracaoApresentacaoComponent
   }
 
   getErrorsInput(input: string): ValidationErrors {
-    return this.formPresentation.get(input).errors;
+    return this.formPresentation.get(input)?.errors;
   }
 
   onLimparAttachedFile($event) {
@@ -107,7 +124,7 @@ export class ConfiguracaoApresentacaoComponent
 
     switch (dataSourceSelected) {
       case 'TXT':
-
+        // TODO: Separar em método
         textFormControl.setValue(null);
         textFormControl.setValidators(Validators.required);
 
@@ -117,6 +134,7 @@ export class ConfiguracaoApresentacaoComponent
         break;
 
       case 'FILE':
+        // TODO: Separar em método
         filenameFormControl.setValue(null);
         filenameFormControl.setValidators(Validators.required);
 
@@ -140,7 +158,7 @@ export class ConfiguracaoApresentacaoComponent
   private startsMandatorySearches(): void {
     this.loadingService.show();
     concat(
-      this.getAllSlides(),
+      this.getAllPresentations(),
       this.getDataSources(),
       this.getIdioms()
     ).pipe(
@@ -148,10 +166,13 @@ export class ConfiguracaoApresentacaoComponent
         this.loadingService.dismiss();
         this.initForm();
       })
-    ).subscribe();
+    ).subscribe(
+      _ => { },
+      error => this.handleErrorService.handle(error)
+    );
   }
 
-  private getAllSlides(): Observable<Array<Apresentacao>> {
+  private getAllPresentations(): Observable<Array<Apresentacao>> {
     return this.presentationService.buscarSlides()
       .pipe(tap(presentations => this._presentations = presentations));
   }
@@ -169,12 +190,8 @@ export class ConfiguracaoApresentacaoComponent
   private initForm() {
     this.formPresentation =
       this.formBuilder.group({
-        fileName: [{
-          value: null,
-          disabled: false
-        }],
-        text: null,
         term: [null, Validators.required],
+        text: null,
         amountOfSlides: [
           this._defaults.AMOUNT_SLIDES,
           [
@@ -182,9 +199,20 @@ export class ConfiguracaoApresentacaoComponent
             Validators.pattern('^[0-9]*$')
           ]
         ],
+        fileName: [{
+          value: null,
+          disabled: false
+        }],
         idiom: [null, Validators.required],
         dataSource: [null, Validators.required],
-        theme: [null, Validators.required]
+        theme: [null, Validators.required],
+        cover: this.formBuilder.group({
+          title: [
+            this._defaults.COVER.title,
+            Validators.required
+          ],
+          subTitle: this._defaults.COVER.subTitle,
+        })
       });
 
     this.setDatasourceToDefault();
@@ -193,18 +221,27 @@ export class ConfiguracaoApresentacaoComponent
   }
 
   private resetFormDefault(): void {
+    this.presentationStepper.selectedIndex = 0;
+    this.presentationStepper.reset();
+
     this.form.resetForm();
     this.formPresentation.patchValue({
       term: null,
       text: null,
-      fileName: null,
       amountOfSlides: this._defaults.AMOUNT_SLIDES,
+      fileName: null,
       idiom: this._defaults.IDIOM,
       dataSource: this._defaults.DATASOURCE,
+      theme: null,
+      cover: {
+        title: this._defaults.COVER.title,
+        subTitle: this._defaults.COVER.subTitle,
+      }
     });
 
     this.formPresentation.updateValueAndValidity();
-    this.tabApresentacao.selectedIndex = 0;
+
+    console.log(this.formPresentation);
 
   }
 
@@ -214,9 +251,12 @@ export class ConfiguracaoApresentacaoComponent
     this.fileReaderService.readFileContent(file, (fileContent, error?) => {
 
       if (error) {
-        console.log(error);
-        this.snackBarService
-          .show('Ocorreu um erro ao anexar o arquivo. Tente novamente');
+
+        this.dialogService.open({
+          title: 'Erro ao anexar arquivo',
+          message: 'Ocorreu um erro ao anexar o arquivo. Tente novamente'
+        });
+
       } else {
 
         this.formPresentation.patchValue({
@@ -267,6 +307,10 @@ export class ConfiguracaoApresentacaoComponent
 
   get themes(): Array<string> {
     return this._themes;
+  }
+
+  get themeFormControl(): Theme {
+    return this.formPresentation?.get('theme')?.value;
   }
 
 }

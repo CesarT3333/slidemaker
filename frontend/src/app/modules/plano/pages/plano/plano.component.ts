@@ -5,14 +5,14 @@ import { Router } from '@angular/router';
 import { finalize, filter } from 'rxjs/operators';
 
 import { ModalConfirmacaoAdiquirimentoComponent } from '../../components/modal-confirmacao-adquirimento/modal-confirmacao-adquirimento.component';
-import { AssinaturaService } from 'src/app/services/assinatura-usuario.service';
-import { HandleErrorService } from 'src/app/services/handle-error.service';
-import { SnackBarService } from 'src/app/services/snack-bar.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { PlanoService } from 'src/app/services/plano.service';
-import Plano from 'src/app/models/plano';
-import { AssinaturaUsuario } from 'src/app/models/assinatura-usuario';
+import { AssinaturaService } from '@services/rest/assinatura-usuario.service';
+import { HandleErrorService } from '@services/handle-error.service';
+import { AssinaturaUsuario } from '@models/assinatura-usuario';
+import { SnackBarService } from '@services/snack-bar.service';
+import { LoadingService } from '@services/loading.service';
+import { UsuarioService } from '@services/usuario.service';
+import { PlanoService } from '@services/rest/plano.service';
+import Plano from '@models/plano';
 
 @Component({
   templateUrl: './plano.component.html',
@@ -49,11 +49,11 @@ export class PlanoComponent
       .pipe(filter(resultadoConfirmacao => resultadoConfirmacao))
       .subscribe((quantidadeObjeto: { quantidade: number }) => {
         this.usuarioService.assinatura =
-          <AssinaturaUsuario>{ plano: $event };
+          <AssinaturaUsuario>{ plan: $event };
 
         if (quantidadeObjeto) {
           this.usuarioService.assinatura
-            .quantidadeApresentacoes = quantidadeObjeto.quantidade;
+            .amountPresentation = quantidadeObjeto.quantidade;
         }
 
         this.router.navigate(['./pagamento']);

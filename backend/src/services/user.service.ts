@@ -22,9 +22,8 @@ export class UserService {
         <User>{
           googleId: profile.id,
           email: profile.emails[0].value,
-          nome: profile.name.givenName,
-          sobreNome: profile.name.familyName,
-          createdAt: new Date()
+          name: profile.name.givenName,
+          familyName: profile.name.familyName,
         });
 
     }
@@ -33,15 +32,15 @@ export class UserService {
 
   async getIdByGoogleId(googleId: string): Promise<number> {
 
-    const idUsuario: number = await this.userRepository
+    const idUser: number = await this.userRepository
       .getIdByGoogleId(googleId)
       .then(usuario => usuario?.id);
 
-    if (!idUsuario) {
+    if (!idUser) {
       throw new NotFoundException('Usuário não encontrado');
     }
 
-    return idUsuario;
+    return idUser;
   }
 
   async getByGoogleId(googleId: string): Promise<User> {

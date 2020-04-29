@@ -16,8 +16,6 @@ const configuracaoApresentacaoRoutes: Routes = [
   imports: [
     RouterModule.forChild(configuracaoApresentacaoRoutes)
   ],
-  exports: [
-    RouterModule
-  ]
+  exports: [RouterModule]
 })
 export class ApresentacaoRoutingModule { }

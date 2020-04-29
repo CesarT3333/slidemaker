@@ -4,19 +4,18 @@ import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { resources } from '../util/resources';
-import { Theme } from '../models/theme';
+import { resources } from '@utils/resources';
+import Plano from '@models/plano';
 
 @Injectable()
-export class ThemeService {
+export class PlanoService {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getAll(): Observable<Array<Theme>> {
-    return this.http.get<Array<Theme>>(resources.THEMES)
+  buscarTodos(): Observable<Array<Plano>> {
+    return this.http.get<Array<Plano>>(resources.PLANOS)
       .pipe(take(1));
   }
-
 }

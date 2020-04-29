@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { take, map } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { AssinaturaUsuario } from '../models/assinatura-usuario';
-import { resources } from '../util/resources';
+import { AssinaturaUsuario } from '@models/assinatura-usuario';
+import { resources } from '@utils/resources';
 
 @Injectable({ providedIn: 'root' })
 export class AssinaturaService {
@@ -20,10 +20,7 @@ export class AssinaturaService {
   }
 
   buscaAssinaturaUsuario(): Observable<AssinaturaUsuario> {
-    return this.http.get(`${resources.ASSINATURAS}/usuario`)
-      .pipe(
-        map(assinatura => <AssinaturaUsuario>assinatura),
-        take(1)
-      );
+    return this.http.get<AssinaturaUsuario>(`${resources.ASSINATURAS}/usuario`)
+      .pipe(take(1));
   }
 }

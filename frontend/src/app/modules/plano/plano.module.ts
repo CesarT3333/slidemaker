@@ -9,7 +9,7 @@ import { ModalConfirmacaoAdiquirimentoComponent } from './components/modal-confi
 import { TipoCobrancaPlanoPipe } from './pipes/tipo-cobranca-plano/tipo-cobranca-plano.pipe';
 import { PortletPlanoComponent } from './components/portlet-plano/portlet-plano.component';
 import { PlanoComponent } from './pages/plano/plano.component';
-import { PlanoService } from 'src/app/services/plano.service';
+import { PlanoService } from '@services/rest/plano.service';
 import { PlanoRoutingModule } from './plano.routing';
 
 @NgModule({
@@ -31,8 +31,6 @@ import { PlanoRoutingModule } from './plano.routing';
     TipoCobrancaPlanoPipe,
     PlanoComponent,
   ],
-  providers: [
-    PlanoService
-  ]
+  providers: [PlanoService]
 })
 export class PlanoModule { }

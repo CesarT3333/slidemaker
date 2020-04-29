@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 import { Presentation } from './presentation';
 
-@Entity({ name: 'usuario' })
+@Entity({ name: 'users' })
 export default class User {
 
   @PrimaryGeneratedColumn()
@@ -12,19 +12,13 @@ export default class User {
   googleId: string;
 
   @Column()
-  nome: string;
+  name: string;
 
-  @Column({ name: 'sobre_nome' })
-  sobreNome: string;
+  @Column({ name: 'family_name' })
+  familyName: string;
 
   @Column()
   email: string;
-
-  @Column({ name: 'created_at' })
-  createdAt?: Date;
-
-  @Column({ name: 'updated_at' })
-  updatedAt?: Date;
 
   @OneToMany(type => Presentation, presentation => presentation.user)
   presentations: Array<Presentation>;

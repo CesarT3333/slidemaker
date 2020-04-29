@@ -9,9 +9,9 @@ export class PresentationRepository
   getAllUserPresentation(googleId: string) {
     return this.find({
       join: {
-        alias: 'presentation',
+        alias: 'presentations',
         leftJoin: {
-          user: 'presentation.user'
+          user: 'presentations.user'
         },
 
       }, where: qb => {

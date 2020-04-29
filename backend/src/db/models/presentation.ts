@@ -1,13 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 import { IsInt } from 'class-validator';
 
 import { DataSourceTextPresentationEnum } from './enum/data-source-text-presentation.enum';
 import { IdiomEnum } from './enum/idiom.enum';
 import { Theme } from './theme';
+import { Cover } from './cover';
 import User from './user';
 
-@Entity({ name: 'presentation' })
+@Entity({ name: 'presentations' })
 export class Presentation {
 
   @PrimaryGeneratedColumn()
@@ -42,5 +43,12 @@ export class Presentation {
     referencedColumnName: 'id'
   })
   theme: Theme;
+
+  @OneToOne(type => Cover, { cascade: true })
+  @JoinColumn({
+    name: 'id_cover',
+    referencedColumnName: 'id',
+  })
+  cover: Cover;
 
 }
