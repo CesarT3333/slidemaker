@@ -9,10 +9,10 @@ import { ApresentacaoService } from '@services/rest/apresentacao.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
 import { HandleErrorService } from '@services/handle-error.service';
 import { FileReaderService } from '@services/file-reade.service';
+import { IdiomService } from '@services/rest/idiom.service';
 import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
-import { IdiomService } from '@services/rest/idiom.service';
 import Apresentacao from '@models/apresentacao';
 import { Theme } from '@models/theme';
 
