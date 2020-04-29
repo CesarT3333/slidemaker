@@ -73,7 +73,8 @@ export class ConfiguracaoApresentacaoComponent
     this.dialogService.open({ message: 'Teste de mensagem' });
   }
 
-  onSavePresentation() {
+  onSubmit() {
+    console.log(this.formPresentation);
     if (this.formPresentation.valid) {
       this.loadingService.show();
       this.presentationService.create(<Apresentacao>this.formPresentation.value)
@@ -90,9 +91,6 @@ export class ConfiguracaoApresentacaoComponent
           error => this.handleErrorService.handle(error)
         );
     }
-  }
-
-  onSubmit() {
   }
 
   onClickAttachmentFile($event) {
