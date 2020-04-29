@@ -1,10 +1,10 @@
-import { TipoCobrancaPlanoEnum } from './enum/tipo-cobranca-plano.enum';
+import { BillingPlanEnum } from './enum/billing-plan.enum';
 
 export default interface Plano {
   id?: number;
-  nome: string;
-  descricao: string;
-  valor: number;
-  atributos: string;
-  tipoCobrancaPlano: TipoCobrancaPlanoEnum;
+  name: string;
+  description: string;
+  cost: number;
+  attributes: string;
+  billingType: BillingPlanEnum;
 }

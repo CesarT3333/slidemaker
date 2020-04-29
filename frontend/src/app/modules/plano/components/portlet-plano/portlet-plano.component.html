@@ -1,16 +1,16 @@
 <div class="portlet">
 
   <div class="flex-item titulo">
-    {{ plano?.nome }}
+    {{ plano?.name }}
   </div>
 
   <div class="flex-item quantitativo">
-    <span> {{ plano?.valor | currency: 'R$' }} <br /> </span>
-    {{ plano?.tipoCobrancaPlano | tipoCobrancaPlanoPipe }}
+    <span> {{ plano?.cost | currency: 'R$' }} <br /> </span>
+    {{ plano?.billingType | tipoCobrancaPlanoPipe }}
   </div>
 
   <div class="flex-item descricao">
-    {{ plano?.descricao }}
+    {{ plano?.description }}
   </div>
 
   <div class="flex-item atributos">

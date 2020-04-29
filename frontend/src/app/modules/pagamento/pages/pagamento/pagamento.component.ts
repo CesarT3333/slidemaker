@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 
 import { finalize, switchMap, map } from 'rxjs/operators';
 
-import { AssinaturaService } from 'src/app/services/assinatura-usuario.service';
+import { AssinaturaService } from '@services/rest/assinatura-usuario.service';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
-import { PagamentoService } from 'src/app/services/pagamento.service';
+import { PagamentoService } from '@services/rest/pagamento.service';
 import { AssinaturaUsuario } from 'src/app/models/assinatura-usuario';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -45,7 +45,7 @@ export class PagamentoComponent
           const assinatura = this.usuarioService.assinatura;
 
           assinatura.idTransacao = idTransacao;
-          assinatura.plano = <Plano>{ id: assinatura.plano.id };
+          assinatura.plan = <Plano>{ id: assinatura.plan.id };
 
           return assinatura;
 

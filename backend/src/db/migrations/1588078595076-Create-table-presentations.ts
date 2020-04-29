@@ -1,14 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { IdiomEnum } from '@model/enum/idiom.enum';
+import { DataSourceTextPresentationEnum } from '@model/enum/data-source-text-presentation.enum';
 
-import { DataSourceTextPresentationEnum } from '../models/enum/data-source-text-presentation.enum';
-import { IdiomEnum } from '../models/enum/idiom.enum';
-
-// tslint:disable
-export class createTablePresentation1586712511159
+export class CreateTablePresentations1588078595076
   implements MigrationInterface {
 
   private table = new Table({
-    name: 'presentation',
+    name: 'presentations',
     columns: [
       {
         name: 'id',
@@ -55,7 +53,7 @@ export class createTablePresentation1586712511159
     foreignKeys: [
       {
         name: 'fk_presentation_user',
-        referencedTableName: 'usuario',
+        referencedTableName: 'users',
         referencedColumnNames: ['id'],
         columnNames: ['id_user'],
         onDelete: 'CASCADE',

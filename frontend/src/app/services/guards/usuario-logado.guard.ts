@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
+import { GoogleProfile } from '@models/google-profile';
 import { SnackBarService } from '../snack-bar.service';
-import { resources } from 'src/app/util/resources';
-import { GoogleProfile } from 'src/app/models/google-profile';
 import { UsuarioService } from '../usuario.service';
+import { resources } from '@utils/resources';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioLogadoGuard

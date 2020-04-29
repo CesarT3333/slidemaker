@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import Apresentacao from '../models/apresentacao';
-import { resources } from '../util/resources';
+import Apresentacao from '@models/apresentacao';
+import { resources } from '@utils/resources';
 
 @Injectable()
 export class ApresentacaoService {

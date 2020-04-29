@@ -2,8 +2,8 @@ import Plano from './plano';
 
 export interface AssinaturaUsuario {
   id?: number;
-  usuario: any;
-  plano: Plano;
+  user: any;
+  plan: Plano;
   idTransacao: string;
-  quantidadeApresentacoes: number;
+  amountPresentation: number;
 }

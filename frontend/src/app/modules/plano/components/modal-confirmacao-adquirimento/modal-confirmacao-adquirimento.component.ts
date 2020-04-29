@@ -1,9 +1,9 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OnInit, Component, Inject } from '@angular/core';
 
-import { TipoCobrancaPlanoEnum } from 'src/app/models/enum/tipo-cobranca-plano.enum';
-import { SnackBarService } from 'src/app/services/snack-bar.service';
-import Plano from 'src/app/models/plano';
+import { SnackBarService } from '@services/snack-bar.service';
+import Plano from '@models/plano';
+import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
 
 @Component({
   templateUrl: './modal-confirmacao-adquirimento.component.html'
@@ -26,7 +26,7 @@ export class ModalConfirmacaoAdiquirimentoComponent
   }
 
   onConfirmarClick(): void {
-    if (this._plano.tipoCobrancaPlano === TipoCobrancaPlanoEnum.POR_APRESENTACAO) {
+    if (this._plano.billingType === BillingPlanEnum.PRESENTATION) {
 
       const quantidadeFormatada = Number(this.quantidade);
 
@@ -54,6 +54,6 @@ export class ModalConfirmacaoAdiquirimentoComponent
   }
 
   get planoPagoPorQuantidadeApresentacoes(): boolean {
-    return this._plano.tipoCobrancaPlano === TipoCobrancaPlanoEnum.POR_APRESENTACAO;
+    return this._plano.billingType === BillingPlanEnum.PRESENTATION;
   }
 }

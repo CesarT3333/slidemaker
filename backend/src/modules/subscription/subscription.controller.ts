@@ -1,14 +1,14 @@
 import { Controller, Get, UseGuards, Req, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UserSignatureService } from '@services/user-signatureservice';
-import { UserSignature } from '@model/user-signature';
+import { UserSignatureService } from '@services/subscription.service';
+import { Subscription } from '@model/subscription';
 import { resources } from '../../util/resources';
 import User from '@model/user';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller(resources.ASSINATURAS)
-export class UserSignatureController {
+export class SubscriptionController {
 
   constructor(
     private userSignatureService: UserSignatureService
@@ -16,17 +16,17 @@ export class UserSignatureController {
 
   @Get(`usuario`)
   getForLoggedInUser(@Req() request) {
-    const usuario = <User>{ googleId: request.user.profileId };
-    return this.userSignatureService.getForLoggedInUser(usuario);
+    const user = <User>{ googleId: request.user.profileId };
+    return this.userSignatureService.getForLoggedInUser(user);
   }
 
   @Post()
   async registraTransacao(@Req() request) {
-    const signature: UserSignature = request.body;
-    signature.usuario = <User>{ googleId: request.user.profileId };
+    const signature: Subscription = request.body;
+    signature.user = <User>{ googleId: request.user.profileId };
 
     await this.userSignatureService
-      .create(<UserSignature>request.body);
+      .create(<Subscription>request.body);
 
   }
 

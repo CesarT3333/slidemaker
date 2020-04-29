@@ -11,7 +11,7 @@ export class SnackBarService {
   show(mensagem: string): void {
     this.matSnackBar.open(mensagem, 'Fechar', {
       duration: 7000,
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 

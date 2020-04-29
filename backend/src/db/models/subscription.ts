@@ -3,27 +3,27 @@ import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, Entity } from 'ty
 import Plan from './plan';
 import User from './user';
 
-@Entity({ name: 'assinaturas' })
-export class UserSignature {
+@Entity({ name: 'subscriptions' })
+export class Subscription {
 
   @PrimaryGeneratedColumn()
   id?: number;
 
   @OneToOne(type => User)
   @JoinColumn({
-    name: 'id_usuario',
+    name: 'id_user',
     referencedColumnName: 'id'
   })
-  usuario: User;
+  user: User;
 
   @OneToOne(type => Plan)
   @JoinColumn({
-    name: 'id_plano',
+    name: 'id_plan',
     referencedColumnName: 'id'
   })
-  plano: Plan;
+  plan: Plan;
 
-  @Column({ name: 'quantidade_apresentacoes', })
-  quantidadeApresentacoes: number;
+  @Column({ name: 'amount_presentation', })
+  amountPresentation: number;
 
 }

@@ -1,8 +1,8 @@
 import { OnInit, Component } from '@angular/core';
 
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { GoogleProfile } from 'src/app/models/google-profile';
-import { AppService } from 'src/app/services/app.service';
+import { UsuarioService } from '@services/usuario.service';
+import { GoogleProfile } from '@models/google-profile';
+import { AppService } from '@services/app.service';
 
 @Component({
   selector: 'smk-header-toolbar',
