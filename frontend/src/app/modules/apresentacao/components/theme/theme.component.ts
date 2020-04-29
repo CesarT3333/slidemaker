@@ -1,10 +1,11 @@
-import { OnInit, Component, Input } from '@angular/core';
+import { OnInit, Component, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { HandleErrorService } from 'src/app/services/handle-error.service';
-import { ThemeService } from 'src/app/services/theme.service';
-import { Theme } from 'src/app/models/theme';
-import { finalize } from 'rxjs/operators';
+import { finalize, filter, tap } from 'rxjs/operators';
+
+import { HandleErrorService } from '@services/handle-error.service';
+import { ThemeService } from '@services/rest/theme.service';
+import { Theme } from '@models/theme';
 
 @Component({
   selector: 'smk-theme',
@@ -20,6 +21,7 @@ export class ThemeComponent
   private _themes: Array<Theme> = [];
 
   @Input() formPresentation: FormGroup;
+  @Output() formPresentationChange = new EventEmitter<FormGroup>();
 
   themeHovered: Theme;
   themeSelected: Theme;
@@ -31,6 +33,7 @@ export class ThemeComponent
 
   ngOnInit(): void {
     this.getAllThemes();
+    this.registerActionOnChangeTheme();
   }
 
   onMouseOutImageTheme(): void {
@@ -59,7 +62,11 @@ export class ThemeComponent
       this.themeSelected = theme;
       this.themeHovered = theme;
       this.formPresentation.patchValue({ theme: theme });
+      this.formPresentation.get('theme')
+        .updateValueAndValidity();
     }
+
+    this.formPresentationChange.emit(this.formPresentation);
 
   }
 
@@ -79,6 +86,14 @@ export class ThemeComponent
     if (defaultTheme) {
       this.onSelectTheme(defaultTheme);
     }
+  }
+
+  private registerActionOnChangeTheme() {
+    this.formPresentation.get('theme').valueChanges
+      .pipe(
+        filter(theme => !theme),
+        tap(_ => this.setDefaultTheme())
+      ).subscribe();
   }
 
   get themes(): Array<Theme> {

@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AssinaturaUsuario } from '../models/assinatura-usuario';
-import { GoogleProfile } from '../models/google-profile';
-import { Router } from '@angular/router';
+import { AssinaturaUsuario } from '@models/assinatura-usuario';
+import { GoogleProfile } from '@models/google-profile';
 import { SnackBarService } from './snack-bar.service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {

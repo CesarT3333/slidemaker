@@ -1,14 +1,16 @@
 export const resources = {
-  PLANS: `/planos`,
+  PLANS: `/plans`,
   AUTH: `/auth`,
-  PRESENTATIONS: `/apresentacoes`,
-  USERS: `/usuarios`,
+
+  PRESENTATIONS: `/presentations`,
+  USERS: `/users`,
 
   THEMES: `/themes`,
 
   IDIOMS: '/idioms',
   DATA_SOURCES: '/data-sources',
 
-  ASSINATURAS: `/assinaturas`,
-  TRANSACOES: `/transacoes`
+  ASSINATURAS: `/subscriptions`,
+
+  // TRANSACOES: `/transacoes`
 };

@@ -21,14 +21,9 @@
   }
 }
 
-.mat-stepper-horizontal {
-  margin-top: 8px;
+.mat-stepper-horizontal, .mat-stepper-vertical{
+  background-color: #f5f5f5;
 }
-
-.mat-form-field {
-  margin-top: 16px;
-}
-
 
 ::ng-deep div.mat-tab-body-content {
   overflow-x: hidden;
@@ -36,6 +31,12 @@
 
 ::ng-deep div.mat-tab-body-wrapper {
   padding-top: 20px;
+}
+
+.botoes-stepper {
+  button{
+    margin-right: 10px;
+  }
 }
 
 .presentation-form {

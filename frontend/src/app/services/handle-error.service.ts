@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SnackBarService } from './snack-bar.service';
+import { DialogService } from './dialog.service';
 
 @Injectable({ providedIn: 'root' })
 export class HandleErrorService {
 
   constructor(
-    private snackBarService: SnackBarService,
+    private dialogService: DialogService,
     private router: Router
   ) { }
 
@@ -16,12 +16,16 @@ export class HandleErrorService {
     switch (error.status) {
       case 401:
         console.log(error.message);
-        this.snackBarService.show('Erro de autenticação');
+        this.dialogService.open({
+          message: 'Erro de autenticação'
+        });
         this.router.navigate(['/login']);
         break;
 
       default:
-        this.snackBarService.show('Ocorreu um erro nesta requisição');
+        this.dialogService.open({
+          message: 'Ocorreu um erro nesta requisição'
+        });
         console.log(error);
         break;
     }

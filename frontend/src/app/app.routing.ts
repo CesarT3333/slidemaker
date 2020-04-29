@@ -15,9 +15,7 @@ import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
       },
       {
         path: 'planos',
-        canActivate: [
-          UsuarioLogadoGuard
-        ],
+        canActivate: [UsuarioLogadoGuard],
         loadChildren: () => import(`./modules/plano/plano.module`)
           .then(m => m.PlanoModule)
       },
@@ -32,9 +30,7 @@ import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
       },
       {
         path: 'pagamento',
-        canActivate: [
-          UsuarioLogadoGuard
-        ],
+        canActivate: [UsuarioLogadoGuard],
         loadChildren: () => import(`./modules/pagamento/pagamento.module`)
           .then(m => m.PagamentoMocule)
       }

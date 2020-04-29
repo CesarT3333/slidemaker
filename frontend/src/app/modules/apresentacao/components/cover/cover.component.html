@@ -1,0 +1,25 @@
+<form [formGroup]="coverFormGroup">
+
+  <div class="row">
+    <div class="col-6 col-sm">
+      <mat-form-field appearance='outline'>
+        <mat-label>Título</mat-label>
+        <input matInput
+               formControlName="title"
+               type="text" />
+
+      </mat-form-field>
+      <mat-form-field appearance='outline'>
+        <mat-label>Subtítulo</mat-label>
+        <input matInput
+               formControlName="subTitle"
+               type="text" />
+      </mat-form-field>
+    </div>
+    <div class="col-6 col-sm">
+      <img src="https://drive.google.com/uc?export=view&id={{selectedTheme?.googleIdImg}}"
+           class="img-fluid"
+           alt="">
+    </div>
+  </div>
+</form>

@@ -1,26 +1,26 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-import { TipoCobrancaPlanoEnum } from './enum/tipo-cobranca-plano.enum';
+import { BillingPlanEnum } from './enum/billing-plan.enum';
 
-@Entity({ name: 'planos' })
+@Entity({ name: 'plans' })
 export default class Plan {
 
-    @PrimaryGeneratedColumn()
-    id?: number;
+  @PrimaryGeneratedColumn()
+  id?: number;
 
-    @Column()
-    nome: string;
+  @Column()
+  name: string;
 
-    @Column()
-    descricao: string;
+  @Column()
+  description: string;
 
-    @Column()
-    valor: number;
+  @Column()
+  cost: number;
 
-    @Column()
-    atributos: string;
+  @Column()
+  attributes: string;
 
-    @Column({ name: 'tipo_cobranca' })
-    tipoCobrancaPlano: TipoCobrancaPlanoEnum;
+  @Column({ name: 'billing_type' })
+  billingType: BillingPlanEnum;
 
 }

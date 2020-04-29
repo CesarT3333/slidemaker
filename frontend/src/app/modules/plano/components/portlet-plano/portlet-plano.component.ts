@@ -1,5 +1,6 @@
 import { OnInit, Component, Input, Output, EventEmitter } from '@angular/core';
-import Plano from 'src/app/models/plano';
+
+import Plano from '@models/plano';
 
 @Component({
   selector: 'smk-portlet-plano',
@@ -20,7 +21,7 @@ export class PortletPlanoComponent
   }
 
   get atributosPlano(): Array<string> {
-    return this.plano.atributos.split(';');
+    return this.plano.attributes.split(';');
   }
 
 }

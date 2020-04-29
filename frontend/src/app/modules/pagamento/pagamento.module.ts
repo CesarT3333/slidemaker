@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AssinaturaService } from 'src/app/services/assinatura-usuario.service';
 import { PagamentoComponent } from './pages/pagamento/pagamento.component';
-import { PagamentoService } from 'src/app/services/pagamento.service';
-import { TransacaoService } from 'src/app/services/transacao.service';
+import { PagamentoService } from '@services/rest/pagamento.service';
+import { TransacaoService } from '@services/rest/transacao.service';
 import { PagamentoRoutingModule } from './pagamento.routing';
 
 @NgModule({
