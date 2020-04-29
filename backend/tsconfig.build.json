@@ -5,5 +5,11 @@
     "test",
     "dist",
     "**/*spec.ts"
-  ]
+  ],
+  "include": [
+    "src"
+  ],
+  "files": [
+    "package.json"
+  ],
 }
