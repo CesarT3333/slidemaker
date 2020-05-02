@@ -4,13 +4,17 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { ConfiguracaoApresentacaoComponent } from './components/configuracao-apresentacao/configuracao-apresentacao.component';
+import { ListPresentationComponent } from './components/list-presentation/list-presentation.component';
 import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
 import { ApresentacaoComponent } from './pages/apresentacao/apresentacao.component';
 import { ApresentacaoService } from '@services/rest/apresentacao.service';
@@ -30,22 +34,27 @@ import { IdiomService } from '@services/rest/idiom.service';
     FormsModule,
 
     MatFormFieldModule,
-    MatSelectModule,
+    MatGridListModule,
+    MatStepperModule,
     MatToolbarModule,
+    MatSelectModule,
     MatButtonModule,
     MatInputModule,
+    MatCardModule,
+    MatListModule,
     MatMenuModule,
     MatIconModule,
-    MatStepperModule,
 
     ApresentacaoRoutingModule,
   ],
   declarations: [
-    CoverComponent,
-    HeaderToolbarComponent,
-    ApresentacaoComponent,
-    ThemeComponent,
     ConfiguracaoApresentacaoComponent,
+    ListPresentationComponent,
+    HeaderToolbarComponent,
+    CoverComponent,
+    ThemeComponent,
+
+    ApresentacaoComponent,
   ],
   providers: [
     ThemeService,

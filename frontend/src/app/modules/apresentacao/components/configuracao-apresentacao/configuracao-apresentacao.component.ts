@@ -13,7 +13,7 @@ import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
 import { IdiomService } from '@services/rest/idiom.service';
-import Apresentacao from '@models/apresentacao';
+import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
 
 @Component({
@@ -38,7 +38,9 @@ export class ConfiguracaoApresentacaoComponent
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
 
-  private _presentations: Array<Apresentacao> = [];
+  themeByPresentation: Theme;
+
+  private _presentations: Array<Presentation> = [];
 
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
@@ -73,12 +75,32 @@ export class ConfiguracaoApresentacaoComponent
     this.dialogService.open({ message: 'Teste de mensagem' });
   }
 
+  onCopyPresentation(selectedPresentation: Presentation): void {
+    this.loadingService.show();
+    this.presentationService.getById(selectedPresentation.id)
+      .pipe(
+        delay(1000),
+        finalize(() => this.loadingService.dismiss())
+      ).subscribe(
+        presentation => this.buildFormByPresentation(presentation),
+        error => this.handleErrorService.handle(error)
+      );
+  }
+
+  onAccessPresentation($event: Presentation): void {
+    window.open(
+      `https://docs.google.com/presentation/d/${$event.theme.googleIdPresentation}`,
+      '_blank'
+    );
+  }
+
   onSubmit() {
     if (this.formPresentation.valid) {
+      this.formPresentation.patchValue({ id: null });
       this.loadingService.show();
-      this.presentationService.create(<Apresentacao>this.formPresentation.value)
+      this.presentationService.create(<Presentation>this.formPresentation.value)
         .pipe(
-          delay(2000),
+          delay(1000),
           finalize(() => this.loadingService.dismiss()),
           switchMap(() => this.getAllPresentations())
         ).subscribe(
@@ -124,7 +146,6 @@ export class ConfiguracaoApresentacaoComponent
 
     switch (dataSourceSelected) {
       case 'TXT':
-        // TODO: Separar em método
         textFormControl.setValue(null);
         textFormControl.setValidators(Validators.required);
 
@@ -134,7 +155,6 @@ export class ConfiguracaoApresentacaoComponent
         break;
 
       case 'FILE':
-        // TODO: Separar em método
         filenameFormControl.setValue(null);
         filenameFormControl.setValidators(Validators.required);
 
@@ -155,6 +175,13 @@ export class ConfiguracaoApresentacaoComponent
 
   }
 
+  private buildFormByPresentation(presentation: Presentation): void {
+    this.resetFormDefault();
+    this.themeByPresentation = presentation.theme;
+    this.formPresentation.patchValue({ ...presentation });
+    this.formPresentation.updateValueAndValidity();
+  }
+
   private startsMandatorySearches(): void {
     this.loadingService.show();
     concat(
@@ -172,7 +199,7 @@ export class ConfiguracaoApresentacaoComponent
     );
   }
 
-  private getAllPresentations(): Observable<Array<Apresentacao>> {
+  private getAllPresentations(): Observable<Array<Presentation>> {
     return this.presentationService.buscarSlides()
       .pipe(tap(presentations => this._presentations = presentations));
   }
@@ -190,6 +217,7 @@ export class ConfiguracaoApresentacaoComponent
   private initForm() {
     this.formPresentation =
       this.formBuilder.group({
+        id: null,
         term: [null, Validators.required],
         text: null,
         amountOfSlides: [
@@ -301,7 +329,7 @@ export class ConfiguracaoApresentacaoComponent
     return <FormControl>this.formPresentation.get('fileName');
   }
 
-  get presentations(): Array<Apresentacao> {
+  get presentations(): Array<Presentation> {
     return this._presentations;
   }
 

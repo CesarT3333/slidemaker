@@ -20,6 +20,12 @@ export class ThemeComponent
 
   private _themes: Array<Theme> = [];
 
+  @Input() set themeByPresentation(theme: Theme) {
+    if (theme) {
+      this.onSelectTheme(theme);
+    }
+  }
+
   @Input() formPresentation: FormGroup;
   @Output() formPresentationChange = new EventEmitter<FormGroup>();
 
@@ -91,7 +97,7 @@ export class ThemeComponent
   private registerActionOnChangeTheme() {
     this.formPresentation.get('theme').valueChanges
       .pipe(
-        filter(theme => !theme),
+        filter(theme => !theme && !this.formPresentation.get('id').value),
         tap(_ => this.setDefaultTheme())
       ).subscribe();
   }

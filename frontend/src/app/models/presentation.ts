@@ -1,6 +1,6 @@
 import { Theme } from './theme';
 
-export default interface Apresentacao {
+export default interface Presentation {
   id?: number;
   term: string;
   amountOfSlides: number;
@@ -8,4 +8,5 @@ export default interface Apresentacao {
   dataSource: string;
   text: string;
   theme: Theme;
+  cover: any;
 }

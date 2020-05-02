@@ -20,14 +20,11 @@ export class CoverComponent
   }
 
   private registerThemeChange(): void {
-    this.formPresentation.get('theme').valueChanges
-      .pipe(filter(theme => theme))
-      .subscribe((theme: Theme) => {
+    this.formPresentation.get('term').valueChanges
+      .pipe(filter(term => term))
+      .subscribe((term: string) => {
         this.formPresentation.get('cover')
-          .patchValue({
-            title: theme.name,
-            subTitle: 'Legenda',
-          });
+          .patchValue({ title: term });
 
         this.formPresentationChange.emit(this.formPresentation);
       });

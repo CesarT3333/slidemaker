@@ -9,12 +9,11 @@
   <div class="row container-smk">
 
     <div class="col-md-4 col-sm-12 portlet">
-      <div class="content">
-        <ul>
-          <li *ngFor="let presentation of presentations">
-            {{presentation.id}} - {{ presentation.term }}
-          </li>
-        </ul>
+      <div class="content list-presentation">
+        <smk-list-presentation [listPresentation]="presentations"
+                               (eventCopy)="onCopyPresentation($event)"
+                               (eventAccessPresentation)="onAccessPresentation($event)">
+        </smk-list-presentation>
       </div>
 
     </div>
@@ -157,7 +156,8 @@
             <mat-step [stepControl]="formPresentation">
               <ng-template matStepLabel>Tema</ng-template>
 
-              <smk-theme [(formPresentation)]="formPresentation">
+              <smk-theme [(formPresentation)]="formPresentation"
+                         [themeByPresentation]="themeByPresentation">
               </smk-theme>
 
               <div class="row">

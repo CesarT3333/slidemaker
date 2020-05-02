@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { take } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import Apresentacao from '@models/apresentacao';
+import Presentation from '@models/presentation';
 import { resources } from '@utils/resources';
 
 @Injectable()
@@ -14,15 +14,20 @@ export class ApresentacaoService {
     private http: HttpClient,
   ) { }
 
-  create(apresentacao: Apresentacao): Observable<Apresentacao> {
-    return this.http.post<Apresentacao>(
-      resources.APRESENTACOES,
+  create(apresentacao: Presentation): Observable<Presentation> {
+    return this.http.post<Presentation>(
+      resources.PRESENTATIONS,
       apresentacao
     ).pipe(take(1));
   }
 
-  buscarSlides(): Observable<Array<Apresentacao>> {
-    return this.http.get<Array<Apresentacao>>(resources.APRESENTACOES)
+  buscarSlides(): Observable<Array<Presentation>> {
+    return this.http.get<Array<Presentation>>(resources.PRESENTATIONS)
+      .pipe(take(1));
+  }
+
+  getById(idPresentation: number): Observable<Presentation> {
+    return this.http.get<Presentation>(`${resources.PRESENTATIONS}/${idPresentation}`)
       .pipe(take(1));
   }
 

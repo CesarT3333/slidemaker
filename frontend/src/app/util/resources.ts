@@ -4,7 +4,7 @@ export const resources = {
   PLANOS: `${BASE_URI}/plans`,
   AUTH: `${BASE_URI}/auth`,
 
-  APRESENTACOES: `${BASE_URI}/presentations`,
+  PRESENTATIONS: `${BASE_URI}/presentations`,
   USUARIOS: `${BASE_URI}/users`,
 
   THEMES: `${BASE_URI}/themes`,
