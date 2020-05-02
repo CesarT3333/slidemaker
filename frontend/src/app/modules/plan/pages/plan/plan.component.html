@@ -1,0 +1,16 @@
+<div class="intro">
+
+  <div class="container-fluid">
+
+    <div class="row justify-content-md-center">
+      <div *ngFor="let plan of plans"
+           class="plan col">
+        <smk-portlet-plan [plan]="plano"
+                           (eventAdiquirirPlan)="onPurchasePlan($event)">
+        </smk-portlet-plan>
+      </div>
+
+    </div>
+
+  </div>
+</div>

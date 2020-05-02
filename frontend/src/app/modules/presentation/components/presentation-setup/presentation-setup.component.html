@@ -1,0 +1,210 @@
+<input id="inputFile"
+       #inputFile
+       type="file"
+       accept=".txt"
+       (change)="onAttachedFile($event)"
+       style="display: none;" />
+
+<div class="container">
+  <div class="row container-smk">
+
+    <div class="col-md-4 col-sm-12 portlet">
+      <div class="content">
+        <ul>
+          <li *ngFor="let presentation of presentations">
+            {{presentation.id}} - {{ presentation.term }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <div *ngIf="formPresentation"
+         class="col-md-8 col-sm-12 portlet">
+
+      <div class="content">
+        <form [formGroup]="formPresentation"
+              #form="ngForm"
+              (ngSubmit)="onSubmit()">
+          <mat-horizontal-stepper linear>
+            <mat-step [stepControl]="formPresentation">
+              <ng-template matStepLabel>Configuração</ng-template>
+
+              <div class="row presentation-form">
+                <div class="col-12">
+                  <mat-form-field appearance='outline'>
+                    <mat-label>Assunto</mat-label>
+                    <input formControlName="term"
+                           matInput
+                           required
+                           type="text" />
+
+                    <mat-error class="invalid-feedback"
+                               *ngIf="getErrorsInput('term')?.required">
+                      Campo obrigatório
+                    </mat-error>
+
+                  </mat-form-field>
+
+                </div>
+
+                <div class="col-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Quantidade de Slides</mat-label>
+                    <input formControlName="amountOfSlides"
+                           matInput
+                           type="text" />
+                    <mat-error class="invalid-feedback"
+                               *ngIf="getErrorsInput('amountOfSlides')?.required">
+                      Campo obrigatório
+                    </mat-error>
+                    <mat-error class="invalid-feedback"
+                               *ngIf="getErrorsInput('amountOfSlides')?.pattern">
+                      Valor informado inválido
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Idioma</mat-label>
+                    <mat-select formControlName="idiom">
+                      <mat-option *ngFor="let idiom of idioms"
+                                  [value]="idiom.name">
+                        {{ idiom.clientData }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fonte de Dados</mat-label>
+                    <mat-select (selectionChange)="onDataSourceChange()"
+                                formControlName="dataSource">
+                      <mat-option *ngFor="let dataSource of dataSources"
+                                  [value]="dataSource.name">
+                        {{ dataSource.clientData }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col"
+                     *ngIf="dataSourceSelected === 'TXT'">
+                  <mat-form-field appearance='outline'>
+                    <mat-label>Texto</mat-label>
+                    <textarea formControlName="text"
+                              required
+                              rows="5"
+                              matInput>
+                      </textarea>
+                    <mat-error class="invalid-feedback"
+                               *ngIf="getErrorsInput('text')?.required">
+                      Campo obrigatório
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div *ngIf="dataSourceSelected === 'FILE'"
+                     class="col-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Arquivo</mat-label>
+                    <input matInput
+                           readonly
+                           required
+                           formControlName="fileName"
+                           placeholder="Anexe um arquivo texto (.txt)">
+
+                    <button *ngIf="!fileName.value"
+                            mat-icon-button
+                            (click)="onClickAttachmentFile($event)"
+                            matSuffix
+                            color="primary"
+                            aria-label="Anexar Arquivo">
+                      <mat-icon style="cursor: pointer;">attachment</mat-icon>
+                    </button>
+
+                    <button *ngIf="fileName.value"
+                            mat-icon-button
+                            (click)="onCleanAttachedFile($event) "
+                            matSuffix
+                            color="primary"
+                            aria-label="Limpar">
+                      <mat-icon style="cursor: pointer;">clear</mat-icon>
+                    </button>
+
+                    <mat-error class="invalid-feedback"
+                               *ngIf="getErrorsInput('fileName')?.required">
+                      Campo obrigatório
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>
+
+                <div class="col-12">
+                  <button mat-stroked-button
+                          [disabled]="formPresentation.invalid"
+                          (click)="$event.preventDefault()"
+                          color="primary"
+                          matStepperNext>
+                    Próximo
+                  </button>
+                </div>
+              </div>
+            </mat-step>
+
+            <mat-step [stepControl]="formPresentation">
+              <ng-template matStepLabel>Tema</ng-template>
+
+              <smk-theme [(formPresentation)]="formPresentation">
+              </smk-theme>
+
+              <div class="row">
+                <div class="col botoes-stepper">
+                  <button mat-stroked-button
+                          color="primary"
+                          (click)="$event?.preventDefault()"
+                          matStepperPrevious>
+                    Voltar
+                  </button>
+                  <button mat-stroked-button
+                          (click)="$event?.preventDefault()"
+                          color="primary"
+                          matStepperNext>
+                    Próximo
+                  </button>
+                </div>
+              </div>
+            </mat-step>
+
+            <mat-step [stepControl]="formPresentation">
+              <ng-template matStepLabel>Capa</ng-template>
+
+              <div class="container">
+                <smk-cover *ngIf="themeFormControl"
+                           [(formPresentation)]="formPresentation">
+                </smk-cover>
+                <div class="row">
+                  <div class="col-12 botoes-stepper">
+                    <button mat-stroked-button
+                            color="primary"
+                            matStepperPrevious>
+                      Voltar
+                    </button>
+                    <button mat-stroked-button
+                            type="submit"
+                            [disabled]="!formPresentation.valid"
+                            color="primary">
+                      Concluir Apresentação
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+
+        </form>
+      </div>
+    </div>
+  </div>

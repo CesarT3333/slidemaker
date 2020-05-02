@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../../../environments/environment';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { UserService } from 'src/app/services/user.service';
 import { AppService } from 'src/app/services/app.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class LoginComponent
 
   constructor(
     private snackBarService: SnackBarService,
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private appService: AppService,
     private router: Router,
   ) { }
@@ -45,12 +45,12 @@ export class LoginComponent
     localStorage.setItem('token', `${authResponse.jwt}`);
     this.loginWindow.close();
     window.removeEventListener('message', this.onLogin);
-    this.usuarioService.googleProfile = authResponse.profile;
-    this.navegaParaPaginaPlanos();
+    this.userService.googleProfile = authResponse.profile;
+    this.navigateToPagePlans();
   }
 
-  private navegaParaPaginaPlanos(): void {
-    this.router.navigate(['/apresentacao'])
+  private navigateToPagePlans(): void {
+    this.router.navigate(['/presentation'])
       .catch(e => console.log(e))
       .finally(() => this.snackBarService.show('Logado com sucesso!'));
   }

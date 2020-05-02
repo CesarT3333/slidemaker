@@ -1,8 +1,8 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { AssinaturaUsuarioGuard } from './services/guards/assinatura-usuario.guard';
-import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
+import { SignatureUserGuard } from './services/guards/signature-user.guard';
+import { UserLoggedGuard } from './services/guards/user-logged.guard';
 
 @NgModule({
   imports: [
@@ -14,25 +14,25 @@ import { UsuarioLogadoGuard } from './services/guards/usuario-logado.guard';
           .then(m => m.LoginModule)
       },
       {
-        path: 'planos',
-        canActivate: [UsuarioLogadoGuard],
-        loadChildren: () => import(`./modules/plano/plano.module`)
-          .then(m => m.PlanoModule)
+        path: 'plans',
+        canActivate: [UserLoggedGuard],
+        loadChildren: () => import(`./modules/plan/plan.module`)
+          .then(m => m.PlanModule)
       },
       {
-        path: 'apresentacao',
+        path: 'presentation',
         canActivate: [
-          UsuarioLogadoGuard,
-          AssinaturaUsuarioGuard
+          UserLoggedGuard,
+          SignatureUserGuard
         ],
-        loadChildren: () => import(`./modules/apresentacao/apresentacao.module`)
-          .then(m => m.ApresentacaoModule)
+        loadChildren: () => import(`./modules/presentation/presentation.module`)
+          .then(m => m.PresentationModule)
       },
       {
-        path: 'pagamento',
-        canActivate: [UsuarioLogadoGuard],
-        loadChildren: () => import(`./modules/pagamento/pagamento.module`)
-          .then(m => m.PagamentoMocule)
+        path: 'payment',
+        canActivate: [UserLoggedGuard],
+        loadChildren: () => import(`./modules/payment/payment.module`)
+          .then(m => m.PaymentMocule)
       }
     ])],
   exports: [RouterModule]
