@@ -22,4 +22,8 @@ export class PresentationService {
     return await this.presentationRepository.getAllUserPresentation(googleId);
   }
 
+  async  getById(id: number): Promise<Presentation> {
+    return await this.presentationRepository.getById(id);
+  }
+
 }

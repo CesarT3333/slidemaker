@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Req, Get } from '@nestjs/common';
+import { Controller, UseGuards, Post, Req, Get, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { PresentationService } from '@services/presentation.service';
@@ -24,6 +24,11 @@ export class PresentationController {
   @Get()
   getAllUserPresentation(@Req() request): Promise<Array<Presentation>> {
     return this.presentationService.getAllUserPresentation(request.user.profileId);
+  }
+
+  @Get(':id')
+  getById(@Param('id') id: number): Promise<Presentation> {
+    return this.presentationService.getById(id);
   }
 
 }
