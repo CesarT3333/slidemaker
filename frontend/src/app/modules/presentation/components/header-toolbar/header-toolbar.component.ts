@@ -1,7 +1,7 @@
 import { OnInit, Component } from '@angular/core';
 
-import { UserService } from '@services/user.service';
 import { GoogleProfile } from '@models/google-profile';
+import { UserService } from '@services/user.service';
 import { AppService } from '@services/app.service';
 
 @Component({

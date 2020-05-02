@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { ModalConfirmsAcquisitionComponent } from './components/modal-confirms-acquisition/modal-confirms-acquisition.component';
-import { PlanBillingTypePipe } from './pipes/plan-billing-type/plan-billing-type.pipe';
 import { PortletPlanComponent } from './components/portlet-plan/portlet-plan.component';
+import { PlanBillingTypePipe } from './pipes/plan-billing-type/plan-billing-type.pipe';
 import { PlanComponent } from './pages/plan/plan.component';
 import { PlanService } from '@services/rest/plan.service';
 import { PlanRoutingModule } from './plan.routing';

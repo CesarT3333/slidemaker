@@ -21,13 +21,11 @@ export class SignatureUserGuard
     return this.signatureService.searchUserSignature()
       .pipe(
         catchError(error => {
-          // this.exibeMensagemErroAssinatura();
           this.navigateToThePlansSelectionPage();
           return of(false);
         }),
         map(response => {
           if (!response) {
-            // this.exibeMensagemErroAssinatura();
             this.navigateToThePlansSelectionPage();
             return false;
           } else {

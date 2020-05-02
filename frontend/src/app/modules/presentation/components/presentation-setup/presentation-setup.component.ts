@@ -9,10 +9,10 @@ import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
 import { HandleErrorService } from '@services/handle-error.service';
 import { FileReaderService } from '@services/file-reade.service';
+import { IdiomService } from '@services/rest/idiom.service';
 import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
-import { IdiomService } from '@services/rest/idiom.service';
 import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
 
@@ -69,10 +69,6 @@ export class PresentationSetupComponent
     this.startsMandatorySearches();
   }
 
-  onAbreModal() {
-    this.dialogService.open({ message: 'Teste de mensagem' });
-  }
-
   onSubmit() {
     if (this.formPresentation.valid) {
       this.loadingService.show();
@@ -124,24 +120,11 @@ export class PresentationSetupComponent
 
     switch (dataSourceSelected) {
       case 'TXT':
-        // TODO: Separar em método
-        textFormControl.setValue(null);
-        textFormControl.setValidators(Validators.required);
-
-        filenameFormControl.patchValue(null);
-        filenameFormControl.setErrors(null);
-        filenameFormControl.setValidators(null);
+        this.enableTextFormControl(textFormControl, filenameFormControl);
         break;
 
       case 'FILE':
-        // TODO: Separar em método
-        filenameFormControl.setValue(null);
-        filenameFormControl.setValidators(Validators.required);
-
-        textFormControl.setValue(null);
-        textFormControl.patchValue(null);
-        textFormControl.setErrors(null);
-        textFormControl.setValidators(null);
+        this.enableFileFormControl(textFormControl, filenameFormControl);
         break;
 
       default:
@@ -153,6 +136,31 @@ export class PresentationSetupComponent
     filenameFormControl.updateValueAndValidity();
     textFormControl.updateValueAndValidity();
 
+  }
+
+  private enableTextFormControl(
+    textFormControl: FormControl,
+    filenameFormControl: FormControl
+  ): void {
+    textFormControl.setValue(null);
+    textFormControl.setValidators(Validators.required);
+
+    filenameFormControl.patchValue(null);
+    filenameFormControl.setErrors(null);
+    filenameFormControl.setValidators(null);
+  }
+
+  private enableFileFormControl(
+    textFormControl: FormControl,
+    filenameFormControl: FormControl
+  ): void {
+    filenameFormControl.setValue(null);
+    filenameFormControl.setValidators(Validators.required);
+
+    textFormControl.setValue(null);
+    textFormControl.patchValue(null);
+    textFormControl.setErrors(null);
+    textFormControl.setValidators(null);
   }
 
   private startsMandatorySearches(): void {
@@ -173,7 +181,7 @@ export class PresentationSetupComponent
   }
 
   private getAllPresentations(): Observable<Array<Presentation>> {
-    return this.presentationService.buscarSlides()
+    return this.presentationService.getAllOfTheUser()
       .pipe(tap(presentations => this._presentations = presentations));
   }
 
@@ -240,8 +248,6 @@ export class PresentationSetupComponent
     });
 
     this.formPresentation.updateValueAndValidity();
-
-    console.log(this.formPresentation);
 
   }
 

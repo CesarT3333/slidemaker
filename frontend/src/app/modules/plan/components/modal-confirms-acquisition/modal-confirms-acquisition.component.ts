@@ -1,9 +1,9 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OnInit, Component, Inject } from '@angular/core';
 
+import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
 import { SnackBarService } from '@services/snack-bar.service';
 import Plan from '@models/plan';
-import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
 
 @Component({
   templateUrl: './modal-confirms-acquisition.component.html'
@@ -25,7 +25,7 @@ export class ModalConfirmsAcquisitionComponent
     this._plan = data.plan;
   }
 
-  onConfirmarClick(): void {
+  onConfirm(): void {
     if (this._plan.billingType === BillingPlanEnum.PRESENTATION) {
 
       const amountFormatted = Number(this.amount);
@@ -41,7 +41,7 @@ export class ModalConfirmsAcquisitionComponent
     }
   }
 
-  onCancelarClick(): void {
+  onCancel(): void {
     this.dialogRef.close(null);
   }
 

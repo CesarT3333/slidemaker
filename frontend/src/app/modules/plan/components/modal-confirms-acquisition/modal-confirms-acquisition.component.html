@@ -2,23 +2,22 @@
 <div mat-dialog-content>
 
   <div *ngIf="planPaidForNumberOfPresentations">
-
     <p>Informe a quantidade de apresentações que deseja adquirir</p>
     <mat-form-field>
       <mat-label>Quantidade de apresentações</mat-label>
       <input matInput
              type="text"
-             [(ngModel)]="quantidade">
+             [(ngModel)]="amount">
     </mat-form-field>
   </div>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button
-          (click)="onCancelarClick()">
+          (click)="onCancel()">
     Cancelar
   </button>
   <button mat-raised-button
-          (click)="onConfirmarClick()"
+          (click)="onConfirm()"
           cdkFocusInitial>
     Confirmar
   </button>

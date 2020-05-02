@@ -17,8 +17,8 @@ export class UserLoggedGuard
   constructor(
     private snackBarService: SnackBarService,
     private userService: UserService,
-    private router: Router,
     private http: HttpClient,
+    private router: Router,
   ) { }
 
   canActivate(): Observable<boolean> | boolean {

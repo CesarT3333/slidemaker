@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { take } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import Presentation from '@models/presentation';
 import { resources } from '@utils/resources';
@@ -21,7 +21,7 @@ export class PresentationService {
     ).pipe(take(1));
   }
 
-  buscarSlides(): Observable<Array<Presentation>> {
+  getAllOfTheUser(): Observable<Array<Presentation>> {
     return this.http.get<Array<Presentation>>(resources.PRESENTATIONS)
       .pipe(take(1));
   }

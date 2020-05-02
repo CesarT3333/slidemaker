@@ -7,11 +7,11 @@ import { finalize, filter } from 'rxjs/operators';
 import { ModalConfirmsAcquisitionComponent } from '../../components/modal-confirms-acquisition/modal-confirms-acquisition.component';
 import { SignatureService } from '@services/rest/signature-user.service';
 import { HandleErrorService } from '@services/handle-error.service';
-import { SignatureUser } from '@models/signature-user';
 import { SnackBarService } from '@services/snack-bar.service';
 import { LoadingService } from '@services/loading.service';
-import { UserService } from '@services/user.service';
 import { PlanService } from '@services/rest/plan.service';
+import { SignatureUser } from '@models/signature-user';
+import { UserService } from '@services/user.service';
 import Plan from '@models/plan';
 
 @Component({

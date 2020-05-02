@@ -16,5 +16,4 @@ export const resources = {
 
   AUTH_USER_LOGGED: `${BASE_URI}/auth/usuario-logado`,
 
-  // TRANSACOES: `${BASE_URI}/transacoes`,
 };

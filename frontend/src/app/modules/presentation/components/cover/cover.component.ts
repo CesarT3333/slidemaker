@@ -1,8 +1,9 @@
 import { OnInit, Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { Theme } from 'src/app/models/theme';
 import { filter } from 'rxjs/operators';
+
+import { Theme } from 'src/app/models/theme';
 
 @Component({
   selector: 'smk-cover',
