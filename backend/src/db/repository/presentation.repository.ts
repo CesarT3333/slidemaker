@@ -6,12 +6,15 @@ import { Presentation } from '@model/presentation';
 export class PresentationRepository
   extends Repository<Presentation> {
 
-  getAllUserPresentation(googleId: string) {
+  getAllUserPresentation(googleId: string): Promise<Array<Presentation>> {
     return this.find({
       join: {
         alias: 'presentations',
+        leftJoinAndSelect: {
+          theme: 'presentations.theme'
+        },
         leftJoin: {
-          user: 'presentations.user'
+          user: 'presentations.user',
         },
 
       }, where: qb => {
@@ -19,5 +22,15 @@ export class PresentationRepository
       },
     });
 
+  }
+
+  getById(id: number): Promise<Presentation> {
+    return this.findOne({
+      where: { id: `${id}` },
+      relations: [
+        'theme',
+        'cover',
+      ]
+    });
   }
 }
