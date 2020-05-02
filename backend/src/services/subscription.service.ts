@@ -19,10 +19,10 @@ export class UserSignatureService {
 
   async create(subscription: Subscription): Promise<any> {
 
-    const idUsuario: number = await this.userService
+    const idUser: number = await this.userService
       .getIdByGoogleId(subscription.user.googleId);
 
-    subscription.user.id = idUsuario;
+    subscription.user.id = idUser;
 
     return this.subscriptionRepository.save(subscription);
   }

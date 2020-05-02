@@ -21,7 +21,7 @@ export class SubscriptionController {
   }
 
   @Post()
-  async registraTransacao(@Req() request) {
+  async registerTransaction(@Req() request) {
     const signature: Subscription = request.body;
     signature.user = <User>{ googleId: request.user.profileId };
 
