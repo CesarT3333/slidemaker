@@ -14,7 +14,6 @@ import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
 import Presentation from '@models/presentation';
-import { ThemeService } from '@services/rest/theme.service';
 import { Theme } from '@models/theme';
 
 @Component({
@@ -39,14 +38,14 @@ export class PresentationSetupComponent
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-  presentationTeste: Presentation;
 
   themeByPresentation: Theme;
 
   private _presentations: Array<Presentation> = [];
-  private _themes: Array<Theme> = [];
+
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
+  private _themes: Array<string> = [];
 
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
@@ -67,7 +66,6 @@ export class PresentationSetupComponent
     private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
-    private themeService: ThemeService,
   ) { }
 
   ngOnInit(): void {
@@ -215,11 +213,7 @@ export class PresentationSetupComponent
 
   private getAllPresentations(): Observable<Array<Presentation>> {
     return this.presentationService.getAllOfTheUser()
-      .pipe(tap(presentations => {this._presentations = presentations
-        this._presentations.forEach(presentation => {
-          this.setTheme(presentation.theme);
-        });
-      }));
+      .pipe(tap(presentations => this._presentations = presentations));
   }
 
   private getDataSources(): Observable<Array<EnumClientData>> {
@@ -329,8 +323,6 @@ export class PresentationSetupComponent
       });
   }
 
-
-
   get idioms(): Array<EnumClientData> {
     return this._idioms;
   }
@@ -351,9 +343,9 @@ export class PresentationSetupComponent
     return this._presentations;
   }
 
-  /*get themes(): Array<string> {
+  get themes(): Array<string> {
     return this._themes;
-  }*/
+  }
 
   get themeFormControl(): Theme {
     return this.formPresentation?.get('theme')?.value;
