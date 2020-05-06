@@ -26,3 +26,15 @@ mat-list {
   height: 50vh !important;
   overflow-y: scroll !important;
 }
+
+.new-flag {
+  text-align: center;
+  position: absolute;
+  width: 55px;
+  background-color: #673ab7;
+  font-weight: bold;
+  color: white;
+  float: left;
+  bottom: 0;
+  font-size: 15px;
+}

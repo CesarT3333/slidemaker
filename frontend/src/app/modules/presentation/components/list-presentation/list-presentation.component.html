@@ -1,5 +1,7 @@
 <mat-list>
-  <mat-list-item *ngFor="let presentation of listPresentation">
+  <mat-list-item *ngFor="let presentation of listPresentation | sortByDatePipe; let index = index">
+    <div *ngIf="index === 0 && showNewFlag"
+         class="new-flag">NEW</div>
     <img matListAvatar
          src="https://drive.google.com/uc?export=view&id={{presentation?.theme?.googleIdImg}}"
          [alt]="presentation.theme.name" />

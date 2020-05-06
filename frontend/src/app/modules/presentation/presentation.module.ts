@@ -19,6 +19,7 @@ import { HeaderToolbarComponent } from './components/header-toolbar/header-toolb
 import { PresentationComponent } from './pages/presentation/presentation.component';
 import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
+import { SortByDatePipe } from './pipes/sort-by-date/sort-by-date.pipe';
 import { ThemeComponent } from './components/theme/theme.component';
 import { CoverComponent } from './components/cover/cover.component';
 import { PresentationRoutingModule } from './presentation.routing';
@@ -53,6 +54,8 @@ import { IdiomService } from '@services/rest/idiom.service';
     HeaderToolbarComponent,
     CoverComponent,
     ThemeComponent,
+
+    SortByDatePipe,
 
     PresentationComponent,
   ],

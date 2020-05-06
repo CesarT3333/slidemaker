@@ -11,6 +11,7 @@ export class ListPresentationComponent
   implements OnInit {
 
   @Input() listPresentation: Array<Presentation> = [];
+  @Input() showNewFlag = false;
 
   @Output() eventCopy = new EventEmitter<Presentation>();
   @Output() eventAccessPresentation = new EventEmitter<Presentation>();

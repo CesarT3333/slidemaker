@@ -9,4 +9,5 @@ export default interface Presentation {
   text: string;
   theme: Theme;
   cover: any;
+  createdAt: Date;
 }

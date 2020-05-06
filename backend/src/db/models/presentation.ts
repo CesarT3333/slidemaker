@@ -51,4 +51,6 @@ export class Presentation {
   })
   cover: Cover;
 
+  @Column({ name: 'created_at' })
+  createdAt: Date;
 }

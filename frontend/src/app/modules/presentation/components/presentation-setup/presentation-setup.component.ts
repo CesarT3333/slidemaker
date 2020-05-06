@@ -33,6 +33,7 @@ export class PresentationSetupComponent
   presentationStepper: MatHorizontalStepper;
 
   formPresentation: FormGroup;
+  showNewFlag = false;
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -104,6 +105,7 @@ export class PresentationSetupComponent
             this._presentations = userpresentations;
             this.resetFormDefault();
             this.dialogService.open({ message: 'Apresentação criada com sucesso' });
+            this.showNewFlag = true;
           },
           error => this.handleErrorService.handle(error)
         );
