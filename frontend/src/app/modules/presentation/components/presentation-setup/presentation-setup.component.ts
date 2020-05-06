@@ -14,6 +14,7 @@ import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
 import Presentation from '@models/presentation';
+import { ThemeService } from '@services/rest/theme.service';
 import { Theme } from '@models/theme';
 
 @Component({
@@ -37,13 +38,13 @@ export class PresentationSetupComponent
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  presentationTeste: Presentation;
 
   private _presentations: Array<Presentation> = [];
-
+  private _themes: Array<Theme> = [];
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
-  private _themes: Array<string> = [];
-
+  
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
     IDIOM: 'PT_BR',
@@ -63,6 +64,7 @@ export class PresentationSetupComponent
     private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
+    private themeService: ThemeService,
   ) { }
 
   ngOnInit(): void {
@@ -138,6 +140,21 @@ export class PresentationSetupComponent
 
   }
 
+  private setTheme(theme:Theme):void {
+    const selectedTheme: Theme = this._themes
+    .find(t => t.googleIdPresentation === this.presentationTeste.theme.googleIdPresentation);      
+
+    if (selectedTheme) {
+      this.onSelectTheme(selectedTheme);
+    }
+  }
+
+  onSelectTheme(theme: Theme): void {
+    this._themes.forEach(t => t.selected = false);
+    const themeSelected = this._themes.find(t => t === theme);
+    theme.selected = true;
+  }
+
   private enableTextFormControl(
     textFormControl: FormControl,
     filenameFormControl: FormControl
@@ -168,7 +185,7 @@ export class PresentationSetupComponent
     concat(
       this.getAllPresentations(),
       this.getDataSources(),
-      this.getIdioms()
+      this.getIdioms()      
     ).pipe(
       finalize(() => {
         this.loadingService.dismiss();
@@ -182,7 +199,11 @@ export class PresentationSetupComponent
 
   private getAllPresentations(): Observable<Array<Presentation>> {
     return this.presentationService.getAllOfTheUser()
-      .pipe(tap(presentations => this._presentations = presentations));
+      .pipe(tap(presentations => {this._presentations = presentations
+        this._presentations.forEach(presentation => {
+          this.setTheme(presentation.theme);            
+        });        
+      }));
   }
 
   private getDataSources(): Observable<Array<EnumClientData>> {
@@ -291,6 +312,8 @@ export class PresentationSetupComponent
       });
   }
 
+  
+
   get idioms(): Array<EnumClientData> {
     return this._idioms;
   }
@@ -311,9 +334,9 @@ export class PresentationSetupComponent
     return this._presentations;
   }
 
-  get themes(): Array<string> {
+  /*get themes(): Array<string> {
     return this._themes;
-  }
+  }*/
 
   get themeFormControl(): Theme {
     return this.formPresentation?.get('theme')?.value;
