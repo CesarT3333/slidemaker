@@ -21,6 +21,40 @@
       max-height: 70vh;
     }
 
+    .list-themes{
+      max-height: 40vh;
+      overflow-y: scroll;
+    
+      .theme-content {    
+        margin-bottom: 1px;
+    
+        img {
+          width: 210px;
+          max-width: 60%;
+          height: auto;
+          border: 2px silver solid;
+          transition: 0.3s;
+    
+          &:hover,
+          &.selected  {
+            opacity: 0.6;
+            border: 2.5px #673ab7 solid;
+          }    
+        }    
+      }
+    
+    }
+    
+    .img-theme-selected {
+      width:400px;
+      transition: visibility 0s, opacity 0.5s linear;
+    }
+    
+    .presentation-term {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+
   }
 }
 
