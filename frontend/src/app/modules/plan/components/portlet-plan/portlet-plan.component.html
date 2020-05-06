@@ -1,0 +1,32 @@
+<div class="portlet">
+
+  <div class="flex-item title">
+    {{ plan?.name }}
+  </div>
+
+  <div class="flex-item quantitative">
+    <span> {{ plan?.cost | currency: 'R$' }} <br /> </span>
+    {{ plan?.billingType | planBillingTypePipe }}
+  </div>
+
+  <div class="flex-item description">
+    {{ plan?.description }}
+  </div>
+
+  <div class="flex-item attributes">
+    <ul>
+      <li *ngFor="let attribute of attributesPlan">
+        &#10004; {{ attribute }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex-item">
+    <button type="button"
+            (click)="onPurchasePlan()"
+            class="btn btn-outline-light">
+      Comprar Agora
+    </button>
+  </div>
+
+</div>

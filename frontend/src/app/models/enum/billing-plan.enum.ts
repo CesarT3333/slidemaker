@@ -5,9 +5,9 @@ export enum BillingPlanEnum {
 
 export namespace BillingPlanEnum {
 
-  export const getDescricaoTipoDeCobranca =
-    (tipoCobranca: BillingPlanEnum): string => {
-      switch (tipoCobranca) {
+  export const getDescritionBillingType =
+    (billingType: BillingPlanEnum): string => {
+      switch (billingType) {
         case BillingPlanEnum.MONTH:
           return 'Por Mês';
 

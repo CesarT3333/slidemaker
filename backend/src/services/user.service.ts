@@ -34,7 +34,7 @@ export class UserService {
 
     const idUser: number = await this.userRepository
       .getIdByGoogleId(googleId)
-      .then(usuario => usuario?.id);
+      .then(user => user?.id);
 
     if (!idUser) {
       throw new NotFoundException('Usuário não encontrado');

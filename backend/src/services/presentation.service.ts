@@ -9,17 +9,21 @@ export class PresentationService {
 
   constructor(
     private presentationRepository: PresentationRepository,
-    private usuarioService: UserService
+    private userService: UserService
   ) { }
 
   async create(presentation: Presentation): Promise<Presentation> {
-    presentation.user = await this.usuarioService
+    presentation.user = await this.userService
       .getByGoogleId(presentation.user.googleId);
     return await this.presentationRepository.save(presentation);
   }
 
   async getAllUserPresentation(googleId: string): Promise<Array<Presentation>> {
     return await this.presentationRepository.getAllUserPresentation(googleId);
+  }
+
+  async  getById(id: number): Promise<Presentation> {
+    return await this.presentationRepository.getById(id);
   }
 
 }

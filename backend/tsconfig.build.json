@@ -10,6 +10,8 @@
     "src"
   ],
   "files": [
+    "paths.json",
+    "tsconfig-paths-bootstrap.js",
     "package.json"
   ],
 }
