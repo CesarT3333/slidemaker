@@ -7,14 +7,16 @@ import { join } from 'path';
 
 import { PresentationModule } from './modules/presentation/presentation.module';
 import { DataSourceModule } from './modules/data-sources/data-source.module';
+import { PaymentModule } from './modules/pyment/payment.module';
 import { IdiomModule } from './modules/idiom/idiom.module';
 import { ThemeModule } from './modules/theme/theme.module';
 import { UserModule } from './modules/user/user.module';
 import { PlanModule } from './modules/plan/plan.module';
 import { AuthModule } from './modules/auth/auth.module';
 
-import database from './config/database';
+import { ConfigurationModule } from './modules/configuration/configuration.module';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
+import database from './config/database';
 
 @Module({
   imports: [
@@ -29,8 +31,10 @@ import { SubscriptionModule } from './modules/subscription/subscription.module';
     DataSourceModule,
     IdiomModule,
 
+    ConfigurationModule,
     SubscriptionModule,
     PresentationModule,
+    PaymentModule,
     ThemeModule,
     UserModule,
     PlanModule,

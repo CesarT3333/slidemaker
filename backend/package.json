@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "",
   "author": "",
   "license": "MIT",
@@ -32,6 +32,7 @@
     "dotenv-flow": "^3.1.0",
     "googleapis": "^49.0.0",
     "jsonwebtoken": "^8.5.1",
+    "nestjs-stripe": "^0.4.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-http-bearer": "^1.0.1",
@@ -40,6 +41,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
+    "stripe": "^8.51.0",
     "typeorm": "^0.2.24"
   },
   "devDependencies": {

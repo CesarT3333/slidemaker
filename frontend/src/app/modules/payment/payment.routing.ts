@@ -1,11 +1,11 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PaymentComponent } from './pages/payment/payment.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 
 @NgModule({
   imports: [RouterModule.forChild([
-    { path: '', component: PaymentComponent }
+    { path: 'success/:sessionId', component: PaymentSuccessComponent },
   ])],
   exports: [RouterModule]
 })

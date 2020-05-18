@@ -1,4 +1,5 @@
 import Plan from './plan';
+import { SubscriptionStatusEnum } from './enum/subscription-status.enum';
 
 export interface SignatureUser {
   id?: number;
@@ -6,4 +7,5 @@ export interface SignatureUser {
   plan: Plan;
   idTransacao: string;
   amountPresentation: number;
+  status: SubscriptionStatusEnum;
 }

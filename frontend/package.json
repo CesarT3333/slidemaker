@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 3000 --proxy-config proxy-config.json --watch --poll=2000",
@@ -24,7 +24,9 @@
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
     "guid-typescript": "^1.0.9",
+    "ngx-stripe": "^9.0.2",
     "rxjs": "~6.5.4",
+    "stripe": "^8.49.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

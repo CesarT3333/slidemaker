@@ -10,8 +10,12 @@ export class PlanService {
     private planRepository: PlanRepository
   ) { }
 
-  getAll(): Promise<Array<Plan>> {
+  async getAll(): Promise<Array<Plan>> {
     return this.planRepository.find();
+  }
+
+  async getById(id: number): Promise<Plan> {
+    return await this.planRepository.findOne(id);
   }
 
 }

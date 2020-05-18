@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 
 import { SignatureService } from '../rest/signature-user.service';
 import { SnackBarService } from '../snack-bar.service';
+import { SignatureUser } from '@models/signature-user';
 
 @Injectable({ providedIn: 'root' })
 export class SignatureUserGuard
@@ -20,11 +21,11 @@ export class SignatureUserGuard
   canActivate(): Observable<boolean> | boolean {
     return this.signatureService.searchUserSignature()
       .pipe(
-        catchError(error => {
+        catchError(_ => {
           this.navigateToThePlansSelectionPage();
           return of(false);
         }),
-        map(response => {
+        map((response: SignatureUser): boolean => {
           if (!response) {
             this.navigateToThePlansSelectionPage();
             return false;

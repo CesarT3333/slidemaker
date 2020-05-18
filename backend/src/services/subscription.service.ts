@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import User from '@model/user';
 
 @Injectable()
-export class UserSignatureService {
+export class SubscriptionService {
 
   constructor(
     private subscriptionRepository: SubscriptionRepository,
@@ -17,6 +17,10 @@ export class UserSignatureService {
     return this.subscriptionRepository.getForLoggedInUser(user);
   }
 
+  async getForLoggedInUserWithStatus(user: User): Promise<Subscription> {
+    return this.subscriptionRepository.getForLoggedInUserWithStatus(user);
+  }
+
   async create(subscription: Subscription): Promise<any> {
 
     const idUser: number = await this.userService
@@ -25,6 +29,10 @@ export class UserSignatureService {
     subscription.user.id = idUser;
 
     return this.subscriptionRepository.save(subscription);
+  }
+
+  async updateWithStatus(subscription: Subscription) {
+    return await this.subscriptionRepository.save(subscription);
   }
 
 }

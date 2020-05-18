@@ -14,6 +14,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { AppInterceptor } from './services/rest/app.interceptor';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
+import { NgxStripeModule } from 'ngx-stripe';
 
 registerLocaleData(ptBr);
 
@@ -24,6 +25,7 @@ registerLocaleData(ptBr);
     DialogComponent
   ],
   imports: [
+    NgxStripeModule.forRoot(),
     MatFormFieldModule,
     MatSnackBarModule,
     MatButtonModule,

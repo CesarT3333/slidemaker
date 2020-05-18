@@ -5,6 +5,8 @@ export const resources = {
   PRESENTATIONS: `/presentations`,
   USERS: `/users`,
 
+  PAYMENTS: `/payments`,
+
   THEMES: `/themes`,
 
   IDIOMS: '/idioms',
@@ -12,5 +14,6 @@ export const resources = {
 
   ASSINATURAS: `/subscriptions`,
 
-  // TRANSACOES: `/transacoes`
+  CONFIGURATIONS: `/configurations`
+
 };
