@@ -1,5 +1,6 @@
 import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, Entity } from 'typeorm';
 
+import { SubscriptionStatusEnum } from './enum/subscription-status.enum';
 import Plan from './plan';
 import User from './user';
 
@@ -23,7 +24,10 @@ export class Subscription {
   })
   plan: Plan;
 
-  @Column({ name: 'amount_presentation', })
+  @Column({ name: 'amount_presentation' })
   amountPresentation: number;
+
+  @Column()
+  status?: SubscriptionStatusEnum;
 
 }

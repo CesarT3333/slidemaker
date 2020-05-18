@@ -1,22 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { TransactionService } from '@services/rest/transactionservice';
-import { PaymentComponent } from './pages/payment/payment.component';
+import { NgxStripeModule } from 'ngx-stripe';
+
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentService } from '@services/rest/payment.service';
 import { PaymentRoutingModule } from './payment.routing';
 
 @NgModule({
   imports: [
     CommonModule,
-    PaymentRoutingModule
+    NgxStripeModule,
+    PaymentRoutingModule,
   ],
-  declarations: [
-    PaymentComponent
-  ],
-  providers: [
-    PaymentService,
-    TransactionService
-  ]
+  declarations: [PaymentSuccessComponent],
+  providers: [PaymentService]
 })
 export class PaymentMocule { }

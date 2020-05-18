@@ -30,6 +30,19 @@ export class UserService {
 
   }
 
+  async getEmailByGoogleId(googleId: string): Promise<string> {
+
+    const idUser: string = await this.userRepository
+      .getEmailByGoogleId(googleId)
+      .then(user => user?.email);
+
+    if (!idUser) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    return idUser;
+  }
+
   async getIdByGoogleId(googleId: string): Promise<number> {
 
     const idUser: number = await this.userRepository

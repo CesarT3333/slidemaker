@@ -6,7 +6,7 @@
 
   <div class="flex-item quantitative">
     <span> {{ plan?.cost | currency: 'R$' }} <br /> </span>
-    {{ plan?.billingType | planBillingTypePipe }}
+    <span class="billing-type">{{ plan?.billingType | planBillingTypePipe }}</span>
   </div>
 
   <div class="flex-item description">

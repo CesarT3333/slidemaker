@@ -7,6 +7,7 @@ import { finalize, filter } from 'rxjs/operators';
 import { ModalConfirmsAcquisitionComponent } from '../../components/modal-confirms-acquisition/modal-confirms-acquisition.component';
 import { SignatureService } from '@services/rest/signature-user.service';
 import { HandleErrorService } from '@services/handle-error.service';
+import { PaymentService } from '@services/rest/payment.service';
 import { SnackBarService } from '@services/snack-bar.service';
 import { LoadingService } from '@services/loading.service';
 import { PlanService } from '@services/rest/plan.service';
@@ -27,6 +28,7 @@ export class PlanComponent
     private handleErrorService: HandleErrorService,
     private signatureService: SignatureService,
     private snackBarService: SnackBarService,
+    private paymentService: PaymentService,
     private loadingService: LoadingService,
     private userService: UserService,
     private planService: PlanService,
@@ -56,7 +58,7 @@ export class PlanComponent
             .amountPresentation = amountObjeto.amount;
         }
 
-        this.router.navigate(['./payment']);
+        this.paymentService.makePayment();
       });
   }
 

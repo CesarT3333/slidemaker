@@ -24,4 +24,11 @@ export class UserRepository
     });
   }
 
+  getEmailByGoogleId = async (googleId: string): Promise<User> => {
+    return await this.findOne({
+      select: ['email'],
+      where: { googleId: `${googleId}` },
+    });
+  }
+
 }

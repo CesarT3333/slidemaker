@@ -7,6 +7,8 @@ export const resources = {
   PRESENTATIONS: `${BASE_URI}/presentations`,
   USERS: `${BASE_URI}/users`,
 
+  PAYMENTS: `${BASE_URI}/payments`,
+
   THEMES: `${BASE_URI}/themes`,
 
   IDIOMS: `${BASE_URI}/idioms`,
@@ -16,4 +18,5 @@ export const resources = {
 
   AUTH_USER_LOGGED: `${BASE_URI}/auth/usuario-logado`,
 
+  CONFIGURATIONS: `${BASE_URI}/configurations`
 };

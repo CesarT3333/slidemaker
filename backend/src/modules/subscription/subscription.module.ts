@@ -2,7 +2,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
 import { SubscriptionRepository } from '@repository/subscription.repository';
-import { UserSignatureService } from '@services/subscription.service';
+import { SubscriptionService } from '@services/subscription.service';
 import { SubscriptionController } from './subscription.controller';
 import { UserModule } from '../user/user.module';
 import { Subscription } from '@model/subscription';
@@ -16,7 +16,7 @@ import { Subscription } from '@model/subscription';
     UserModule
   ],
   controllers: [SubscriptionController],
-  providers: [UserSignatureService],
-  exports: [UserSignatureService]
+  providers: [SubscriptionService],
+  exports: [SubscriptionService]
 })
 export class SubscriptionModule { }
