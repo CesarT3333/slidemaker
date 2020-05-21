@@ -7,6 +7,7 @@ import { IdiomEnum } from './enum/idiom.enum';
 import { Theme } from './theme';
 import { Cover } from './cover';
 import User from './user';
+import { Sentence } from 'src/interfaces/sentence';
 
 @Entity({ name: 'presentations' })
 export class Presentation {
@@ -53,4 +54,9 @@ export class Presentation {
 
   @Column({ name: 'created_at' })
   createdAt: Date;
+
+  textToSanitize: string;
+  sanitizedText: string;
+  textSentences: Array<Sentence> = [];
+
 }

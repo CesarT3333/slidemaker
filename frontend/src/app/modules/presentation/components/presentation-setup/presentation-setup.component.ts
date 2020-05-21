@@ -2,8 +2,10 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } fro
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
-import { finalize, delay, tap, switchMap } from 'rxjs/operators';
-import { Observable, concat } from 'rxjs';
+import { finalize, delay, tap, switchMap, map } from 'rxjs/operators';
+import { webSocket, WebSocketSubject } from 'rxjs/internal-compatibility';
+import { Observable, concat, Subscription } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
 
 import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
@@ -42,11 +44,11 @@ export class PresentationSetupComponent
   themeByPresentation: Theme;
 
   private _presentations: Array<Presentation> = [];
+  private _progressPresentationProgress$: Subscription;
 
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
   private _themes: Array<string> = [];
-
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
     IDIOM: 'PT_BR',
@@ -66,6 +68,7 @@ export class PresentationSetupComponent
     private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
+    private socket: Socket,
   ) { }
 
   ngOnInit(): void {
@@ -95,13 +98,21 @@ export class PresentationSetupComponent
     if (this.formPresentation.valid) {
       this.formPresentation.patchValue({ id: null });
       this.loadingService.show();
+
+      this._progressPresentationProgress$ =
+        this.socket.fromEvent('presentationProgress')
+          .subscribe(res => console.log(res));
+
       this.presentationService.create(<Presentation>this.formPresentation.value)
         .pipe(
-          delay(1000),
-          finalize(() => this.loadingService.dismiss()),
+          finalize(() => {
+            this.loadingService.dismiss();
+            this._progressPresentationProgress$.unsubscribe();
+          }),
           switchMap(() => this.getAllPresentations())
         ).subscribe(
           userpresentations => {
+            console.log(userpresentations);
             this._presentations = userpresentations;
             this.resetFormDefault();
             this.dialogService.open({ message: 'Apresentação criada com sucesso' });

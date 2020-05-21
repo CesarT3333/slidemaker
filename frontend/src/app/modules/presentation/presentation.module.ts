@@ -13,6 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { SocketIoModule } from 'ngx-socket-io';
+
 import { PresentationSetupComponent } from './components/presentation-setup/presentation-setup.component';
 import { ListPresentationComponent } from './components/list-presentation/list-presentation.component';
 import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
@@ -34,6 +36,14 @@ import { IdiomService } from '@services/rest/idiom.service';
     ReactiveFormsModule,
     FormsModule,
 
+    SocketIoModule.forRoot({
+      url: 'http://localhost:4000/presentation',
+      options: {
+        query: {
+          token: localStorage.getItem('token')
+        }
+      }
+    }),
     MatFormFieldModule,
     MatGridListModule,
     MatStepperModule,

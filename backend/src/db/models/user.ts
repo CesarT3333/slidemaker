@@ -23,4 +23,6 @@ export default class User {
   @OneToMany(type => Presentation, presentation => presentation.user)
   presentations: Array<Presentation>;
 
+  authorizationToken?: string;
+
 }
