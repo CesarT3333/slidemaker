@@ -22,7 +22,7 @@ export class PresentationImagesService {
         const query = `${presentation.term} ${sentence.keywords[0]}`;
 
         sentence.images = await this.fetcGoogleAndReturnImageLinks(query);
-        console.log(sentence);
+
       }
 
     }

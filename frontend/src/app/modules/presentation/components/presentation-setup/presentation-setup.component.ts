@@ -2,14 +2,15 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } fro
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
-import { finalize, delay, tap, switchMap, map } from 'rxjs/operators';
-import { webSocket, WebSocketSubject } from 'rxjs/internal-compatibility';
-import { Observable, concat, Subscription } from 'rxjs';
-import { Socket } from 'ngx-socket-io';
+import { finalize, delay, tap, switchMap } from 'rxjs/operators';
+import { Observable, concat } from 'rxjs';
 
+import { ModalSuccessfulPresentationCreationComponent } from '../successful-presentation-creation.component/modal-successful-presentation-creation.component';
+import { ModalProgressPresentationComponent } from '../modal-progress-presentation/modal-progress-presentation.component';
 import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
 import { HandleErrorService } from '@services/handle-error.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FileReaderService } from '@services/file-reade.service';
 import { IdiomService } from '@services/rest/idiom.service';
 import { LoadingService } from '@services/loading.service';
@@ -44,8 +45,6 @@ export class PresentationSetupComponent
   themeByPresentation: Theme;
 
   private _presentations: Array<Presentation> = [];
-  private _progressPresentationProgress$: Subscription;
-
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
   private _themes: Array<string> = [];
@@ -68,7 +67,7 @@ export class PresentationSetupComponent
     private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
-    private socket: Socket,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -97,25 +96,23 @@ export class PresentationSetupComponent
   onSubmit() {
     if (this.formPresentation.valid) {
       this.formPresentation.patchValue({ id: null });
-      this.loadingService.show();
 
-      this._progressPresentationProgress$ =
-        this.socket.fromEvent('presentationProgress')
-          .subscribe(res => console.log(res));
+      const modalProgressPresentation: MatDialogRef<ModalProgressPresentationComponent> =
+        this.openModalProgressPresentation();
 
-      this.presentationService.create(<Presentation>this.formPresentation.value)
+      const formPresentationValue: Presentation = this.formPresentation.value;
+      const googleIdPresentation: string = formPresentationValue.theme.googleIdPresentation;
+
+      this.presentationService.create(formPresentationValue)
         .pipe(
-          finalize(() => {
-            this.loadingService.dismiss();
-            this._progressPresentationProgress$.unsubscribe();
-          }),
+          finalize(() => modalProgressPresentation.close()),
           switchMap(() => this.getAllPresentations())
         ).subscribe(
           userpresentations => {
-            console.log(userpresentations);
             this._presentations = userpresentations;
             this.resetFormDefault();
-            this.dialogService.open({ message: 'Apresentação criada com sucesso' });
+            this.openModalSuccessfulPresentationCreation(googleIdPresentation);
+
             this.showNewFlag = true;
           },
           error => this.handleErrorService.handle(error)
@@ -171,6 +168,20 @@ export class PresentationSetupComponent
     filenameFormControl.updateValueAndValidity();
     textFormControl.updateValueAndValidity();
 
+  }
+
+  private openModalSuccessfulPresentationCreation(googleIdPresentation: string): void {
+    this.dialog.open(ModalSuccessfulPresentationCreationComponent, {
+      data: { googleIdPresentation: googleIdPresentation }
+    });
+  }
+
+  private openModalProgressPresentation(): MatDialogRef<ModalProgressPresentationComponent> {
+    return this.dialog.open(ModalProgressPresentationComponent, {
+      width: '500px',
+      closeOnNavigation: false,
+      disableClose: true,
+    });
   }
 
   private buildFormByPresentation(presentation: Presentation): void {
@@ -360,6 +371,13 @@ export class PresentationSetupComponent
 
   get themeFormControl(): Theme {
     return this.formPresentation?.get('theme')?.value;
+  }
+
+  get amountOfSlidesListValues(): Array<number> {
+    return [
+      10, 15, 20, 25, 30, 35, 40,
+      45, 50, 55, 60, 65, 70, 75, 80
+    ];
   }
 
 }

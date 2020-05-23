@@ -10,30 +10,29 @@ import {
 
 import { Server } from 'socket.io';
 
+import { EventProgressPresentationEnum } from '@model/enum/event-progress-presentation.enum';
 import User from '@model/user';
 
 @WebSocketGateway(4000, { namespace: '/presentation' })
 export class PresentationProgressGateway
-  implements OnGatewayConnection, OnGatewayInit, OnGatewayDisconnect {
+  implements OnGatewayConnection, OnGatewayDisconnect {
 
   private _clients: Array<any> = [];
+
+  @WebSocketServer()
+  server: Server;
 
   handleDisconnect(client: any) {
     this._clients = this._clients
       .filter(c => `${c.handshake.query.token}` === `${client.handshake.query.token}`);
   }
 
-  afterInit(server: any) { }
-
-  @WebSocketServer()
-  server: Server;
-
-  emitProgressToClient(user: User, progressValue: number): void {
+  emitProgressToClient(user: User, progress: EventProgressPresentationEnum): void {
     const client = this._clients
       .find(c => `${c.handshake.query.token}` === `${user.authorizationToken}`);
 
     if (client) {
-      client.emit('presentationProgress', { progress: progressValue });
+      client.emit('presentationProgress', { progress });
     }
   }
 
@@ -45,9 +44,3 @@ export class PresentationProgressGateway
 
   }
 }
-
-/*
-  interface ClientWs {
-    handshake: { query: string }
-  }
-*/

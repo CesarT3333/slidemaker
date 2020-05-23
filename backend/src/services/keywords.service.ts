@@ -22,7 +22,6 @@ export class KeywordsService {
   async fetchKeywordsOfAllSentences(presentation: Presentation) {
 
     for (const s of presentation.textSentences) {
-      console.log(s.text);
       s.keywords = [];
       s.keywords = await this.fetchWatsonAndReturnKeywords(s.text);
     }

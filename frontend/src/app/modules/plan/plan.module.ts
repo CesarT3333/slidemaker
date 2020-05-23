@@ -15,13 +15,16 @@ import { PlanRoutingModule } from './plan.routing';
 
 @NgModule({
   imports: [
-    ReactiveFormsModule,
-    PlanRoutingModule,
+    CommonModule,
+    FormsModule,
+
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    CommonModule,
-    FormsModule,
+
+    ReactiveFormsModule,
+    PlanRoutingModule,
+
   ],
   entryComponents: [
     ModalConfirmsAcquisitionComponent

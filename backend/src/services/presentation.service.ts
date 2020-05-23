@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { DataSourceTextPresentationEnum } from '@model/enum/data-source-text-presentation.enum';
+import { EventProgressPresentationEnum } from '@model/enum/event-progress-presentation.enum';
 import { PresentationProgressGateway } from './presentation-progress.gateway';
 import { PresentationRepository } from '@repository/presentation.repository';
 import { PresentationImagesService } from './presentation-images.service';
@@ -32,22 +34,11 @@ export class PresentationService {
       authorizationToken: presentation.user.authorizationToken
     };
 
-    this.presentationProgressGateway.emitProgressToClient(presentation.user, 10);
-    await this.algorithmiaService.fetchContentFromWikipedia(presentation);
-
-    this.presentationProgressGateway.emitProgressToClient(presentation.user, 25);
-    this.textService.sanitilizeContent(presentation);
-
-    this.presentationProgressGateway.emitProgressToClient(presentation.user, 40);
-    this.sentenceBoundaryService.getTextSentences(presentation);
-
-    this.presentationProgressGateway.emitProgressToClient(presentation.user, 55);
-    await this.keywordsService.fetchKeywordsOfAllSentences(presentation);
-
-    this.presentationProgressGateway.emitProgressToClient(presentation.user, 70);
-    await this.presentationImagesService.fetcImageOfAllSentences(presentation);
-
-    console.log(presentation);
+    await this.textIdentification(presentation);
+    this.sanitilizeContentOfText(presentation);
+    this.getTextSentences(presentation);
+    await this.fetchKeywordsOfAllSentences(presentation);
+    await this.fetcImageOfAllSentences(presentation);
 
     return await this.presentationRepository.save(presentation);
   }
@@ -60,4 +51,52 @@ export class PresentationService {
     return await this.presentationRepository.getById(id);
   }
 
+  private async textIdentification(presentation: Presentation): Promise<void> {
+
+    if (presentation.dataSource === DataSourceTextPresentationEnum.WIKIPEDIA) {
+
+      this.presentationProgressGateway.emitProgressToClient(
+        presentation.user,
+        EventProgressPresentationEnum.FETCH_CONTENT_WIKIPEDIA
+      );
+
+      await this.algorithmiaService.fetchContentFromWikipedia(presentation);
+    }
+  }
+
+  private sanitilizeContentOfText(presentation: Presentation): void {
+    this.presentationProgressGateway.emitProgressToClient(
+      presentation.user,
+      EventProgressPresentationEnum.CLEAN_TEXT
+    );
+
+    this.textService.sanitilizeContent(presentation);
+  }
+
+  private getTextSentences(presentation: Presentation): void {
+    this.presentationProgressGateway.emitProgressToClient(
+      presentation.user,
+      EventProgressPresentationEnum.SENTENCES_DETECTION
+    );
+
+    this.sentenceBoundaryService.getTextSentences(presentation);
+  }
+
+  private async fetchKeywordsOfAllSentences(presentation: Presentation): Promise<void> {
+    this.presentationProgressGateway.emitProgressToClient(
+      presentation.user,
+      EventProgressPresentationEnum.IDENTIFYING_KEYWORDS
+    );
+
+    await this.keywordsService.fetchKeywordsOfAllSentences(presentation);
+  }
+
+  private async fetcImageOfAllSentences(presentation: Presentation): Promise<void> {
+    this.presentationProgressGateway.emitProgressToClient(
+      presentation.user,
+      EventProgressPresentationEnum.SEARCHING_IMAGE
+    );
+
+    await this.presentationImagesService.fetcImageOfAllSentences(presentation);
+  }
 }
