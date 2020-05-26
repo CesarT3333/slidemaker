@@ -10,14 +10,14 @@ import { AppService } from '@services/app.service';
   templateUrl: './header-toolbar.component.html'
 })
 export class HeaderToolbarComponent
-  implements OnInit {
+  implements OnInit { 
 
   constructor(
     private userService: UserService,
     private appService: AppService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   onLogoutClick() {
     this.userService.logoutUser();
@@ -34,5 +34,5 @@ export class HeaderToolbarComponent
 
   get appVersion(): string {
     return this.appService.appVersion;
-  }
+  }  
 }

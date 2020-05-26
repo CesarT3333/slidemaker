@@ -16,9 +16,9 @@ import { IdiomService } from '@services/rest/idiom.service';
 import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
+import { UserService } from '@services/user.service';
 import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
-import { UserService } from '@services/user.service';
 
 @Component({
   templateUrl: './presentation-setup.component.html',
@@ -44,6 +44,8 @@ export class PresentationSetupComponent
   thirdFormGroup: FormGroup;
 
   themeByPresentation: Theme;
+  // amountPresentations = 2;
+  idPlanUser: number;
 
   private _presentations: Array<Presentation> = [];
   private _dataSources: Array<EnumClientData> = [];
@@ -381,6 +383,10 @@ export class PresentationSetupComponent
       10, 15, 20, 25, 30, 35, 40,
       45, 50, 55, 60, 65, 70, 75, 80
     ];
+  }
+
+  get amountPresentations(): number {
+    return this.userService.signature.amountPresentation;
   }
 
 }
