@@ -19,7 +19,7 @@ export class PresentationService {
   create(presentation: Presentation): Observable<Presentation> {
 
     const googleAccessToken: string =
-      this.userService.googleProfile.googleAccessToken;
+      this.userService.googleProfile?.googleAccessToken;
 
     const headers = new HttpHeaders()
       .set('google_access_token', googleAccessToken);

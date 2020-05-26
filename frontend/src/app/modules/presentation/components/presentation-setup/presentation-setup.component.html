@@ -146,6 +146,12 @@
                     Próximo
                   </button>
                 </div>
+
+                <div class="col-12"
+                     *ngIf="isStartupPlan">
+                     <hr>
+                  <span>Quantidade de apresentações restantes: {{ amountPresentations || 0 }}</span>
+                </div>
               </div>
             </mat-step>
 
@@ -201,7 +207,6 @@
           </mat-horizontal-stepper>
 
         </form>
-        <span *ngIf="idPlanUser == 3">Quantidade de apresentações restantes: {{ amountPresentations }}</span>
       </div>
 
 

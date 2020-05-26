@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { SignatureUser } from '@models/signature-user';
+import { Subscription } from '@models/subscription';
 import { resources } from '@utils/resources';
 
 @Injectable({ providedIn: 'root' })
@@ -14,13 +14,13 @@ export class SignatureService {
     private http: HttpClient
   ) { }
 
-  createSignature(signature: SignatureUser): Observable<any> {
+  createSignature(signature: Subscription): Observable<any> {
     return this.http.post(resources.SIGNATURES, signature)
       .pipe(take(1));
   }
 
-  searchUserSignature(): Observable<SignatureUser> {
-    return this.http.get<SignatureUser>(`${resources.SIGNATURES}/usuario`)
+  searchUserSignature(): Observable<Subscription> {
+    return this.http.get<Subscription>(`${resources.SIGNATURES}/usuario`)
       .pipe(take(1));
   }
 }

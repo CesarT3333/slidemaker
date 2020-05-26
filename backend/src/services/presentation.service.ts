@@ -6,9 +6,12 @@ import { PresentationProgressGateway } from './presentation-progress.gateway';
 import { PresentationRepository } from '@repository/presentation.repository';
 import { PresentationImagesService } from './presentation-images.service';
 import { SentenceBoundaryService } from './sentence-boundary.service';
+import { BillingPlanEnum } from '@model/enum/billing-plan.enum';
+import { SubscriptionService } from './subscription.service';
 import { GoogleDriveService } from './google-drive.service';
 import { AlgorithmiaService } from './algorithmia.service';
 import { KeywordsService } from './keywords.service';
+import { Subscription } from '@model/subscription';
 import { Presentation } from '@model/presentation';
 import { UserService } from './user.service';
 import { TextService } from './text.service';
@@ -21,6 +24,7 @@ export class PresentationService {
     private userService: UserService,
 
     private googleDriveService: GoogleDriveService,
+    private subscriptionService: SubscriptionService,
 
     private presentationProgressGateway: PresentationProgressGateway,
     private presentationImagesService: PresentationImagesService,
@@ -36,11 +40,24 @@ export class PresentationService {
     await this.textIdentification(presentation);
     this.sanitilizeContentOfText(presentation);
     this.getTextSentences(presentation);
-    await this.fetchKeywordsOfAllSentences(presentation);
-    await this.fetcImageOfAllSentences(presentation);
+    // await this.fetchKeywordsOfAllSentences(presentation);
+    // await this.fetcImageOfAllSentences(presentation);
+
     await this.googleDriveService.createPresentation(presentation);
 
+    await this.updateUserSubscription(presentation);
+
     return await this.presentationRepository.save(presentation);
+  }
+
+  private async updateUserSubscription(presentation: Presentation): Promise<any> {
+    const userSubscription: Subscription =
+      await this.subscriptionService.getForLoggedInUser(presentation.user);
+
+    if (userSubscription.plan.billingType === BillingPlanEnum.PRESENTATION) {
+      userSubscription.amountPresentation -= 1;
+      this.subscriptionService.create(userSubscription);
+    }
   }
 
   async getAllUserPresentation(googleId: string): Promise<Array<Presentation>> {

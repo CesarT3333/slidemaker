@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } fro
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
-import { finalize, delay, tap, switchMap, map } from 'rxjs/operators';
+import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
 
 import { ModalSuccessfulPresentationCreationComponent } from '../successful-presentation-creation.component/modal-successful-presentation-creation.component';
@@ -19,6 +19,8 @@ import { DialogService } from '@services/dialog.service';
 import { UserService } from '@services/user.service';
 import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
+import { Subscription } from '@models/subscription';
+import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
 
 @Component({
   templateUrl: './presentation-setup.component.html',
@@ -44,13 +46,14 @@ export class PresentationSetupComponent
   thirdFormGroup: FormGroup;
 
   themeByPresentation: Theme;
-  // amountPresentations = 2;
   idPlanUser: number;
 
   private _presentations: Array<Presentation> = [];
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
   private _themes: Array<string> = [];
+  private _userSubscription: Subscription;
+
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
     IDIOM: 'PT_BR',
@@ -112,7 +115,7 @@ export class PresentationSetupComponent
 
           tap((newPresentation: Presentation) =>
             this.openModalSuccessfulPresentationCreation(newPresentation.idGoogle)),
-
+          switchMap(() => this.getUserSubscription()),
           switchMap(() => this.getAllPresentations())
         ).subscribe(
           userpresentations => {
@@ -224,6 +227,7 @@ export class PresentationSetupComponent
   private startsMandatorySearches(): void {
     this.loadingService.show();
     concat(
+      this.getUserSubscription(),
       this.getAllPresentations(),
       this.getDataSources(),
       this.getIdioms()
@@ -236,6 +240,11 @@ export class PresentationSetupComponent
       _ => { },
       error => this.handleErrorService.handle(error)
     );
+  }
+
+  private getUserSubscription(): Observable<Subscription> {
+    return this.userService.subsctiptionUser()
+      .pipe(tap(subscription => this._userSubscription = subscription));
   }
 
   private getAllPresentations(): Observable<Array<Presentation>> {
@@ -386,7 +395,10 @@ export class PresentationSetupComponent
   }
 
   get amountPresentations(): number {
-    return this.userService.signature.amountPresentation;
+    return this._userSubscription?.amountPresentation;
   }
 
+  get isStartupPlan(): boolean {
+    return this._userSubscription?.plan.billingType === BillingPlanEnum.PRESENTATION;
+  }
 }

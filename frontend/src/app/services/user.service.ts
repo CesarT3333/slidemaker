@@ -1,27 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { catchError, map, take } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { SignatureUser } from '@models/signature-user';
+import { Subscription } from '@models/subscription';
 import { GoogleProfile } from '@models/google-profile';
 import { SnackBarService } from './snack-bar.service';
-import { SignatureService } from '@services/rest/signature-user.service';
-import { Router } from '@angular/router';
 import { resources } from '@utils/resources';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  signature: SignatureUser;
+  signature: Subscription;
 
   private _googleProfile: GoogleProfile;
 
   constructor(
-    private http: HttpClient,
     private snackBarService: SnackBarService,
-    private signatureSevice: SignatureService,
+    private http: HttpClient,
     private router: Router,
   ) { }
 
@@ -30,6 +28,11 @@ export class UserService {
     localStorage.removeItem('token');
     this.router.navigate(['/login'])
       .then(() => this.snackBarService.show('Usuário deslogado'));
+  }
+
+  subsctiptionUser(): Observable<Subscription> {
+    return this.http.get<Subscription>(`${resources.SIGNATURES}/usuario`)
+      .pipe(take(1));
   }
 
   set googleProfile(profile) {
@@ -43,33 +46,6 @@ export class UserService {
     } else {
       return this._googleProfile;
     }
-  }
-
-  subsctiptionUser(): Observable<SignatureUser> {
-  /*  console.log("to no metodo do service",
-    this.http.post(resources.SIGNATURES, this.signature)
-      .pipe(take(1)));
-*/
-    
-
-    return this.http.get<SignatureUser>(`${resources.SIGNATURES}/usuario`)
-    .pipe(take(1));
-
-      /*map(response => {
-        console.log("Resposta", response);
-      })
-    );*/
-
-    /*console.log("to no metodo do service");
-
-    if (!this.signature){
-      console.log("assinatura vazia - ", localStorage);
-      return JSON.parse(localStorage.getItem('amountPresentation'));
-    }
-    else {
-      console.log("to no else");
-      return this.signature;
-    }*/
   }
 
 }

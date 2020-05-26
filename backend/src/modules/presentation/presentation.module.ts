@@ -5,6 +5,7 @@ import { PresentationProgressGateway } from '@services/presentation-progress.gat
 import { PresentationImagesService } from '@services/presentation-images.service';
 import { SentenceBoundaryService } from '@services/sentence-boundary.service';
 import { PresentationRepository } from '@repository/presentation.repository';
+import { SubscriptionModule } from '../subscription/subscription.module';
 import { PresentationService } from '@services/presentation.service';
 import { GoogleDriveService } from '@services/google-drive.service';
 import { PresentationController } from './presentation.controller';
@@ -21,6 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
     CoverModule,
     ConfigModule,
+    SubscriptionModule,
     TypeOrmModule.forFeature([Presentation, PresentationRepository])
   ],
   controllers: [PresentationController],

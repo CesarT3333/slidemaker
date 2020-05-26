@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 
 import { SignatureService } from '../rest/signature-user.service';
 import { SnackBarService } from '../snack-bar.service';
-import { SignatureUser } from '@models/signature-user';
+import { Subscription } from '@models/subscription';
 
 @Injectable({ providedIn: 'root' })
 export class SignatureUserGuard
@@ -25,7 +25,7 @@ export class SignatureUserGuard
           this.navigateToThePlansSelectionPage();
           return of(false);
         }),
-        map((response: SignatureUser): boolean => {
+        map((response: Subscription): boolean => {
           if (!response) {
             this.navigateToThePlansSelectionPage();
             return false;
