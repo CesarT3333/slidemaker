@@ -91,6 +91,7 @@
                     <textarea formControlName="text"
                               required
                               rows="5"
+                              maxlength="8500"
                               matInput>
                       </textarea>
                     <mat-error class="invalid-feedback"
@@ -200,6 +201,9 @@
           </mat-horizontal-stepper>
 
         </form>
+        <span *ngIf="idPlanUser == 3">Quantidade de apresentações restantes: {{ amountPresentations }}</span>
       </div>
+
+      
     </div>
   </div>

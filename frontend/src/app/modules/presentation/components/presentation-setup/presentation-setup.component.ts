@@ -9,6 +9,7 @@ import { ModalSuccessfulPresentationCreationComponent } from '../successful-pres
 import { ModalProgressPresentationComponent } from '../modal-progress-presentation/modal-progress-presentation.component';
 import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
+import { UserService } from '@services/user.service';
 import { HandleErrorService } from '@services/handle-error.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FileReaderService } from '@services/file-reade.service';
@@ -43,6 +44,8 @@ export class PresentationSetupComponent
   thirdFormGroup: FormGroup;
 
   themeByPresentation: Theme;
+  amountPresentations: number;
+  idPlanUser: number;
 
   private _presentations: Array<Presentation> = [];
   private _dataSources: Array<EnumClientData> = [];
@@ -59,9 +62,10 @@ export class PresentationSetupComponent
   };
 
   constructor(
-    private presentationService: PresentationService,
+    private presentationService: PresentationService,    
     private handleErrorService: HandleErrorService,
     private dataSourceService: DataSourceService,
+    private userService: UserService,
     private fileReaderService: FileReaderService,
     private loadingService: LoadingService,
     private dialogService: DialogService,
@@ -72,6 +76,8 @@ export class PresentationSetupComponent
 
   ngOnInit(): void {
     this.startsMandatorySearches();
+    this.signatureUser();
+  
   }
 
   onCopyPresentation(selectedPresentation: Presentation): void {
@@ -94,29 +100,36 @@ export class PresentationSetupComponent
   }
 
   onSubmit() {
-    if (this.formPresentation.valid) {
-      this.formPresentation.patchValue({ id: null });
+    if (this.amountPresentations == 0 && this.idPlanUser == 3) {
+      this.dialogService.open({
+        title: 'Assinatura expirada',
+        message: 'Usuário não possui mais apresentações para serem criadas. Caso queira, recontratante o plano.'
+      });
+    } else {
+      if (this.formPresentation.valid) {
+        this.formPresentation.patchValue({ id: null });
 
-      const modalProgressPresentation: MatDialogRef<ModalProgressPresentationComponent> =
-        this.openModalProgressPresentation();
+        const modalProgressPresentation: MatDialogRef<ModalProgressPresentationComponent> =
+          this.openModalProgressPresentation();
 
-      const formPresentationValue: Presentation = this.formPresentation.value;
-      const googleIdPresentation: string = formPresentationValue.theme.googleIdPresentation;
+        const formPresentationValue: Presentation = this.formPresentation.value;
+        const googleIdPresentation: string = formPresentationValue.theme.googleIdPresentation;
 
-      this.presentationService.create(formPresentationValue)
-        .pipe(
-          finalize(() => modalProgressPresentation.close()),
-          switchMap(() => this.getAllPresentations())
-        ).subscribe(
-          userpresentations => {
-            this._presentations = userpresentations;
-            this.resetFormDefault();
-            this.openModalSuccessfulPresentationCreation(googleIdPresentation);
+        this.presentationService.create(formPresentationValue)
+          .pipe(
+            finalize(() => modalProgressPresentation.close()),
+            switchMap(() => this.getAllPresentations())
+          ).subscribe(
+            userpresentations => {
+              this._presentations = userpresentations;
+              this.resetFormDefault();
+              this.openModalSuccessfulPresentationCreation(googleIdPresentation);
 
-            this.showNewFlag = true;
-          },
-          error => this.handleErrorService.handle(error)
-        );
+              this.showNewFlag = true;
+            },
+            error => this.handleErrorService.handle(error)
+          );
+      }
     }
 
   }
@@ -131,7 +144,7 @@ export class PresentationSetupComponent
     this.processesAttachedFile();
   }
 
-  getErrorsInput(input: string): ValidationErrors {
+  getErrorsInput(input: string): ValidationErrors {    
     return this.formPresentation.get(input)?.errors;
   }
 
@@ -378,6 +391,13 @@ export class PresentationSetupComponent
       10, 15, 20, 25, 30, 35, 40,
       45, 50, 55, 60, 65, 70, 75, 80
     ];
-  }
+  }  
 
+  signatureUser(): void {
+    this.userService.subsctiptionUser()
+      .subscribe(
+        signature => this.idPlanUser = signature.plan.id,
+        signature => this.amountPresentations = signature.amountPresentation,
+      );
+  }
 }

@@ -18,5 +18,7 @@ export const resources = {
 
   AUTH_USER_LOGGED: `${BASE_URI}/auth/usuario-logado`,
 
-  CONFIGURATIONS: `${BASE_URI}/configurations`
+  CONFIGURATIONS: `${BASE_URI}/configurations`,
+
+  
 };
