@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 
 import { StripeService } from 'ngx-stripe';
 
+import { ConfigurationService } from './configuration.service';
 import { LoadingService } from '@services/loading.service';
-import { SignatureUser } from '@models/signature-user';
+import { Subscription } from '@models/subscription';
 import { UserService } from '@services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { resources } from '@utils/resources';
-import { ConfigurationService } from './configuration.service';
 
 @Injectable()
 export class PaymentService {
@@ -48,7 +48,7 @@ export class PaymentService {
       .pipe(take(1));
   }
 
-  private createStripeSession(signature: SignatureUser): Observable<any> {
+  private createStripeSession(signature: Subscription): Observable<any> {
     return this.http.post(`${resources.PAYMENTS}/stripe-session`, signature)
       .pipe(take(1));
   }

@@ -5,16 +5,22 @@ import { OnInit, Component, ViewChild } from '@angular/core';
 import { finalize, delay, tap, switchMap } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
 
+import { ModalSuccessfulPresentationCreationComponent } from '../successful-presentation-creation.component/modal-successful-presentation-creation.component';
+import { ModalProgressPresentationComponent } from '../modal-progress-presentation/modal-progress-presentation.component';
 import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
 import { HandleErrorService } from '@services/handle-error.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FileReaderService } from '@services/file-reade.service';
 import { IdiomService } from '@services/rest/idiom.service';
 import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
+import { UserService } from '@services/user.service';
 import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
+import { Subscription } from '@models/subscription';
+import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
 
 @Component({
   templateUrl: './presentation-setup.component.html',
@@ -40,12 +46,13 @@ export class PresentationSetupComponent
   thirdFormGroup: FormGroup;
 
   themeByPresentation: Theme;
+  idPlanUser: number;
 
   private _presentations: Array<Presentation> = [];
-
   private _dataSources: Array<EnumClientData> = [];
   private _idioms: Array<EnumClientData> = [];
   private _themes: Array<string> = [];
+  private _userSubscription: Subscription;
 
   private readonly _defaults = {
     DATASOURCE: 'WIKIPEDIA',
@@ -66,6 +73,8 @@ export class PresentationSetupComponent
     private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
+    private userService: UserService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +95,7 @@ export class PresentationSetupComponent
 
   onAccessPresentation($event: Presentation): void {
     window.open(
-      `https://docs.google.com/presentation/d/${$event.theme.googleIdPresentation}`,
+      `https://docs.google.com/presentation/d/${$event.idGoogle}`,
       '_blank'
     );
   }
@@ -94,17 +103,24 @@ export class PresentationSetupComponent
   onSubmit() {
     if (this.formPresentation.valid) {
       this.formPresentation.patchValue({ id: null });
-      this.loadingService.show();
-      this.presentationService.create(<Presentation>this.formPresentation.value)
+
+      const modalProgressPresentation: MatDialogRef<ModalProgressPresentationComponent> =
+        this.openModalProgressPresentation();
+
+      const formPresentationValue: Presentation = this.formPresentation.value;
+
+      this.presentationService.create(formPresentationValue)
         .pipe(
-          delay(1000),
-          finalize(() => this.loadingService.dismiss()),
+          finalize(() => modalProgressPresentation.close()),
+
+          tap((newPresentation: Presentation) =>
+            this.openModalSuccessfulPresentationCreation(newPresentation.idGoogle)),
+          switchMap(() => this.getUserSubscription()),
           switchMap(() => this.getAllPresentations())
         ).subscribe(
           userpresentations => {
             this._presentations = userpresentations;
             this.resetFormDefault();
-            this.dialogService.open({ message: 'Apresentação criada com sucesso' });
             this.showNewFlag = true;
           },
           error => this.handleErrorService.handle(error)
@@ -162,6 +178,20 @@ export class PresentationSetupComponent
 
   }
 
+  private openModalSuccessfulPresentationCreation(googleIdPresentation: string): void {
+    this.dialog.open(ModalSuccessfulPresentationCreationComponent, {
+      data: { googleIdPresentation: googleIdPresentation }
+    });
+  }
+
+  private openModalProgressPresentation(): MatDialogRef<ModalProgressPresentationComponent> {
+    return this.dialog.open(ModalProgressPresentationComponent, {
+      width: '500px',
+      closeOnNavigation: false,
+      disableClose: true,
+    });
+  }
+
   private buildFormByPresentation(presentation: Presentation): void {
     this.resetFormDefault();
     this.themeByPresentation = presentation.theme;
@@ -197,6 +227,7 @@ export class PresentationSetupComponent
   private startsMandatorySearches(): void {
     this.loadingService.show();
     concat(
+      this.getUserSubscription(),
       this.getAllPresentations(),
       this.getDataSources(),
       this.getIdioms()
@@ -209,6 +240,11 @@ export class PresentationSetupComponent
       _ => { },
       error => this.handleErrorService.handle(error)
     );
+  }
+
+  private getUserSubscription(): Observable<Subscription> {
+    return this.userService.subsctiptionUser()
+      .pipe(tap(subscription => this._userSubscription = subscription));
   }
 
   private getAllPresentations(): Observable<Array<Presentation>> {
@@ -351,4 +387,18 @@ export class PresentationSetupComponent
     return this.formPresentation?.get('theme')?.value;
   }
 
+  get amountOfSlidesListValues(): Array<number> {
+    return [
+      10, 15, 20, 25, 30, 35, 40,
+      45, 50, 55, 60, 65, 70, 75, 80
+    ];
+  }
+
+  get amountPresentations(): number {
+    return this._userSubscription?.amountPresentation;
+  }
+
+  get isStartupPlan(): boolean {
+    return this._userSubscription?.plan.billingType === BillingPlanEnum.PRESENTATION;
+  }
 }

@@ -10,4 +10,6 @@ export interface UserGooglePayload {
 
   emails: Array<{ value: string }>;
   photos: Array<any>;
+
+  googleAccessToken?: string;
 }

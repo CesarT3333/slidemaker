@@ -33,7 +33,7 @@ export class PaymentSuccessComponent
         retry(3)
       ).subscribe(
         _ => this.router.navigate(['/presentation'])
-          .finally(() => this.snackBarService.show('PagamentoConfirmado com sucesso')),
+          .finally(() => this.snackBarService.show('Pagamento confirmado com sucesso')),
 
         error => this.handleErrorService.handle(error)
       );

@@ -47,24 +47,6 @@
 
                 </div>
 
-                <div class="col-12">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Quantidade de Slides</mat-label>
-                    <input formControlName="amountOfSlides"
-                           matInput
-                           type="text" />
-                    <mat-error class="invalid-feedback"
-                               *ngIf="getErrorsInput('amountOfSlides')?.required">
-                      Campo obrigatório
-                    </mat-error>
-                    <mat-error class="invalid-feedback"
-                               *ngIf="getErrorsInput('amountOfSlides')?.pattern">
-                      Valor informado inválido
-                    </mat-error>
-                  </mat-form-field>
-
-                </div>
-
                 <div class="col-md-6 col-sm-12">
                   <mat-form-field appearance="outline">
                     <mat-label>Idioma</mat-label>
@@ -90,6 +72,18 @@
                   </mat-form-field>
                 </div>
 
+                <div class="col-6">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Quantidade de Slides</mat-label>
+                    <mat-select formControlName="amountOfSlides">
+                      <mat-option *ngFor="let amountOfSlides of amountOfSlidesListValues"
+                                  [value]="amountOfSlides">
+                        {{ amountOfSlides}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
                 <div class="col"
                      *ngIf="dataSourceSelected === 'TXT'">
                   <mat-form-field appearance='outline'>
@@ -97,6 +91,7 @@
                     <textarea formControlName="text"
                               required
                               rows="5"
+                              maxlength="8500"
                               matInput>
                       </textarea>
                     <mat-error class="invalid-feedback"
@@ -150,6 +145,12 @@
                           matStepperNext>
                     Próximo
                   </button>
+                </div>
+
+                <div class="col-12"
+                     *ngIf="isStartupPlan">
+                     <hr>
+                  <span>Quantidade de apresentações restantes: {{ amountPresentations || 0 }}</span>
                 </div>
               </div>
             </mat-step>
@@ -207,5 +208,7 @@
 
         </form>
       </div>
+
+
     </div>
   </div>

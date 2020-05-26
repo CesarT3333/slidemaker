@@ -44,6 +44,7 @@ export class AuthService {
         emails: googleProfile.profile.emails,
         name: googleProfile.profile.name,
         photos: googleProfile.profile.photos,
+        googleAccessToken: googleProfile.accessToken
       }
     };
 

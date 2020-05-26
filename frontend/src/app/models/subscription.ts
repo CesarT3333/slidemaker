@@ -1,7 +1,7 @@
 import Plan from './plan';
 import { SubscriptionStatusEnum } from './enum/subscription-status.enum';
 
-export interface SignatureUser {
+export interface Subscription {
   id?: number;
   user: any;
   plan: Plan;

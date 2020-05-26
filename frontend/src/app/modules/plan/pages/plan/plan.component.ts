@@ -11,7 +11,7 @@ import { PaymentService } from '@services/rest/payment.service';
 import { SnackBarService } from '@services/snack-bar.service';
 import { LoadingService } from '@services/loading.service';
 import { PlanService } from '@services/rest/plan.service';
-import { SignatureUser } from '@models/signature-user';
+import { Subscription } from '@models/subscription';
 import { UserService } from '@services/user.service';
 import Plan from '@models/plan';
 
@@ -51,7 +51,7 @@ export class PlanComponent
       .pipe(filter(resultConfirmation => resultConfirmation))
       .subscribe((amountObjeto: { amount: number }) => {
         this.userService.signature =
-          <SignatureUser>{ plan: $event };
+          <Subscription>{ plan: $event };
 
         if (amountObjeto) {
           this.userService.signature

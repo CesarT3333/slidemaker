@@ -9,7 +9,7 @@
     <button mat-button
             *ngIf="userImageProfile"
             [matMenuTriggerFor]="menu">
-      {{ googleProfile.displayName }}
+      {{ googleProfile?.displayName || '' }}
       <mat-icon>keyboard_arrow_down</mat-icon>
       <img class="img-perfil rounded-circle"
            [src]="userImageProfile" />

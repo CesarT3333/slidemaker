@@ -9,6 +9,11 @@ export enum IdiomEnum {
 }
 
 export namespace IdiomEnum {
+
+  export const getAlgorithmiainitials =
+    (idiom: IdiomEnum): string =>
+      idiom === IdiomEnum.EN ? 'en' : 'pt';
+
   export const getAllForCLientTest =
     (): Array<IdiomDataType> => ([
       { name: IdiomEnum.PT_PR, clientData: 'Português' },

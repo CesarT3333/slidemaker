@@ -31,6 +31,10 @@ export class SubscriptionService {
     return this.subscriptionRepository.save(subscription);
   }
 
+  async save(subscription: Subscription): Promise<any> {
+    return this.subscriptionRepository.save(subscription);
+  }
+
   async updateWithStatus(subscription: Subscription) {
     return await this.subscriptionRepository.save(subscription);
   }

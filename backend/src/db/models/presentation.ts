@@ -3,6 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToOne
 import { IsInt } from 'class-validator';
 
 import { DataSourceTextPresentationEnum } from './enum/data-source-text-presentation.enum';
+import { Sentence } from 'src/interfaces/sentence';
 import { IdiomEnum } from './enum/idiom.enum';
 import { Theme } from './theme';
 import { Cover } from './cover';
@@ -53,4 +54,12 @@ export class Presentation {
 
   @Column({ name: 'created_at' })
   createdAt: Date;
+
+  @Column({ name: 'id_google' })
+  idGoogle: string;
+
+  textToSanitize: string;
+  sanitizedText: string;
+  textSentences: Array<Sentence> = [];
+
 }

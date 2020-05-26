@@ -14,6 +14,7 @@ import { UserModule } from './modules/user/user.module';
 import { PlanModule } from './modules/plan/plan.module';
 import { AuthModule } from './modules/auth/auth.module';
 
+import { PresentationProgressGateway } from '@services/presentation-progress.gateway';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
 import database from './config/database';
@@ -39,6 +40,7 @@ import database from './config/database';
     UserModule,
     PlanModule,
     AuthModule,
-  ]
+  ],
+  providers: [PresentationProgressGateway]
 })
 export class AppModule { }
