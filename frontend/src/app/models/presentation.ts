@@ -10,4 +10,6 @@ export default interface Presentation {
   theme: Theme;
   cover: any;
   createdAt: Date;
+
+  idGoogle: string;
 }

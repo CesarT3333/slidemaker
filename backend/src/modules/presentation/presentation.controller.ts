@@ -17,12 +17,16 @@ export class PresentationController {
   @Post()
   create(@Req() request) {
     const presentation: Presentation = request.body;
+
     const baererToken: string =
       request?.headers?.authorization?.replace('Bearer ', '');
 
+    const googleAccessToken: string = request?.headers?.google_access_token;
+
     presentation.user = <User>{
       googleId: request.user.profileId,
-      authorizationToken: baererToken
+      authorizationToken: baererToken,
+      googleAccessToken
     };
 
     return this.presentationService.create(presentation);

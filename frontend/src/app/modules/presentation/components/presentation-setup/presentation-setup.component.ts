@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } fro
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
-import { finalize, delay, tap, switchMap } from 'rxjs/operators';
+import { finalize, delay, tap, switchMap, map } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
 
 import { ModalSuccessfulPresentationCreationComponent } from '../successful-presentation-creation.component/modal-successful-presentation-creation.component';
@@ -18,6 +18,7 @@ import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
 import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
+import { UserService } from '@services/user.service';
 
 @Component({
   templateUrl: './presentation-setup.component.html',
@@ -67,6 +68,7 @@ export class PresentationSetupComponent
     private dialogService: DialogService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private dialog: MatDialog
   ) { }
 
@@ -88,7 +90,7 @@ export class PresentationSetupComponent
 
   onAccessPresentation($event: Presentation): void {
     window.open(
-      `https://docs.google.com/presentation/d/${$event.theme.googleIdPresentation}`,
+      `https://docs.google.com/presentation/d/${$event.idGoogle}`,
       '_blank'
     );
   }
@@ -101,18 +103,19 @@ export class PresentationSetupComponent
         this.openModalProgressPresentation();
 
       const formPresentationValue: Presentation = this.formPresentation.value;
-      const googleIdPresentation: string = formPresentationValue.theme.googleIdPresentation;
 
       this.presentationService.create(formPresentationValue)
         .pipe(
           finalize(() => modalProgressPresentation.close()),
+
+          tap((newPresentation: Presentation) =>
+            this.openModalSuccessfulPresentationCreation(newPresentation.idGoogle)),
+
           switchMap(() => this.getAllPresentations())
         ).subscribe(
           userpresentations => {
             this._presentations = userpresentations;
             this.resetFormDefault();
-            this.openModalSuccessfulPresentationCreation(googleIdPresentation);
-
             this.showNewFlag = true;
           },
           error => this.handleErrorService.handle(error)

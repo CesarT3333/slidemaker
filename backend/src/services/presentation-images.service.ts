@@ -34,14 +34,15 @@ export class PresentationImagesService {
       await customSearch.cse.list({
         auth: this.configService.get('GOOGLE_API_KEY'),
         cx: this.configService.get('GOOGLE_SEARCH_ENGINE_ID'),
+        rights: 'cc_sharealike',
         q: query,
         searchType: 'image',
         num: 2
       });
 
     const imagesUrls: Array<string> =
-      response.data.items.map(i => i.link);
+      response.data.items?.map(i => i.link);
 
-    return imagesUrls;
+    return imagesUrls || [];
   }
 }

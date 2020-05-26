@@ -6,6 +6,7 @@ import { PresentationProgressGateway } from './presentation-progress.gateway';
 import { PresentationRepository } from '@repository/presentation.repository';
 import { PresentationImagesService } from './presentation-images.service';
 import { SentenceBoundaryService } from './sentence-boundary.service';
+import { GoogleDriveService } from './google-drive.service';
 import { AlgorithmiaService } from './algorithmia.service';
 import { KeywordsService } from './keywords.service';
 import { Presentation } from '@model/presentation';
@@ -19,6 +20,8 @@ export class PresentationService {
     private presentationRepository: PresentationRepository,
     private userService: UserService,
 
+    private googleDriveService: GoogleDriveService,
+
     private presentationProgressGateway: PresentationProgressGateway,
     private presentationImagesService: PresentationImagesService,
     private sentenceBoundaryService: SentenceBoundaryService,
@@ -28,17 +31,14 @@ export class PresentationService {
   ) { }
 
   async create(presentation: Presentation): Promise<any> {
-    presentation.user = {
-      ...await this.userService
-        .getByGoogleId(presentation.user.googleId),
-      authorizationToken: presentation.user.authorizationToken
-    };
 
+    await this.retrieveUserId(presentation);
     await this.textIdentification(presentation);
     this.sanitilizeContentOfText(presentation);
     this.getTextSentences(presentation);
     await this.fetchKeywordsOfAllSentences(presentation);
     await this.fetcImageOfAllSentences(presentation);
+    await this.googleDriveService.createPresentation(presentation);
 
     return await this.presentationRepository.save(presentation);
   }
@@ -51,6 +51,12 @@ export class PresentationService {
     return await this.presentationRepository.getById(id);
   }
 
+  private async retrieveUserId(presentation: Presentation): Promise<void> {
+    const idUser: number = await this.userService
+      .getIdByGoogleId(presentation.user.googleId);
+    presentation.user.id = idUser;
+  }
+
   private async textIdentification(presentation: Presentation): Promise<void> {
 
     if (presentation.dataSource === DataSourceTextPresentationEnum.WIKIPEDIA) {
@@ -61,6 +67,14 @@ export class PresentationService {
       );
 
       await this.algorithmiaService.fetchContentFromWikipedia(presentation);
+    } else {
+
+      this.presentationProgressGateway.emitProgressToClient(
+        presentation.user,
+        EventProgressPresentationEnum.READ_TEXT_USER
+      );
+
+      presentation.textToSanitize = presentation.text;
     }
   }
 

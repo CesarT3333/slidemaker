@@ -24,5 +24,6 @@ export default class User {
   presentations: Array<Presentation>;
 
   authorizationToken?: string;
+  googleAccessToken?: string;
 
 }

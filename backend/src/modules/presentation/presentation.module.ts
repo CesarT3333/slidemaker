@@ -6,6 +6,7 @@ import { PresentationImagesService } from '@services/presentation-images.service
 import { SentenceBoundaryService } from '@services/sentence-boundary.service';
 import { PresentationRepository } from '@repository/presentation.repository';
 import { PresentationService } from '@services/presentation.service';
+import { GoogleDriveService } from '@services/google-drive.service';
 import { PresentationController } from './presentation.controller';
 import { AlgorithmiaService } from '@services/algorithmia.service';
 import { KeywordsService } from '@services/keywords.service';
@@ -26,6 +27,8 @@ import { ConfigModule } from '@nestjs/config';
   providers: [
     PresentationService,
     PresentationProgressGateway,
+
+    GoogleDriveService,
 
     PresentationImagesService,
     SentenceBoundaryService,
