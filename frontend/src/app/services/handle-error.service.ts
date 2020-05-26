@@ -11,9 +11,14 @@ export class HandleErrorService {
     private router: Router
   ) { }
 
-  handle(error: { message: string, status: number }): void {
+  handle(error: { error: { message: string }, message: string, status: number }): void {
 
     switch (error.status) {
+      case 400:
+        this.dialogService.open({
+          message: error.error.message
+        });
+        break;
       case 401:
         console.log(error.message);
         this.dialogService.open({

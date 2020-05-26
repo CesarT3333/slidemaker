@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import * as algorithmia from 'algorithmia';
@@ -14,18 +14,23 @@ export class AlgorithmiaService {
   ) { }
 
   async fetchContentFromWikipedia(presentation: Presentation): Promise<void> {
+    try {
 
-    const algorithmiaResponse = await algorithmia
-      .client(`${this.configService.get('ALGORITHMIA_KEY')}`)
-      .algo('web/WikipediaParser/0.1.2')
-      .pipe({
-        articleName: presentation.term,
-        lang: IdiomEnum.getAlgorithmiainitials(presentation.idiom)
-      });
+      const algorithmiaResponse = await algorithmia
+        .client(`${this.configService.get('ALGORITHMIA_KEY')}`)
+        .algo('web/WikipediaParser/0.1.2')
+        .pipe({
+          articleName: presentation.term,
+          lang: IdiomEnum.getAlgorithmiainitials(presentation.idiom)
+        });
 
-    presentation.textToSanitize = algorithmiaResponse.get().content;
+      presentation.textToSanitize = algorithmiaResponse.get().content;
 
-    console.log('Finish get content from wikipedia');
+      console.log('Finish get content from wikipedia');
+    } catch {
+
+      throw new BadRequestException(`Erro na busca de termo no wikipedia: "${presentation.term}"`);
+    }
 
   }
 
