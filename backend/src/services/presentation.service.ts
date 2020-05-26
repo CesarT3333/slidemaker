@@ -23,8 +23,8 @@ export class PresentationService {
     private presentationRepository: PresentationRepository,
     private userService: UserService,
 
-    private googleDriveService: GoogleDriveService,
     private subscriptionService: SubscriptionService,
+    private googleDriveService: GoogleDriveService,
 
     private presentationProgressGateway: PresentationProgressGateway,
     private presentationImagesService: PresentationImagesService,
@@ -40,10 +40,10 @@ export class PresentationService {
     await this.textIdentification(presentation);
     this.sanitilizeContentOfText(presentation);
     this.getTextSentences(presentation);
-    // await this.fetchKeywordsOfAllSentences(presentation);
-    // await this.fetcImageOfAllSentences(presentation);
+    await this.fetchKeywordsOfAllSentences(presentation);
+    await this.fetcImageOfAllSentences(presentation);
 
-    await this.googleDriveService.createPresentation(presentation);
+    // await this.googleDriveService.createPresentation(presentation);
 
     await this.updateUserSubscription(presentation);
 
