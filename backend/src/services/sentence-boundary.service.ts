@@ -9,6 +9,10 @@ export class SentenceBoundaryService {
 
   getTextSentences(presentation: Presentation): void {
 
+    if (!presentation.amountOfSlides) {
+      presentation.amountOfSlides = 15;
+    }
+
     const sentences: Array<string> = sentenceBoundaryDetection
       .sentences(presentation.sanitizedText);
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { SubscriptionStatusEnum } from '@model/enum/subscription-status.enum';
 import { SubscriptionRepository } from '@repository/subscription.repository';
 import { Subscription } from '@model/subscription';
 import { UserService } from './user.service';
@@ -22,6 +23,11 @@ export class SubscriptionService {
   }
 
   async create(subscription: Subscription): Promise<any> {
+
+    if (subscription.plan.id === 4) {
+      subscription.amountPresentation = 3;
+      subscription.status = SubscriptionStatusEnum.APPROVED;
+    }
 
     const idUser: number = await this.userService
       .getIdByGoogleId(subscription.user.googleId);

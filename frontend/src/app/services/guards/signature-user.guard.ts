@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { SignatureService } from '../rest/signature-user.service';
 import { SnackBarService } from '../snack-bar.service';
 import { Subscription } from '@models/subscription';
+import { SubscriptionStatusEnum } from '@models/enum/subscription-status.enum';
 
 @Injectable({ providedIn: 'root' })
 export class SignatureUserGuard

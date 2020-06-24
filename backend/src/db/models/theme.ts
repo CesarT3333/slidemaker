@@ -15,4 +15,7 @@ export class Theme {
   @Column({ name: 'google_id_presentation' })
   googleIdPresentation: string;
 
+  @Column({ name: 'image_name' })
+  imageName?: string;
+
 }

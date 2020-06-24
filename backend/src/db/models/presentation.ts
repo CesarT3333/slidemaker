@@ -58,8 +58,12 @@ export class Presentation {
   @Column({ name: 'id_google' })
   idGoogle: string;
 
+  @Column({ name: 'thank_slide' })
+  thankSlide: boolean;
+
   textToSanitize: string;
   sanitizedText: string;
   textSentences: Array<Sentence> = [];
+  deletedOfGoogle?: boolean;
 
 }

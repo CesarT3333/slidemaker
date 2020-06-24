@@ -19,6 +19,15 @@ export class HandleErrorService {
           message: error.error.message
         });
         break;
+
+      case 402:
+        console.log(error.message);
+        this.dialogService.open({
+          message: 'Assinatura Vencida ou inválida =/ \n por favor adquira um plano'
+        });
+        this.router.navigate(['/plans']);
+        break;
+
       case 401:
         console.log(error.message);
         this.dialogService.open({

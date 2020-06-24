@@ -16,6 +16,7 @@ import { Theme } from '@model/theme';
   providers: [
     ThemeService,
     GoogleDriveService
-  ]
+  ],
+  exports: [ThemeService]
 })
 export class ThemeModule { }

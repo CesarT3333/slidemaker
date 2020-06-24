@@ -13,7 +13,6 @@ File: `.env`
 URL_FRONTEND= http://localhost:3000
 
 SECRET_JWT=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
 POSTGRES_URL_STRING=postgresql://[user]:[password]@localhost:5432/slidemakerdb
 
 GOOGLE_URL_CALLBACK= http://localhost:4200/auth/google/callback

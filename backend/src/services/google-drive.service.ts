@@ -24,16 +24,11 @@ export class GoogleDriveService {
       auth: this.configService.get('GOOGLE_API_KEY')
     });
 
-    const googleOauth = new OAuth2Client({
-      clientId: this.configService.get('GOOGLE_CLIENT_ID'),
-      clientSecret: this.configService.get('GOOGLE_CLIENT_SECRET'),
-    });
-
-    googleOauth.setCredentials({ access_token: presentation.user.googleAccessToken });
+    const googleOauth = this.getGoogleOAuth2Client(presentation.user.googleAccessToken);
 
     const copyPresentation = await google.drive('v3').files
       .copy({
-        requestBody: { parents: ['root'] },
+        requestBody: { parents: ['root'], name: presentation.term },
         auth: googleOauth,
         fileId: presentation.theme.googleIdPresentation,
       });
@@ -56,6 +51,31 @@ export class GoogleDriveService {
       }
     );
 
+    if (presentation.thankSlide) {
+      slidesCreated.push({
+        createSlide: {
+          objectId: `thank_slide_1`,
+          slideLayoutReference: {
+            predefinedLayout: 'TITLE_ONLY'
+          },
+          placeholderIdMappings: [
+            {
+              objectId: `thank_slide_title_1`,
+              layoutPlaceholder: {
+                type: 'TITLE'
+              },
+            },
+          ]
+        },
+      });
+      slidesCreated.push({
+        insertText: {
+          objectId: `thank_slide_title_1`,
+          text: `Obrigado!`
+        }
+      });
+    }
+
     await slides.presentations.batchUpdate({
       auth: googleOauth,
       presentationId: presentation.idGoogle,
@@ -64,8 +84,19 @@ export class GoogleDriveService {
 
   }
 
+  async getPresentationByIdGoogle(idGoogle: string, userAccessToken: string) {
+
+    const googleOauth = this.getGoogleOAuth2Client(userAccessToken);
+    const presentation = await google.drive('v3').files.get({
+      fileId: idGoogle,
+      auth: googleOauth
+    });
+
+    console.log('presentation');
+    return presentation;
+  }
+
   getAllThemes(): Promise<any> {
-    this.getAllPresentations();
     return google.drive('v3').files.list({
       auth: this.configService.get('GOOGLE_API_KEY'),
       fields: 'files(*)',
@@ -79,7 +110,6 @@ export class GoogleDriveService {
       fields: 'files(*)',
       q: `'18h4BYqMZaZtINBE4CLk_DCcWuAwb__j0' in parents`
     }).then((responseGoogle): Array<Theme> => {
-      responseGoogle.data.files.forEach(p => console.log(p));
       return responseGoogle.data.files.map(f => (
         {
           name: f.name,
@@ -91,12 +121,33 @@ export class GoogleDriveService {
 
   }
 
+  async deletePresentation(presentation: Presentation) {
+    const auth = this.getGoogleOAuth2Client(presentation.user.googleAccessToken);
+    await google.drive('v3').files
+      .delete({
+        auth,
+        fileId: presentation.idGoogle,
+      });
+  }
+
+  private getGoogleOAuth2Client(googleAccessToken: string): OAuth2Client {
+    const googleOauth = new OAuth2Client({
+      clientId: this.configService.get('GOOGLE_CLIENT_ID'),
+      clientSecret: this.configService.get('GOOGLE_CLIENT_SECRET'),
+    });
+
+    googleOauth.setCredentials({ access_token: googleAccessToken });
+
+    return googleOauth;
+  }
+
   private createSlides(presentation: Presentation): Array<any> {
     const ID_TITLE_SLIDE = 'id_title_slide';
     const ID_TITLE_SLIDE_TITLE = 'id_title_slide_title';
     const ID_TITLE_SLIDE_BODY = 'id_title_slide_body';
 
     return presentation.textSentences.map((txs, index): SlidesV1.Schema$Request[] => {
+
       const slides: Array<SlidesV1.Schema$Request> = [
         {
           createSlide: {
@@ -135,7 +186,6 @@ export class GoogleDriveService {
       ];
 
       if (txs?.images?.length) {
-        console.log(txs.images[0]);
         slides.push({
           createImage: {
             objectId: `${ID_TITLE_SLIDE}_${index}_img`,
@@ -144,14 +194,22 @@ export class GoogleDriveService {
               pageObjectId: `${ID_TITLE_SLIDE}_${index}`,
               size: {
                 height: {
-                  magnitude: 4000000,
+                  magnitude: 2000000,
                   unit: 'EMU',
                 },
                 width: {
-                  magnitude: 4000000,
+                  magnitude: 2000000,
                   unit: 'EMU',
                 },
               },
+              transform: {
+                scaleX: 1,
+                scaleY: 1,
+                translateX: 6300000,
+                translateY: 3000000,
+                unit: 'EMU'
+              }
+
             },
           }
         });
@@ -160,5 +218,6 @@ export class GoogleDriveService {
       return slides;
 
     });
+
   }
 }

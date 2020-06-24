@@ -27,7 +27,19 @@ export class Subscription {
   @Column({ name: 'amount_presentation' })
   amountPresentation: number;
 
+  @Column({ name: 'original_amount_presentation' })
+  originalAmountPresentation: number;
+
+  @Column({ name: 'amount_paid' })
+  amountPaid: number;
+
+  @Column({ name: 'stripe_subscription_id' })
+  stripeSubscriptionId: string;
+
   @Column()
   status?: SubscriptionStatusEnum;
+
+  @Column({ name: 'adding_presentation' })
+  addingPresentations?: number;
 
 }
