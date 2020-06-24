@@ -3,11 +3,12 @@
     <div *ngIf="index === 0 && showNewFlag"
          class="new-flag">NEW</div>
     <img matListAvatar
-         src="https://drive.google.com/uc?export=view&id={{presentation?.theme?.googleIdImg}}"
+         *ngIf="presentation.cover.imageMiniature"
+         [src]="presentation.cover.imageMiniature"
          [alt]="presentation.theme.name" />
     <h3 matLine> {{ presentation.term }}</h3>
     <p matLine>
-      <span> {{ presentation.theme.name }} </span>
+      <span class="description-theme">{{ presentation.theme.name }}</span>
     </p>
 
     <button mat-icon-button
@@ -27,6 +28,13 @@
                alt="">
         </mat-icon>
         <span>Acessar</span>
+      </button>
+      <button mat-menu-item
+              (click)="onDeletePresentation(presentation)">
+        <mat-icon class="icon-clone-presentation">
+          delete
+        </mat-icon>
+        <span>Deletar</span>
       </button>
     </mat-menu>
 

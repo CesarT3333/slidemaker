@@ -14,6 +14,11 @@ export class SignatureService {
     private http: HttpClient
   ) { }
 
+  cancelSubscription(): Observable<any> {
+    return this.http.put(resources.PAYMENTS, {})
+      .pipe(take(1));
+  }
+
   createSignature(signature: Subscription): Observable<any> {
     return this.http.post(resources.SIGNATURES, signature)
       .pipe(take(1));

@@ -8,4 +8,9 @@ export interface Subscription {
   idTransacao: string;
   amountPresentation: number;
   status: SubscriptionStatusEnum;
+
+  amountPaid: number;
+  originalAmountPresentation: number;
+
+  addingPresentations?: number;
 }

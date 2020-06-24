@@ -7,12 +7,12 @@ import { StripeService } from 'ngx-stripe';
 
 import { ConfigurationService } from './configuration.service';
 import { LoadingService } from '@services/loading.service';
-import { Subscription } from '@models/subscription';
 import { UserService } from '@services/user.service';
+import { Subscription } from '@models/subscription';
 import { HttpClient } from '@angular/common/http';
 import { resources } from '@utils/resources';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PaymentService {
 
   constructor(

@@ -12,4 +12,7 @@ export class Cover {
   @Column({ name: 'sub_title' })
   subTitle: string;
 
+  themeId: number;
+  imageBlob?: Buffer;
+
 }

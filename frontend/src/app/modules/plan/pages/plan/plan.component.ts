@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { finalize, filter } from 'rxjs/operators';
+import { finalize, filter, tap } from 'rxjs/operators';
 
 import { ModalConfirmsAcquisitionComponent } from '../../components/modal-confirms-acquisition/modal-confirms-acquisition.component';
 import { SignatureService } from '@services/rest/signature-user.service';
@@ -14,6 +14,7 @@ import { PlanService } from '@services/rest/plan.service';
 import { Subscription } from '@models/subscription';
 import { UserService } from '@services/user.service';
 import Plan from '@models/plan';
+import { SubscriptionStatusEnum } from '@models/enum/subscription-status.enum';
 
 @Component({
   templateUrl: './plan.component.html',
@@ -26,7 +27,7 @@ export class PlanComponent
 
   constructor(
     private handleErrorService: HandleErrorService,
-    private signatureService: SignatureService,
+    private subscriptionService: SignatureService,
     private snackBarService: SnackBarService,
     private paymentService: PaymentService,
     private loadingService: LoadingService,
@@ -41,24 +42,31 @@ export class PlanComponent
     this.checkUserHasSignature();
   }
 
-  onPurchasePlan($event: Plan) {
+  onPurchasePlan(plan: Plan) {
     this.dialog.open(ModalConfirmsAcquisitionComponent, {
       width: '500px',
       closeOnNavigation: false,
       disableClose: true,
-      data: { plan: $event }
+      data: { plan: plan }
     }).afterClosed()
       .pipe(filter(resultConfirmation => resultConfirmation))
-      .subscribe((amountObjeto: { amount: number }) => {
+      .subscribe((amountObjet: { amount: number }) => {
         this.userService.signature =
-          <Subscription>{ plan: $event };
+          <Subscription>{ plan: plan };
 
-        if (amountObjeto) {
+        if (amountObjet) {
           this.userService.signature
-            .amountPresentation = amountObjeto.amount;
+            .amountPresentation = amountObjet.amount;
         }
 
-        this.paymentService.makePayment();
+        if (plan.id === 4) {
+          this.userService.signature.amountPresentation = 4;
+          this.subscriptionService.createSignature(this.userService.signature)
+            .subscribe(_ => this.router.navigate(['/presentation']));
+        } else {
+          this.paymentService.makePayment();
+        }
+
       });
   }
 
@@ -73,14 +81,17 @@ export class PlanComponent
   }
 
   private checkUserHasSignature(): void {
-    this.signatureService.searchUserSignature()
-      .subscribe(assinatura => {
-        if (assinatura) {
-          this.loadingService.show();
-          this.router.navigate(['/presentation'])
-            .then(() => this.snackBarService.show('Usuário já possui assinatura!'))
-            .finally(() => this.loadingService.dismiss());
-        }
+    this.subscriptionService.searchUserSignature()
+      .pipe(
+        filter(userSubscription =>
+          userSubscription?.status !== SubscriptionStatusEnum.REPPROVED),
+
+        filter(userSubscription => userSubscription.plan.id !== 4)
+      ).subscribe(_ => {
+        this.loadingService.show();
+        this.router.navigate(['/presentation'])
+          .then(() => this.snackBarService.show('Usuário já possui assinatura!'))
+          .finally(() => this.loadingService.dismiss());
       });
   }
 

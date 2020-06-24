@@ -54,6 +54,6 @@ export class ModalConfirmsAcquisitionComponent
   }
 
   get planPaidForNumberOfPresentations(): boolean {
-    return this._plan.billingType === BillingPlanEnum.PRESENTATION;
+    return this._plan.billingType === BillingPlanEnum.PRESENTATION && this._plan.id !== 4;
   }
 }

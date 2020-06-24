@@ -2,6 +2,8 @@ export const resources = {
   PLANS: `/plans`,
   AUTH: `/auth`,
 
+  COVER: `/covers`,
+
   PRESENTATIONS: `/presentations`,
   USERS: `/users`,
 

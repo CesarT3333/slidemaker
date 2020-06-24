@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Req, Get, Param } from '@nestjs/common';
+import { Controller, UseGuards, Post, Req, Get, Param, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { PresentationService } from '@services/presentation.service';
@@ -32,9 +32,21 @@ export class PresentationController {
     return this.presentationService.create(presentation);
   }
 
+  @Delete(':id')
+  deletePresentation(@Req() request, @Param() params): Promise<any> {
+
+    const user = <User>{ googleAccessToken: request?.headers?.google_access_token };
+    const idPresentation: number = params.id;
+
+    return this.presentationService.deletePresentation(user, idPresentation);
+  }
+
   @Get()
-  getAllUserPresentation(@Req() request): Promise<Array<Presentation>> {
-    return this.presentationService.getAllUserPresentation(request.user.profileId);
+  async getAllUserPresentation(@Req() request): Promise<Array<Presentation>> {
+    return await this.presentationService.getAllUserPresentation(
+      request.user.profileId,
+      request?.headers?.google_access_token
+    );
   }
 
   @Get(':id')

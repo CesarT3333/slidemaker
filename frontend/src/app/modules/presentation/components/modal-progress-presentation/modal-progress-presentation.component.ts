@@ -2,7 +2,7 @@ import { OnInit, Component, OnDestroy } from '@angular/core';
 
 import { Socket } from 'ngx-socket-io';
 
-import { concatMap, delay } from 'rxjs/operators';
+import { concatMap, delay, tap } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 
 import { EventProgressPresentationEnum } from '@models/enum/event-progress-presentation.enum';
@@ -17,7 +17,7 @@ export class ModalProgressPresentationComponent
   private _progressPresentationProgress$: Subscription;
   private _progress: EventProgressPresentationEnum;
 
-  private readonly DELAY_PROGRESS = 2000;
+  private readonly DELAY_PROGRESS = 4000;
 
   constructor(
     private socket: Socket
@@ -25,8 +25,10 @@ export class ModalProgressPresentationComponent
 
     this._progressPresentationProgress$ =
       this.socket.fromEvent<WsResponse>('presentationProgress')
-        .pipe(concatMap(item => of(item).pipe(delay(this.DELAY_PROGRESS))))
-        .subscribe(wsResponse => this._progress = wsResponse.progress);
+        .pipe(
+          concatMap(item => of(item).pipe(delay(this.DELAY_PROGRESS))),
+          tap(wsResponse => console.log(wsResponse))
+        ).subscribe(wsResponse => this._progress = wsResponse.progress);
   }
 
   ngOnInit(): void { }

@@ -21,8 +21,12 @@ export class SubscriptionRepository
       .leftJoinAndSelect('subscriptions.user', 'users')
       .leftJoinAndSelect('subscriptions.plan', 'plans')
       .where('users.googleId = :googleId', { googleId: user.googleId })
-      .andWhere('subscriptions.status = :status', { status: SubscriptionStatusEnum.APPROVED })
-      .getOne();
+      .andWhere('subscriptions.status IN (:...values)', {
+        values: [
+          SubscriptionStatusEnum.APPROVED,
+          SubscriptionStatusEnum.REPPROVED
+        ]
+      }).getOne();
   }
 
 }

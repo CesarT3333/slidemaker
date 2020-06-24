@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } fro
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OnInit, Component, ViewChild } from '@angular/core';
 
-import { finalize, delay, tap, switchMap } from 'rxjs/operators';
+import { finalize, delay, tap, switchMap, map } from 'rxjs/operators';
 import { Observable, concat } from 'rxjs';
 
 import { ModalSuccessfulPresentationCreationComponent } from '../successful-presentation-creation.component/modal-successful-presentation-creation.component';
@@ -10,17 +10,20 @@ import { ModalProgressPresentationComponent } from '../modal-progress-presentati
 import { PresentationService } from '@services/rest/presentation.service';
 import { DataSourceService } from '@services/rest/data-sources.service';
 import { HandleErrorService } from '@services/handle-error.service';
+import { amountOfSlidesListDefaultValues } from '@utils/constants';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FileReaderService } from '@services/file-reade.service';
+import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
 import { IdiomService } from '@services/rest/idiom.service';
+import { CoverService } from '@services/rest/cover.service';
 import { LoadingService } from '@services/loading.service';
 import { EnumClientData } from '@models/enum-client-data';
 import { DialogService } from '@services/dialog.service';
 import { UserService } from '@services/user.service';
+import { Subscription } from '@models/subscription';
 import Presentation from '@models/presentation';
 import { Theme } from '@models/theme';
-import { Subscription } from '@models/subscription';
-import { BillingPlanEnum } from '@models/enum/billing-plan.enum';
+import { Cover } from '@models/cover';
 
 @Component({
   templateUrl: './presentation-setup.component.html',
@@ -45,6 +48,8 @@ export class PresentationSetupComponent
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
 
+  imageToShow: any;
+
   themeByPresentation: Theme;
   idPlanUser: number;
 
@@ -58,6 +63,7 @@ export class PresentationSetupComponent
     DATASOURCE: 'WIKIPEDIA',
     IDIOM: 'PT_BR',
     AMOUNT_SLIDES: 20,
+    thankSlide: true,
     COVER: {
       title: 'Claro Simples',
       subTitle: 'Legenda'
@@ -71,6 +77,7 @@ export class PresentationSetupComponent
     private fileReaderService: FileReaderService,
     private loadingService: LoadingService,
     private dialogService: DialogService,
+    private coverService: CoverService,
     private idiomService: IdiomService,
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -129,6 +136,23 @@ export class PresentationSetupComponent
 
   }
 
+  onProducesImageCover(): void {
+    const cover: Cover = this.formPresentation.get('cover').value;
+    const theme: Theme = this.formPresentation.get('theme').value;
+
+    this.coverService.producesCoverImage(<Cover>{
+      title: cover.title,
+      subTitle: cover.subTitle,
+      themeId: theme.id
+    }).subscribe(
+      imageBlob => this.fileReaderService.createImageFromBlob(
+        imageBlob,
+        result => this.imageToShow = result
+      ),
+      error => this.handleErrorService.handle(error)
+    );
+  }
+
   onClickAttachmentFile($event) {
     $event?.preventDefault();
     this.inputFile.nativeElement.click();
@@ -176,6 +200,19 @@ export class PresentationSetupComponent
     filenameFormControl.updateValueAndValidity();
     textFormControl.updateValueAndValidity();
 
+  }
+
+  onDeletePresentation(): void {
+    this.loadingService.show();
+    this.getAllPresentations()
+      .pipe(finalize(() => this.loadingService.dismiss())
+      ).subscribe();
+  }
+
+  onStepChange($event): void {
+    if ($event.selectedIndex === 2) {
+      this.onProducesImageCover();
+    }
   }
 
   private openModalSuccessfulPresentationCreation(googleIdPresentation: string): void {
@@ -247,9 +284,29 @@ export class PresentationSetupComponent
       .pipe(tap(subscription => this._userSubscription = subscription));
   }
 
-  private getAllPresentations(): Observable<Array<Presentation>> {
+  private getAllPresentations(): Observable<any> {
     return this.presentationService.getAllOfTheUser()
-      .pipe(tap(presentations => this._presentations = presentations));
+      .pipe(
+        switchMap(presentations => {
+
+          const requests: Array<Observable<any>> = [];
+
+          presentations.forEach(p => {
+            (<Cover>p.cover).themeId = p.theme.id;
+            requests.push(this.coverService.producesCoverImage(p.cover)
+              .pipe(
+                tap(imageBlob => this.fileReaderService.createImageFromBlob(imageBlob,
+                  result => p.cover.imageMiniature = result))
+              ));
+          });
+
+          return concat(...requests).pipe(
+            finalize(() => this._presentations = presentations)
+          );
+
+        }),
+
+      );
   }
 
   private getDataSources(): Observable<Array<EnumClientData>> {
@@ -263,13 +320,25 @@ export class PresentationSetupComponent
   }
 
   private initForm() {
+
+    const amountOfSlidesValues: number =
+      this._userSubscription.plan.id === 4 ?
+        15 : this._defaults.AMOUNT_SLIDES;
+
+    const amountOfSlidesDisabled: boolean =
+      !!(this._userSubscription.plan.id === 4);
+
     this.formPresentation =
       this.formBuilder.group({
         id: null,
         term: [null, Validators.required],
         text: null,
+        thankSlide: [true],
         amountOfSlides: [
-          this._defaults.AMOUNT_SLIDES,
+          {
+            value: amountOfSlidesValues,
+            disabled: amountOfSlidesDisabled
+          },
           [
             Validators.required,
             Validators.pattern('^[0-9]*$')
@@ -300,12 +369,17 @@ export class PresentationSetupComponent
     this.presentationStepper.selectedIndex = 0;
     this.presentationStepper.reset();
 
+    const amountOfSlidesValues: number =
+      this._userSubscription.plan.id === 4 ?
+        15 : this._defaults.AMOUNT_SLIDES;
+
     this.form.resetForm();
     this.formPresentation.patchValue({
       term: null,
       text: null,
-      amountOfSlides: this._defaults.AMOUNT_SLIDES,
+      amountOfSlides: amountOfSlidesValues,
       fileName: null,
+      thankSlide: this._defaults.thankSlide,
       idiom: this._defaults.IDIOM,
       dataSource: this._defaults.DATASOURCE,
       theme: null,
@@ -388,10 +462,7 @@ export class PresentationSetupComponent
   }
 
   get amountOfSlidesListValues(): Array<number> {
-    return [
-      10, 15, 20, 25, 30, 35, 40,
-      45, 50, 55, 60, 65, 70, 75, 80
-    ];
+    return amountOfSlidesListDefaultValues;
   }
 
   get amountPresentations(): number {

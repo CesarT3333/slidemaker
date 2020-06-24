@@ -1,3 +1,14 @@
 img {
   border: 2px solid  #673ab7;
 }
+
+.img-cover:hover {
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover,
+  &.selected  {
+    opacity: 0.6;
+    border: 2.5px #673ab7 solid;
+  }
+}

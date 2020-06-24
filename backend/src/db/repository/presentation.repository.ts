@@ -11,7 +11,8 @@ export class PresentationRepository
       join: {
         alias: 'presentations',
         leftJoinAndSelect: {
-          theme: 'presentations.theme'
+          theme: 'presentations.theme',
+          cover: 'presentations.cover',
         },
         leftJoin: {
           user: 'presentations.user',

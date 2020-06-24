@@ -17,6 +17,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { PresentationProgressGateway } from '@services/presentation-progress.gateway';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
+import { CoverImageService } from '@services/cover-image.service';
+import { CoverModule } from './modules/cover/cover.module';
 import database from './config/database';
 
 @Module({
@@ -31,11 +33,14 @@ import database from './config/database';
 
     DataSourceModule,
     IdiomModule,
+    CoverModule,
 
     ConfigurationModule,
     SubscriptionModule,
     PresentationModule,
+    CoverImageService,
     PaymentModule,
+    CoverModule,
     ThemeModule,
     UserModule,
     PlanModule,

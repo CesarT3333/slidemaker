@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row container-smk">
+
+    <div class="col-12 portlet">
+      <div class="content">
+        <label class="bd-title">Minha assinatura</label>
+        <hr>
+        <div class="row"
+             *ngIf="subscriptionForm">
+          <form [formGroup]="subscriptionForm">
+
+            <div class="col-md-6">
+              <mat-form-field appearance='outline'>
+                <mat-label>Nome do Plano</mat-label>
+                <input formControlName="planName"
+                       matInput
+                       type="text" />
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+              <mat-form-field appearance='outline'>
+                <mat-label>Descrição</mat-label>
+                <textarea formControlName="planDescription"
+                          required
+                          matInput>
+                  </textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6"
+                 *ngIf="isBillingTypeMonth">
+              <mat-form-field appearance='outline'>
+                <mat-label>Quantidade a ser paga por mês</mat-label>
+                <input formControlName="planCost"
+                       matInput
+                       type="text" />
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="isBillingTypePresentation">
+              <div class="col-6"
+                   *ngIf="amountPaid">
+                <mat-form-field appearance='outline'>
+                  <mat-label>Valor Pago</mat-label>
+                  <input formControlName="amountPaid"
+                         matInput
+                         type="text" />
+                </mat-form-field>
+              </div>
+              <div class="col-6"
+                   *ngIf="originalAmountPresentation">
+                <mat-form-field appearance='outline'>
+                  <mat-label>Quantidade de Apresentações adiquiridas</mat-label>
+                  <input formControlName="originalAmountPresentation"
+                         matInput
+                         type="text" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance='outline'>
+                  <mat-label>Quantidade de apresentações restantes</mat-label>
+                  <input formControlName="amountPresentation"
+                         matInput
+                         type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="row">
+          <hr>
+          <div class="col-12">
+            <button mat-stroked-button
+                    (click)="onBackClick()"
+                    color="primary">
+              Voltar
+            </button>
+            <button mat-stroked-button
+                    *ngIf="isFreePlan"
+                    (click)="onSignPlan()"
+                    color="primary">
+              Assinar um plano
+            </button>
+            <button mat-stroked-button
+                    *ngIf="!isBillingTypePresentation"
+                    (click)="onCancelSubscription()"
+                    color="primary">
+              Cancelar assinatura
+            </button>
+            <button mat-stroked-button
+                    *ngIf="isStartupPlan"
+                    (click)="onAddPresentations()"
+                    color="primary">
+              Adiquirir mais apresentações
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

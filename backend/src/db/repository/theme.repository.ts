@@ -4,4 +4,12 @@ import { Theme } from '@model/theme';
 
 @EntityRepository(Theme)
 export class ThemeRepository
-  extends Repository<Theme> { }
+  extends Repository<Theme> {
+
+  getImageNameBy = async (themeId: number): Promise<Theme> => {
+    return await this.findOne({
+      select: ['imageName'],
+      where: { id: `${themeId}` },
+    });
+  }
+}

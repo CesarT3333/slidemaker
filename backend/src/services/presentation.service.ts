@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
+import { HttpPaymentRequiredException } from 'src/util/exception/http-payment-required.exception';
 import { DataSourceTextPresentationEnum } from '@model/enum/data-source-text-presentation.enum';
 import { EventProgressPresentationEnum } from '@model/enum/event-progress-presentation.enum';
 import { PresentationProgressGateway } from './presentation-progress.gateway';
+import { SubscriptionStatusEnum } from '@model/enum/subscription-status.enum';
 import { PresentationRepository } from '@repository/presentation.repository';
 import { PresentationImagesService } from './presentation-images.service';
 import { SentenceBoundaryService } from './sentence-boundary.service';
@@ -15,6 +17,7 @@ import { Subscription } from '@model/subscription';
 import { Presentation } from '@model/presentation';
 import { UserService } from './user.service';
 import { TextService } from './text.service';
+import User from '@model/user';
 
 @Injectable()
 export class PresentationService {
@@ -25,7 +28,6 @@ export class PresentationService {
 
     private subscriptionService: SubscriptionService,
     private googleDriveService: GoogleDriveService,
-
     private presentationProgressGateway: PresentationProgressGateway,
     private presentationImagesService: PresentationImagesService,
     private sentenceBoundaryService: SentenceBoundaryService,
@@ -36,18 +38,29 @@ export class PresentationService {
 
   async create(presentation: Presentation): Promise<any> {
 
-    await this.retrieveUserId(presentation);
+    this.retrieveUserId(presentation);
+    await this.validateUserSubscription(presentation);
     await this.textIdentification(presentation);
     this.sanitilizeContentOfText(presentation);
     this.getTextSentences(presentation);
-    await this.fetchKeywordsOfAllSentences(presentation);
+    // await this.fetchKeywordsOfAllSentences(presentation);
     await this.fetcImageOfAllSentences(presentation);
 
-    // await this.googleDriveService.createPresentation(presentation);
+    await this.googleDriveService.createPresentation(presentation);
 
     await this.updateUserSubscription(presentation);
 
     return await this.presentationRepository.save(presentation);
+  }
+
+  async deletePresentation(user: User, idPresentation: number): Promise<any> {
+    const presentation = await this.presentationRepository.findOne(idPresentation);
+    presentation.user = user;
+
+    return this.googleDriveService.deletePresentation(presentation)
+      .catch(error => console.log(error))
+      .finally(() => this.presentationRepository.delete(idPresentation));
+
   }
 
   private async updateUserSubscription(presentation: Presentation): Promise<any> {
@@ -56,12 +69,46 @@ export class PresentationService {
 
     if (userSubscription.plan.billingType === BillingPlanEnum.PRESENTATION) {
       userSubscription.amountPresentation -= 1;
-      this.subscriptionService.create(userSubscription);
+
+      if (userSubscription.amountPresentation === 0) {
+        userSubscription.status = SubscriptionStatusEnum.REPPROVED;
+      }
+
+      this.subscriptionService.save(userSubscription);
     }
   }
 
-  async getAllUserPresentation(googleId: string): Promise<Array<Presentation>> {
-    return await this.presentationRepository.getAllUserPresentation(googleId);
+  private async validateUserSubscription(presentation: Presentation) {
+    const userSubscription: Subscription =
+      await this.subscriptionService.getForLoggedInUser(presentation.user);
+
+    if (userSubscription.status === SubscriptionStatusEnum.REPPROVED) {
+      throw new HttpPaymentRequiredException();
+    }
+
+  }
+
+  async getAllUserPresentation(googleId: string, googleAccessToken: string): Promise<Array<Presentation>> {
+    const userPresentations: Array<Presentation> =
+      await this.presentationRepository.getAllUserPresentation(googleId);
+
+    for (let count = 0; userPresentations.length > count; count++) {
+
+      try {
+        await this.googleDriveService.getPresentationByIdGoogle(
+          userPresentations[count].idGoogle,
+          googleAccessToken
+        );
+
+        userPresentations[count].deletedOfGoogle = false;
+
+      } catch {
+        userPresentations[count].deletedOfGoogle = true;
+      }
+    }
+
+    return userPresentations.filter(p => p.deletedOfGoogle === false);
+
   }
 
   async getById(id: number): Promise<Presentation> {

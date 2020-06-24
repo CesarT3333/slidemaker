@@ -6,6 +6,7 @@ export const resources = {
 
   PRESENTATIONS: `${BASE_URI}/presentations`,
   USERS: `${BASE_URI}/users`,
+  COVER: `${BASE_URI}/covers`,
 
   PAYMENTS: `${BASE_URI}/payments`,
 
@@ -20,5 +21,5 @@ export const resources = {
 
   CONFIGURATIONS: `${BASE_URI}/configurations`,
 
-  
+
 };

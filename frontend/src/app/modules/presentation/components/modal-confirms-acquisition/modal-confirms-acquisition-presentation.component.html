@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Adiquirir mais apresentações</h1>
+<div mat-dialog-content>
+
+  <p>Informe a quantidade de apresentações que deseja adquirir</p>
+  <mat-form-field>
+    <mat-label>Quantidade de apresentações</mat-label>
+    <input matInput
+           type="text"
+           [(ngModel)]="amount">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button
+          (click)="onCancel()">
+    Cancelar
+  </button>
+  <button mat-raised-button
+          (click)="onConfirm()"
+          cdkFocusInitial>
+    Confirmar
+  </button>
+</div>

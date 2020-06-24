@@ -33,7 +33,7 @@ export class PaymentService {
     const subscriptionOfLoggedUser: Subscription = await this.subscriptionService
       .getForLoggedInUser(user);
 
-    subscriptionOfLoggedUser.status = await this.updateStatusUserSubscription(subscriptionOfLoggedUser, stripeSessionResponse);
+    await this.updateUserSubscription(subscriptionOfLoggedUser, stripeSessionResponse);
 
     if (subscriptionOfLoggedUser.status === SubscriptionStatusEnum.APPROVED) {
 
@@ -48,12 +48,33 @@ export class PaymentService {
 
   }
 
+  async cancelSubscription(user: User) {
+    const userSubscription = await this.subscriptionService.getForLoggedInUser(user);
+
+    try {
+
+      if (userSubscription?.stripeSubscriptionId) {
+        const apiKey: string = this.configService.get('STRIPE_SECRET_KEY');
+        await this.stripeClient.subscriptions.del(userSubscription.stripeSubscriptionId, {},
+          { apiKey }
+        );
+      }
+
+      userSubscription.status = SubscriptionStatusEnum.REPPROVED;
+      await this.subscriptionService.save(userSubscription);
+
+    } catch {
+      throw new Error('Erro ao cancelar assinatura');
+    }
+  }
+
   async createStripeSession(subscription: Subscription) {
 
     const userEmail: string = await this.userService
       .getEmailByGoogleId(subscription.user.googleId);
 
     await this.createSubscriptionIfNotExist(subscription);
+    await this.processAddingPresentationIfExist(subscription);
 
     const selectedPlan: Plan = await this.planService.getById(subscription.plan.id);
     const productRequest = this.buildProductRequest(selectedPlan, subscription);
@@ -70,6 +91,12 @@ export class PaymentService {
         ...productRequest
       }, { apiKey }
     );
+  }
+
+  private async processAddingPresentationIfExist(subscription: Subscription) {
+    if (subscription.addingPresentations) {
+      await this.subscriptionService.save(subscription);
+    }
   }
 
   private async createSubscriptionIfNotExist(subscription: Subscription): Promise<void> {
@@ -89,10 +116,10 @@ export class PaymentService {
 
   }
 
-  private async updateStatusUserSubscription(
+  private async updateUserSubscription(
     subscriptionOfLoggedUser: Subscription,
     sessionResponse: Stripe.Checkout.Session
-  ): Promise<SubscriptionStatusEnum> {
+  ) {
 
     const apiKey: string = this.configService.get('STRIPE_SECRET_KEY');
 
@@ -101,18 +128,38 @@ export class PaymentService {
       const stripeSubscription = await this.stripeClient.subscriptions
         .retrieve(`${sessionResponse.subscription}`, {}, { apiKey });
 
-      return stripeSubscription.status === 'active' ?
-        SubscriptionStatusEnum.APPROVED :
-        SubscriptionStatusEnum.REPPROVED;
+      subscriptionOfLoggedUser.stripeSubscriptionId = stripeSubscription.id;
+      subscriptionOfLoggedUser.originalAmountPresentation = null;
+      subscriptionOfLoggedUser.amountPaid = null;
+
+      subscriptionOfLoggedUser.status =
+        stripeSubscription.status === 'active' ?
+          SubscriptionStatusEnum.APPROVED :
+          SubscriptionStatusEnum.REPPROVED;
 
     } else {
 
       const paymentIntent = await this.stripeClient.paymentIntents
         .retrieve(`${sessionResponse.payment_intent}`, {}, { apiKey });
 
-      return paymentIntent.status === 'succeeded' ?
-        SubscriptionStatusEnum.APPROVED :
-        SubscriptionStatusEnum.REPPROVED;
+      subscriptionOfLoggedUser.stripeSubscriptionId = null;
+      subscriptionOfLoggedUser.originalAmountPresentation =
+        subscriptionOfLoggedUser.amountPresentation;
+
+      subscriptionOfLoggedUser.amountPaid =
+        (subscriptionOfLoggedUser.amountPresentation * subscriptionOfLoggedUser.plan.cost);
+
+      if (subscriptionOfLoggedUser.addingPresentations) {
+        subscriptionOfLoggedUser.amountPresentation += subscriptionOfLoggedUser.addingPresentations;
+        subscriptionOfLoggedUser.addingPresentations = null;
+        subscriptionOfLoggedUser.originalAmountPresentation =
+          subscriptionOfLoggedUser.amountPresentation;
+      }
+
+      subscriptionOfLoggedUser.status =
+        paymentIntent.status === 'succeeded' ?
+          SubscriptionStatusEnum.APPROVED :
+          SubscriptionStatusEnum.REPPROVED;
     }
   }
 
@@ -123,6 +170,9 @@ export class PaymentService {
 
     // TODO: Extract to factory
     if (selectedPlan.billingType === BillingPlanEnum.PRESENTATION) {
+      const amountToPay: number =
+        subscription.addingPresentations || subscription.amountPresentation;
+
       return {
         line_items: [
           {
@@ -130,7 +180,7 @@ export class PaymentService {
             description: selectedPlan.description,
             amount: selectedPlan.cost * 100,
             currency: 'brl',
-            quantity: subscription.amountPresentation,
+            quantity: amountToPay,
           }
         ]
       };

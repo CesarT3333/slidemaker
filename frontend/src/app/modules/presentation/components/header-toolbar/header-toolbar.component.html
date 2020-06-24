@@ -17,6 +17,11 @@
 
     <mat-menu #menu="matMenu"
               [overlapTrigger]="false">
+      <button (click)="onSubscriptionClick()"
+              mat-menu-item>
+        <mat-icon>sentiment_very_satisfied</mat-icon>
+        <span>Minha conta</span>
+      </button>
       <button (click)="onLogoutClick()"
               mat-menu-item>
         <mat-icon>exit_to_app</mat-icon>

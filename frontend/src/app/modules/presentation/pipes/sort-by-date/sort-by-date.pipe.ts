@@ -6,7 +6,11 @@ export class SortByDatePipe
   implements PipeTransform {
 
   transform(presentations: Array<Presentation>): any {
-    return presentations.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    if (presentations?.length) {
+      return presentations?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else {
+      return [];
+    }
   }
 
 }

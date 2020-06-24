@@ -15,29 +15,34 @@ export class PresentationImagesService {
 
   async fetcImageOfAllSentences(presentation: Presentation) {
 
-    for (const sentence of presentation.textSentences) {
+    presentation.textSentences.forEach(txs => txs.images = []);
 
-      if (sentence?.keywords?.length) {
+    const imgs: Array<string> = [];
+    const amountRequests: number = presentation.textSentences.length / 5;
 
-        const query = `${presentation.term} ${sentence.keywords[0]}`;
-
-        sentence.images = await this.fetcGoogleAndReturnImageLinks(query);
-
-      }
-
+    let start = 0;
+    for (let amount = 0; amount <= amountRequests; amount++) {
+      (await this.fetcGoogleAndReturnImageLinks(presentation.term, start))?.forEach(i => imgs.push(i));
+      start += 5;
     }
+
+    imgs.forEach((img, index) => presentation.textSentences[index]?.images?.push(img));
+
   }
 
-  private async fetcGoogleAndReturnImageLinks(query: string) {
+  private async fetcGoogleAndReturnImageLinks(query: string, start: number) {
 
     const response: any =
       await customSearch.cse.list({
         auth: this.configService.get('GOOGLE_API_KEY'),
         cx: this.configService.get('GOOGLE_SEARCH_ENGINE_ID'),
-        rights: 'cc_sharealike',
+        rights: 'cc_publicdomain',
+        imgSize: 'MEDIUM',
+        start,
+        safe: 'off',
+        num: 5,
         q: query,
         searchType: 'image',
-        num: 2
       });
 
     const imagesUrls: Array<string> =

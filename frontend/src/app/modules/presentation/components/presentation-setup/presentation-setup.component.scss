@@ -19,6 +19,7 @@
       padding: 13px;
       border-radius: 35px;
       max-height: 70vh;
+      overflow: auto;
     }
 
   }
@@ -52,12 +53,13 @@
     }
   }
 
-  textarea {
-    resize: none !important;
-    overflow: scroll;
-  }
-
   ::ng-deep .mat-form-field-suffix {
     display: inherit;
+  }
+}
+
+::ng-deep .mat-checkbox-checked {
+  .mat-checkbox-background {
+    background: #673ab7 !important;
   }
 }
