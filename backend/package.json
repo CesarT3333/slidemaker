@@ -37,7 +37,7 @@
     "dotenv-flow": "^3.1.0",
     "gm": "^1.23.1",
     "googleapis": "^51.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "nestjs-stripe": "^0.4.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
